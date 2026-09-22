@@ -1,0 +1,14 @@
+.git
+.agents
+.claude
+.codex
+.env*
+.vercel
+.next*
+.test-build
+.execution-build
+node_modules
+research
+tests
+supabase
+*.tsbuildinfo

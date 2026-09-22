@@ -1,0 +1,83 @@
+{
+  "started": "2026-09-06T21:35:12.442152+00:00",
+  "config": {
+    "fastEmaLength": 20,
+    "trendEmaLength": 200,
+    "htfEmaLength": 50,
+    "htfTimeframe": "1H",
+    "adxLength": 14,
+    "adxThreshold": 20,
+    "atrLength": 14,
+    "deltaLength": 14,
+    "swingLookback": 10,
+    "volumeMultiplier": 1.5,
+    "atrMultiplier": 1.5,
+    "minConfluenceScore": 5,
+    "vwapEnabled": true,
+    "deltaEnabled": true,
+    "fvgEnabled": true,
+    "obEnabled": true,
+    "riskPct": 1,
+    "rrRatio": 3,
+    "cooldownBars": 10,
+    "sessionStart": "09:30",
+    "sessionEnd": "15:30",
+    "sessionTimezone": "Asia/Kolkata"
+  },
+  "through": "2026-09-07T09:14:59.999Z",
+  "candles": 47,
+  "qualified": [],
+  "blockers": {
+    "ADX too low": 36,
+    "Volatility below average": 21,
+    "Outside strategy session": 26,
+    "Low confluence": 45,
+    "Neutral trend": 15,
+    "Invalid stop distance": 15
+  },
+  "last": {
+    "time": 1788772499999,
+    "direction": "SHORT",
+    "qualified": false,
+    "reasons": [
+      "Volatility below average",
+      "Low confluence"
+    ],
+    "longScore": 0,
+    "shortScore": 3,
+    "factors": {
+      "trend": true,
+      "vwap": true,
+      "delta": true,
+      "volume": false,
+      "sweep": false,
+      "fvg": false,
+      "ob": false
+    },
+    "longFactors": {
+      "trend": false,
+      "vwap": false,
+      "delta": false,
+      "volume": false,
+      "sweep": false,
+      "fvg": false,
+      "ob": false
+    },
+    "shortFactors": {
+      "trend": true,
+      "vwap": true,
+      "delta": true,
+      "volume": false,
+      "sweep": false,
+      "fvg": false,
+      "ob": false
+    },
+    "price": 79528.39,
+    "sl": 79766.16562753792,
+    "tp": 78815.06311738623,
+    "adx": 23.750282941273845,
+    "atr": 144.1104183586114,
+    "vwap": 79833.00010267002,
+    "delta": -18.489606788556884
+  }
+}

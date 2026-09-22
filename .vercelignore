@@ -1,0 +1,13 @@
+.agents/
+.claude/
+.codex/
+.test-build/
+.next-demo/
+.execution-build/
+.env*
+research/
+tests/
+scripts/
+supabase/.temp/
+
+.next-local/

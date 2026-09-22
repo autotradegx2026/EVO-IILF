@@ -1,0 +1,11 @@
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+# Netlify detects Next.js and installs its OpenNext adapter automatically.
+# Keep API routes and middleware in Next.js; do not add an SPA catch-all redirect.
+# Set runtime credentials in Netlify's environment-variable UI/API, never here.
+# Supabase Cron remains the scheduler: switch its Vault URL only after acceptance.

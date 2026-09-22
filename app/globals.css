@@ -1,0 +1,158 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --sidebar: 0 0% 100%;
+    --sidebar-foreground: 215 25% 32%;
+    --sidebar-accent: 221 83% 96%;
+    --sidebar-accent-foreground: 221 83% 43%;
+    /* Royal Blue & White Light Theme */
+    --background: 0 0% 100%; /* #FFFFFF */
+    --foreground: 222 47% 11%; /* #0F172A (Deep Slate for text) */
+    
+    --card: 0 0% 100%; /* #FFFFFF */
+    --card-foreground: 222 47% 11%;
+    
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+    
+    --primary: 221 83% 53%; /* #1D4ED8 (Royal Blue) */
+    --primary-foreground: 0 0% 100%;
+    
+    --secondary: 210 40% 96%; /* #F1F5F9 (Light Slate) */
+    --secondary-foreground: 222 47% 11%;
+    
+    --muted: 210 40% 96%;
+    --muted-foreground: 215 16% 47%; /* #64748B */
+    
+    --accent: 221 83% 53%; /* Royal Blue */
+    --accent-foreground: 0 0% 100%;
+    
+    --destructive: 0 84% 60%; /* #EF4444 */
+    --destructive-foreground: 0 0% 100%;
+    
+    --border: 214 32% 91%; /* #E2E8F0 */
+    --input: 214 32% 91%;
+    --ring: 221 83% 53%;
+    
+    --radius: 0.625rem;
+    
+    /* Charts */
+    --chart-1: 221 83% 53%;
+    --chart-2: 142 71% 45%;
+    --chart-3: 45 93% 47%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 0 84% 60%;
+  }
+
+  .dark {
+    --sidebar: 222 47% 10%;
+    --sidebar-foreground: 210 40% 92%;
+    --sidebar-accent: 217 30% 20%;
+    --sidebar-accent-foreground: 217 91% 75%;
+    /* Keep a dark mode fallback just in case, though we force light */
+    --background: 222 47% 8%; 
+    --foreground: 210 40% 98%; 
+    --card: 215 32% 17%; 
+    --card-foreground: 210 40% 98%;
+    --popover: 215 32% 17%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 217 91% 60%; 
+    --primary-foreground: 210 40% 98%;
+    --secondary: 215 25% 27%; 
+    --secondary-foreground: 210 40% 98%;
+    --muted: 215 25% 27%;
+    --muted-foreground: 215 20% 65%; 
+    --accent: 217 91% 60%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 84% 60%; 
+    --destructive-foreground: 210 40% 98%;
+    --border: 215 25% 27%;
+    --input: 215 25% 27%;
+    --ring: 217 91% 60%;
+    
+    --chart-1: 217 91% 60%;
+    --chart-2: 142 71% 45%;
+    --chart-3: 45 93% 47%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 0 84% 60%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  
+  /* Scrollbar styles */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-muted-foreground/30 rounded-full;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-muted-foreground/50;
+  }
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active{
+    -webkit-box-shadow: 0 0 0 30px hsl(var(--background)) inset !important;
+    -webkit-text-fill-color: hsl(var(--foreground)) !important;
+}
+
+@layer components {
+  .dashboard-content { min-width: 0; overflow-wrap: anywhere; }
+  .dashboard-content > * { width: 100%; min-width: 0; max-width: none; }
+  .dashboard-content :where(.grid, .flex) > * { min-width: 0; }
+  .dashboard-content :where(input, select, textarea) { max-width: 100%; }
+  .dashboard-content :where(img, video, iframe, canvas) { max-width: 100%; }
+  [data-slot="sidebar-inner"] { border: 1px solid hsl(var(--border)); }
+  [data-slot="sidebar-menu-button"][data-active="true"] { box-shadow: inset 3px 0 0 hsl(var(--primary)); }
+  @media (prefers-reduced-motion: reduce) {
+    [data-slot="sidebar-gap"], [data-slot="sidebar-container"] { transition: none; }
+  }
+}
+
+/* Shared workspace surfaces keep existing trading controls and state colors. */
+@layer components {
+  .dashboard-content { --workspace-radius: 1rem; }
+  .dashboard-content :where(.bg-card, [data-slot="card"]) {
+    border-radius: var(--workspace-radius);
+    border-color: hsl(var(--border) / .85);
+    box-shadow: 0 1px 2px hsl(var(--foreground) / .025), 0 4px 20px hsl(var(--foreground) / .025);
+  }
+  .dashboard-content :where(h1) { font-size: clamp(1.35rem, 1.1rem + .65vw, 1.85rem); font-weight: 700; letter-spacing: -.035em; line-height: 1.3; }
+  .dashboard-content :where(h2, h3) { letter-spacing: -.02em; }
+  .dashboard-content :where(p) { line-height: 1.6; }
+  .dashboard-content :where(input:not([type="checkbox"]):not([type="radio"]):not([type="file"]), select, textarea) {
+    border-radius: .65rem;
+    min-height: 2.5rem;
+    border-color: hsl(var(--input));
+    box-shadow: 0 1px 2px hsl(var(--foreground) / .025);
+  }
+  .dashboard-content :where(input, select, textarea):focus-visible { outline: 2px solid hsl(var(--ring) / .35); outline-offset: 2px; }
+  .dashboard-content :where(button:not([role="switch"]):not(.rounded-full)) { border-radius: .65rem; }
+  .dashboard-content :where(table) { border-collapse: collapse; }
+  .dashboard-content :where(thead) { background: hsl(var(--muted) / .65); }
+  .dashboard-content :where(th) { font-size: .7rem; letter-spacing: .025em; font-weight: 600; }
+  .dashboard-content :where(th, td) { padding-top: .9rem; padding-bottom: .9rem; }
+  .dashboard-content :where(tbody tr) { transition: background-color 120ms ease; }
+  .dashboard-content :where(tbody tr:hover) { background: hsl(var(--muted) / .35); }
+  .dashboard-content :where(.overflow-x-auto) { max-width: 100%; overscroll-behavior-x: contain; }
+  @media (max-width: 639px) {
+    .dashboard-content :where(input:not([type="checkbox"]):not([type="radio"]), select, textarea) { font-size: 1rem; }
+  }
+}

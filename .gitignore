@@ -1,0 +1,58 @@
+# Claude Code internal — do not commit
+.agents/
+.claude/
+
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Next.js build output
+.next/
+out/
+build/
+
+# Environment variables — NEVER commit
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Supabase
+.supabase/
+
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Testing
+coverage/
+.vercel
+.netlify/
+.env*
+
+# Local test output and linked Supabase metadata
+.test-build/
+supabase/.temp/
+
+.next-demo/
+.next-local/
+.execution-build/
+research/*.lock

@@ -1,0 +1,6666 @@
+{
+  "format": "evo-forward-paper-v1",
+  "modelHash": "9dd95dc58472a5b6ffad7ca1c85389cce875f8228793a1f29578b8991083d34b",
+  "model": {
+    "strategy": "evo-iilf-1.0",
+    "config": {
+      "fastEmaLength": 20,
+      "trendEmaLength": 200,
+      "htfEmaLength": 50,
+      "htfTimeframe": "1H",
+      "adxLength": 14,
+      "adxThreshold": 20,
+      "atrLength": 14,
+      "deltaLength": 14,
+      "swingLookback": 10,
+      "volumeMultiplier": 1.5,
+      "atrMultiplier": 1.5,
+      "minConfluenceScore": 5,
+      "vwapEnabled": true,
+      "deltaEnabled": true,
+      "fvgEnabled": true,
+      "obEnabled": true,
+      "riskPct": 1,
+      "rrRatio": 3,
+      "cooldownBars": 10,
+      "sessionStart": "00:00",
+      "sessionEnd": "00:00",
+      "sessionTimezone": "Asia/Kolkata"
+    },
+    "pairs": [
+      "BTCUSDT",
+      "ETHUSDT",
+      "SOLUSDT"
+    ],
+    "timeframe": "1m",
+    "initialCapital": 100000,
+    "currency": "USDT",
+    "quantityStep": 0.0001,
+    "maxTradesPerDay": 3,
+    "maxDailyLossPct": 3,
+    "maxCatchupBars": 500,
+    "baseHistoryBars": 2000,
+    "higherHistoryBars": 100
+  },
+  "startedAt": "2026-09-06T11:43:57.686Z",
+  "savedAt": "2026-09-06T12:13:57.688Z",
+  "entryHaltReason": null,
+  "trades": [],
+  "observations": [
+    {
+      "id": "BTCUSDT:2026-09-06T11:43:00.000Z",
+      "symbol": "BTCUSDT",
+      "observedAt": "2026-09-06T11:43:58.944Z",
+      "signalCloseTime": "2026-09-06T11:43:00.000Z",
+      "bar": {
+        "symbol": "BINANCE:BTCUSDT",
+        "tf": "1m",
+        "time": "2026-09-06T11:42:00.000Z",
+        "close_time": "2026-09-06T11:43:00.000Z",
+        "open": 79921.98,
+        "high": 79921.99,
+        "low": 79914.02,
+        "close": 79914.03
+      },
+      "inputHash": "62b39700451be5bd4cbb77b5f45219f3455ff02940b668f0aec5977c041cf7c4",
+      "snapshot": {
+        "time": 1788694979999,
+        "direction": null,
+        "qualified": false,
+        "reasons": [
+          "Neutral trend",
+          "ADX too low",
+          "Volatility below average",
+          "Low confluence",
+          "Invalid stop distance"
+        ],
+        "longScore": 1,
+        "shortScore": 1,
+        "factors": {
+          "trend": false,
+          "vwap": true,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "longFactors": {
+          "trend": false,
+          "vwap": true,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "shortFactors": {
+          "trend": false,
+          "vwap": false,
+          "delta": true,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "price": 79914.03,
+        "sl": null,
+        "tp": null,
+        "adx": 16.722564142662808,
+        "atr": 14.154899106188017,
+        "vwap": 79862.07147538013,
+        "delta": -0.40678702882485906
+      },
+      "decision": "WARMUP_ONLY",
+      "reasons": [
+        "Neutral trend",
+        "ADX too low",
+        "Volatility below average",
+        "Low confluence",
+        "Invalid stop distance",
+        "Candle closed before this invocation started; historical entries are prohibited."
+      ],
+      "tradeId": null
+    },
+    {
+      "id": "ETHUSDT:2026-09-06T11:43:00.000Z",
+      "symbol": "ETHUSDT",
+      "observedAt": "2026-09-06T11:43:59.100Z",
+      "signalCloseTime": "2026-09-06T11:43:00.000Z",
+      "bar": {
+        "symbol": "BINANCE:ETHUSDT",
+        "tf": "1m",
+        "time": "2026-09-06T11:42:00.000Z",
+        "close_time": "2026-09-06T11:43:00.000Z",
+        "open": 2500.92,
+        "high": 2500.93,
+        "low": 2500.37,
+        "close": 2500.37
+      },
+      "inputHash": "782f7812a159be1998f2b64dd989cdeea6999db26a47a31d06d61890e8ba5025",
+      "snapshot": {
+        "time": 1788694979999,
+        "direction": "LONG",
+        "qualified": false,
+        "reasons": [
+          "ADX too low",
+          "Volatility below average",
+          "Low confluence"
+        ],
+        "longScore": 2,
+        "shortScore": 1,
+        "factors": {
+          "trend": true,
+          "vwap": true,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "longFactors": {
+          "trend": true,
+          "vwap": true,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "shortFactors": {
+          "trend": false,
+          "vwap": false,
+          "delta": true,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "price": 2500.37,
+        "sl": 2499.21714088312,
+        "tp": 2503.8285773506395,
+        "adx": 9.758897254649758,
+        "atr": 0.7685727445867272,
+        "vwap": 2497.373830952283,
+        "delta": -5.425713071158538
+      },
+      "decision": "WARMUP_ONLY",
+      "reasons": [
+        "ADX too low",
+        "Volatility below average",
+        "Low confluence",
+        "Candle closed before this invocation started; historical entries are prohibited."
+      ],
+      "tradeId": null
+    },
+    {
+      "id": "SOLUSDT:2026-09-06T11:43:00.000Z",
+      "symbol": "SOLUSDT",
+      "observedAt": "2026-09-06T11:43:58.958Z",
+      "signalCloseTime": "2026-09-06T11:43:00.000Z",
+      "bar": {
+        "symbol": "BINANCE:SOLUSDT",
+        "tf": "1m",
+        "time": "2026-09-06T11:42:00.000Z",
+        "close_time": "2026-09-06T11:43:00.000Z",
+        "open": 106.4,
+        "high": 106.41,
+        "low": 106.3,
+        "close": 106.32
+      },
+      "inputHash": "d9e99dc660c9fcb7b700e69186e0f3601e9ce2c8d92100450f0e68d43bec2132",
+      "snapshot": {
+        "time": 1788694979999,
+        "direction": "LONG",
+        "qualified": false,
+        "reasons": [
+          "ADX too low",
+          "Low confluence"
+        ],
+        "longScore": 2,
+        "shortScore": 1,
+        "factors": {
+          "trend": true,
+          "vwap": true,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "longFactors": {
+          "trend": true,
+          "vwap": true,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "shortFactors": {
+          "trend": false,
+          "vwap": false,
+          "delta": true,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "price": 106.32,
+        "sl": 106.16976567256165,
+        "tp": 106.77070298231502,
+        "adx": 13.779807358067211,
+        "atr": 0.08682288495889665,
+        "vwap": 105.36343811790672,
+        "delta": -304.6890650432164
+      },
+      "decision": "WARMUP_ONLY",
+      "reasons": [
+        "ADX too low",
+        "Low confluence",
+        "Candle closed before this invocation started; historical entries are prohibited."
+      ],
+      "tradeId": null
+    },
+    {
+      "id": "BTCUSDT:2026-09-06T11:44:00.000Z",
+      "symbol": "BTCUSDT",
+      "observedAt": "2026-09-06T11:44:01.859Z",
+      "signalCloseTime": "2026-09-06T11:44:00.000Z",
+      "bar": {
+        "symbol": "BINANCE:BTCUSDT",
+        "tf": "1m",
+        "time": "2026-09-06T11:43:00.000Z",
+        "close_time": "2026-09-06T11:44:00.000Z",
+        "open": 79914.03,
+        "high": 79951.57,
+        "low": 79914.02,
+        "close": 79941.99
+      },
+      "inputHash": "3b6bfa3aa891cec8e0bde40bedb3f0a7516e946ad0e27bd2712176c8ed2d517c",
+      "snapshot": {
+        "time": 1788695039999,
+        "direction": "LONG",
+        "qualified": false,
+        "reasons": [
+          "ADX too low",
+          "Volatility below average"
+        ],
+        "longScore": 5,
+        "shortScore": 1,
+        "factors": {
+          "trend": true,
+          "vwap": true,
+          "delta": true,
+          "volume": true,
+          "sweep": false,
+          "fvg": false,
+          "ob": true
+        },
+        "longFactors": {
+          "trend": true,
+          "vwap": true,
+          "delta": true,
+          "volume": true,
+          "sweep": false,
+          "fvg": false,
+          "ob": true
+        },
+        "shortFactors": {
+          "trend": false,
+          "vwap": false,
+          "delta": false,
+          "volume": true,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "price": 79941.99,
+        "sl": 79890.28103338782,
+        "tp": 80097.11689983658,
+        "adx": 17.151426717770537,
+        "atr": 15.825977741460509,
+        "vwap": 79862.17294861504,
+        "delta": 0.8417085750184554
+      },
+      "decision": "NO_SETUP",
+      "reasons": [
+        "ADX too low",
+        "Volatility below average"
+      ],
+      "tradeId": null
+    },
+    {
+      "id": "ETHUSDT:2026-09-06T11:44:00.000Z",
+      "symbol": "ETHUSDT",
+      "observedAt": "2026-09-06T11:44:01.864Z",
+      "signalCloseTime": "2026-09-06T11:44:00.000Z",
+      "bar": {
+        "symbol": "BINANCE:ETHUSDT",
+        "tf": "1m",
+        "time": "2026-09-06T11:43:00.000Z",
+        "close_time": "2026-09-06T11:44:00.000Z",
+        "open": 2500.38,
+        "high": 2501.82,
+        "low": 2500.01,
+        "close": 2501.71
+      },
+      "inputHash": "819a5552c9f16ea15b6be45b921ae7a11fb22c34904fe29c30129fa3bc957997",
+      "snapshot": {
+        "time": 1788695039999,
+        "direction": "LONG",
+        "qualified": false,
+        "reasons": [
+          "ADX too low",
+          "Volatility below average"
+        ],
+        "longScore": 6,
+        "shortScore": 1,
+        "factors": {
+          "trend": true,
+          "vwap": true,
+          "delta": true,
+          "volume": true,
+          "sweep": true,
+          "fvg": false,
+          "ob": true
+        },
+        "longFactors": {
+          "trend": true,
+          "vwap": true,
+          "delta": true,
+          "volume": true,
+          "sweep": true,
+          "fvg": false,
+          "ob": true
+        },
+        "shortFactors": {
+          "trend": false,
+          "vwap": false,
+          "delta": false,
+          "volume": true,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "price": 2501.71,
+        "sl": 2498.7455593914688,
+        "tp": 2510.603321825594,
+        "adx": 9.838348904613005,
+        "atr": 0.8429604056876714,
+        "vwap": 2497.381978794852,
+        "delta": 32.1952486716626
+      },
+      "decision": "NO_SETUP",
+      "reasons": [
+        "ADX too low",
+        "Volatility below average"
+      ],
+      "tradeId": null
+    },
+    {
+      "id": "SOLUSDT:2026-09-06T11:44:00.000Z",
+      "symbol": "SOLUSDT",
+      "observedAt": "2026-09-06T11:44:01.868Z",
+      "signalCloseTime": "2026-09-06T11:44:00.000Z",
+      "bar": {
+        "symbol": "BINANCE:SOLUSDT",
+        "tf": "1m",
+        "time": "2026-09-06T11:43:00.000Z",
+        "close_time": "2026-09-06T11:44:00.000Z",
+        "open": 106.33,
+        "high": 106.45,
+        "low": 106.27,
+        "close": 106.45
+      },
+      "inputHash": "d1b5e4eee5f56d6943e21f85b65b9b8a4513566aad1494dc8d6ea59b01ca1ffa",
+      "snapshot": {
+        "time": 1788695039999,
+        "direction": "LONG",
+        "qualified": false,
+        "reasons": [
+          "ADX too low"
+        ],
+        "longScore": 6,
+        "shortScore": 1,
+        "factors": {
+          "trend": true,
+          "vwap": true,
+          "delta": true,
+          "volume": true,
+          "sweep": true,
+          "fvg": false,
+          "ob": true
+        },
+        "longFactors": {
+          "trend": true,
+          "vwap": true,
+          "delta": true,
+          "volume": true,
+          "sweep": true,
+          "fvg": false,
+          "ob": true
+        },
+        "shortFactors": {
+          "trend": false,
+          "vwap": false,
+          "delta": false,
+          "volume": true,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "price": 106.45,
+        "sl": 106.12978241023582,
+        "tp": 107.41065276929255,
+        "adx": 13.949048823207846,
+        "atr": 0.09347839317611881,
+        "vwap": 105.36583916995477,
+        "delta": 282.7922769625458
+      },
+      "decision": "NO_SETUP",
+      "reasons": [
+        "ADX too low"
+      ],
+      "tradeId": null
+    },
+    {
+      "id": "BTCUSDT:2026-09-06T11:45:00.000Z",
+      "symbol": "BTCUSDT",
+      "observedAt": "2026-09-06T11:45:03.461Z",
+      "signalCloseTime": "2026-09-06T11:45:00.000Z",
+      "bar": {
+        "symbol": "BINANCE:BTCUSDT",
+        "tf": "1m",
+        "time": "2026-09-06T11:44:00.000Z",
+        "close_time": "2026-09-06T11:45:00.000Z",
+        "open": 79941.99,
+        "high": 79953.92,
+        "low": 79941.99,
+        "close": 79953.92
+      },
+      "inputHash": "144b295b09464ba2ab64deb66b5c1f521d39929b99601be251ce627e8a0ffc48",
+      "snapshot": {
+        "time": 1788695099999,
+        "direction": "LONG",
+        "qualified": false,
+        "reasons": [
+          "ADX too low",
+          "Volatility below average",
+          "Low confluence"
+        ],
+        "longScore": 3,
+        "shortScore": 0,
+        "factors": {
+          "trend": true,
+          "vwap": true,
+          "delta": true,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "longFactors": {
+          "trend": true,
+          "vwap": true,
+          "delta": true,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "shortFactors": {
+          "trend": false,
+          "vwap": false,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "price": 79953.92,
+        "sl": 79918.6684595744,
+        "tp": 80059.67462127679,
+        "adx": 17.63140571323841,
+        "atr": 15.547693617069973,
+        "vwap": 79862.1916089029,
+        "delta": 0.9141514316826613
+      },
+      "decision": "NO_SETUP",
+      "reasons": [
+        "ADX too low",
+        "Volatility below average",
+        "Low confluence"
+      ],
+      "tradeId": null
+    },
+    {
+      "id": "ETHUSDT:2026-09-06T11:45:00.000Z",
+      "symbol": "ETHUSDT",
+      "observedAt": "2026-09-06T11:45:03.443Z",
+      "signalCloseTime": "2026-09-06T11:45:00.000Z",
+      "bar": {
+        "symbol": "BINANCE:ETHUSDT",
+        "tf": "1m",
+        "time": "2026-09-06T11:44:00.000Z",
+        "close_time": "2026-09-06T11:45:00.000Z",
+        "open": 2501.72,
+        "high": 2502.37,
+        "low": 2501.72,
+        "close": 2502.36
+      },
+      "inputHash": "c5dea36e7a5eff8ee14d147c670fa7a630eea38a5c77f947fca27abf154f2bc9",
+      "snapshot": {
+        "time": 1788695099999,
+        "direction": "LONG",
+        "qualified": false,
+        "reasons": [
+          "ADX too low",
+          "Volatility below average",
+          "Low confluence"
+        ],
+        "longScore": 3,
+        "shortScore": 0,
+        "factors": {
+          "trend": true,
+          "vwap": true,
+          "delta": true,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "longFactors": {
+          "trend": true,
+          "vwap": true,
+          "delta": true,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "shortFactors": {
+          "trend": false,
+          "vwap": false,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "price": 2502.36,
+        "sl": 2500.4751622920776,
+        "tp": 2508.0145131237678,
+        "adx": 10.402571037451414,
+        "atr": 0.8298918052813987,
+        "vwap": 2497.382796100149,
+        "delta": 30.857588848774252
+      },
+      "decision": "NO_SETUP",
+      "reasons": [
+        "ADX too low",
+        "Volatility below average",
+        "Low confluence"
+      ],
+      "tradeId": null
+    },
+    {
+      "id": "SOLUSDT:2026-09-06T11:45:00.000Z",
+      "symbol": "SOLUSDT",
+      "observedAt": "2026-09-06T11:45:03.579Z",
+      "signalCloseTime": "2026-09-06T11:45:00.000Z",
+      "bar": {
+        "symbol": "BINANCE:SOLUSDT",
+        "tf": "1m",
+        "time": "2026-09-06T11:44:00.000Z",
+        "close_time": "2026-09-06T11:45:00.000Z",
+        "open": 106.45,
+        "high": 106.51,
+        "low": 106.45,
+        "close": 106.51
+      },
+      "inputHash": "8f12672d0405606337faae8a079b1fa79e9858c5e67cf32af9c85c9020507230",
+      "snapshot": {
+        "time": 1788695099999,
+        "direction": "LONG",
+        "qualified": false,
+        "reasons": [
+          "ADX too low",
+          "Low confluence"
+        ],
+        "longScore": 3,
+        "shortScore": 0,
+        "factors": {
+          "trend": true,
+          "vwap": true,
+          "delta": true,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "longFactors": {
+          "trend": true,
+          "vwap": true,
+          "delta": true,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "shortFactors": {
+          "trend": false,
+          "vwap": false,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "price": 106.51,
+        "sl": 106.31336938093327,
+        "tp": 107.09989185720022,
+        "adx": 13.394432235042641,
+        "atr": 0.09108707937782477,
+        "vwap": 105.36617824765318,
+        "delta": 315.63037336753973
+      },
+      "decision": "NO_SETUP",
+      "reasons": [
+        "ADX too low",
+        "Low confluence"
+      ],
+      "tradeId": null
+    },
+    {
+      "id": "BTCUSDT:2026-09-06T11:46:00.000Z",
+      "symbol": "BTCUSDT",
+      "observedAt": "2026-09-06T11:46:02.659Z",
+      "signalCloseTime": "2026-09-06T11:46:00.000Z",
+      "bar": {
+        "symbol": "BINANCE:BTCUSDT",
+        "tf": "1m",
+        "time": "2026-09-06T11:45:00.000Z",
+        "close_time": "2026-09-06T11:46:00.000Z",
+        "open": 79953.91,
+        "high": 79955.97,
+        "low": 79934.52,
+        "close": 79955.96
+      },
+      "inputHash": "6c61568e2e7e219deea60e0a1f406e8432c07a3cd7e665b71c4af7db42f8b70f",
+      "snapshot": {
+        "time": 1788695159999,
+        "direction": "LONG",
+        "qualified": false,
+        "reasons": [
+          "ADX too low",
+          "Volatility below average",
+          "Low confluence"
+        ],
+        "longScore": 3,
+        "shortScore": 0,
+        "factors": {
+          "trend": true,
+          "vwap": true,
+          "delta": true,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "longFactors": {
+          "trend": true,
+          "vwap": true,
+          "delta": true,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "shortFactors": {
+          "trend": false,
+          "vwap": false,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "price": 79955.96,
+        "sl": 79910.5660696048,
+        "tp": 80092.14179118563,
+        "adx": 17.650144322896242,
+        "atr": 15.969286930136194,
+        "vwap": 79862.2472033258,
+        "delta": 1.3500845741249732
+      },
+      "decision": "NO_SETUP",
+      "reasons": [
+        "ADX too low",
+        "Volatility below average",
+        "Low confluence"
+      ],
+      "tradeId": null
+    },
+    {
+      "id": "ETHUSDT:2026-09-06T11:46:00.000Z",
+      "symbol": "ETHUSDT",
+      "observedAt": "2026-09-06T11:46:02.838Z",
+      "signalCloseTime": "2026-09-06T11:46:00.000Z",
+      "bar": {
+        "symbol": "BINANCE:ETHUSDT",
+        "tf": "1m",
+        "time": "2026-09-06T11:45:00.000Z",
+        "close_time": "2026-09-06T11:46:00.000Z",
+        "open": 2502.36,
+        "high": 2502.36,
+        "low": 2500.64,
+        "close": 2501.98
+      },
+      "inputHash": "ca5b77d3ea3aea3b4f4a8dfcf50feb660f563e8d4e8c072483e229c81303e8c1",
+      "snapshot": {
+        "time": 1788695159999,
+        "direction": "LONG",
+        "qualified": false,
+        "reasons": [
+          "ADX too low",
+          "Volatility below average",
+          "Low confluence"
+        ],
+        "longScore": 3,
+        "shortScore": 0,
+        "factors": {
+          "trend": true,
+          "vwap": true,
+          "delta": true,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "longFactors": {
+          "trend": true,
+          "vwap": true,
+          "delta": true,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "shortFactors": {
+          "trend": false,
+          "vwap": false,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "price": 2501.98,
+        "sl": 2499.299793556929,
+        "tp": 2510.0206193292124,
+        "adx": 9.748377538009311,
+        "atr": 0.8934709620470312,
+        "vwap": 2497.385358550174,
+        "delta": 16.409137002271024
+      },
+      "decision": "NO_SETUP",
+      "reasons": [
+        "ADX too low",
+        "Volatility below average",
+        "Low confluence"
+      ],
+      "tradeId": null
+    },
+    {
+      "id": "SOLUSDT:2026-09-06T11:46:00.000Z",
+      "symbol": "SOLUSDT",
+      "observedAt": "2026-09-06T11:46:02.811Z",
+      "signalCloseTime": "2026-09-06T11:46:00.000Z",
+      "bar": {
+        "symbol": "BINANCE:SOLUSDT",
+        "tf": "1m",
+        "time": "2026-09-06T11:45:00.000Z",
+        "close_time": "2026-09-06T11:46:00.000Z",
+        "open": 106.5,
+        "high": 106.52,
+        "low": 106.45,
+        "close": 106.51
+      },
+      "inputHash": "85e35b18d9233c2b6d4e99c793f8265e3253f9088871259a92dc878e587362df",
+      "snapshot": {
+        "time": 1788695159999,
+        "direction": "LONG",
+        "qualified": false,
+        "reasons": [
+          "ADX too low",
+          "Low confluence"
+        ],
+        "longScore": 3,
+        "shortScore": 0,
+        "factors": {
+          "trend": true,
+          "vwap": true,
+          "delta": true,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "longFactors": {
+          "trend": true,
+          "vwap": true,
+          "delta": true,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "shortFactors": {
+          "trend": false,
+          "vwap": false,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "price": 106.51,
+        "sl": 106.3156287108666,
+        "tp": 107.0931138674002,
+        "adx": 12.764409166724388,
+        "atr": 0.08958085942226537,
+        "vwap": 105.36658927188154,
+        "delta": 358.8621902518678
+      },
+      "decision": "NO_SETUP",
+      "reasons": [
+        "ADX too low",
+        "Low confluence"
+      ],
+      "tradeId": null
+    },
+    {
+      "id": "BTCUSDT:2026-09-06T11:47:00.000Z",
+      "symbol": "BTCUSDT",
+      "observedAt": "2026-09-06T11:47:02.718Z",
+      "signalCloseTime": "2026-09-06T11:47:00.000Z",
+      "bar": {
+        "symbol": "BINANCE:BTCUSDT",
+        "tf": "1m",
+        "time": "2026-09-06T11:46:00.000Z",
+        "close_time": "2026-09-06T11:47:00.000Z",
+        "open": 79955.96,
+        "high": 79963.62,
+        "low": 79955.96,
+        "close": 79963.61
+      },
+      "inputHash": "c152e55dfec61db75c34893e41f539b0a5c10e238bc732cee0941b15462a158b",
+      "snapshot": {
+        "time": 1788695219999,
+        "direction": "LONG",
+        "qualified": false,
+        "reasons": [
+          "ADX too low",
+          "Volatility below average",
+          "Low confluence"
+        ],
+        "longScore": 3,
+        "shortScore": 0,
+        "factors": {
+          "trend": true,
+          "vwap": true,
+          "delta": true,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "longFactors": {
+          "trend": true,
+          "vwap": true,
+          "delta": true,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "shortFactors": {
+          "trend": false,
+          "vwap": false,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "price": 79963.61,
+        "sl": 79932.89635034732,
+        "tp": 80055.75094895804,
+        "adx": 17.963888539374683,
+        "atr": 15.375766435125675,
+        "vwap": 79862.30608923406,
+        "delta": 1.6883346309083103
+      },
+      "decision": "NO_SETUP",
+      "reasons": [
+        "ADX too low",
+        "Volatility below average",
+        "Low confluence"
+      ],
+      "tradeId": null
+    },
+    {
+      "id": "ETHUSDT:2026-09-06T11:47:00.000Z",
+      "symbol": "ETHUSDT",
+      "observedAt": "2026-09-06T11:47:02.867Z",
+      "signalCloseTime": "2026-09-06T11:47:00.000Z",
+      "bar": {
+        "symbol": "BINANCE:ETHUSDT",
+        "tf": "1m",
+        "time": "2026-09-06T11:46:00.000Z",
+        "close_time": "2026-09-06T11:47:00.000Z",
+        "open": 2501.97,
+        "high": 2503.01,
+        "low": 2501.97,
+        "close": 2503.01
+      },
+      "inputHash": "a6e5018c5f64a9cc032a02321c1dcc9e04964bb7367fac832c241e228b8be5a4",
+      "snapshot": {
+        "time": 1788695219999,
+        "direction": "LONG",
+        "qualified": false,
+        "reasons": [
+          "ADX too low",
+          "Volatility below average",
+          "Low confluence"
+        ],
+        "longScore": 3,
+        "shortScore": 0,
+        "factors": {
+          "trend": true,
+          "vwap": true,
+          "delta": true,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "longFactors": {
+          "trend": true,
+          "vwap": true,
+          "delta": true,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "shortFactors": {
+          "trend": false,
+          "vwap": false,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "price": 2503.01,
+        "sl": 2500.6140940171485,
+        "tp": 2510.1977179485552,
+        "adx": 9.728086169134698,
+        "atr": 0.9039373219008446,
+        "vwap": 2497.38747040763,
+        "delta": 21.126012068634886
+      },
+      "decision": "NO_SETUP",
+      "reasons": [
+        "ADX too low",
+        "Volatility below average",
+        "Low confluence"
+      ],
+      "tradeId": null
+    },
+    {
+      "id": "SOLUSDT:2026-09-06T11:47:00.000Z",
+      "symbol": "SOLUSDT",
+      "observedAt": "2026-09-06T11:47:02.730Z",
+      "signalCloseTime": "2026-09-06T11:47:00.000Z",
+      "bar": {
+        "symbol": "BINANCE:SOLUSDT",
+        "tf": "1m",
+        "time": "2026-09-06T11:46:00.000Z",
+        "close_time": "2026-09-06T11:47:00.000Z",
+        "open": 106.51,
+        "high": 106.61,
+        "low": 106.49,
+        "close": 106.59
+      },
+      "inputHash": "5adf72ab16c589198d09d8d33bec0bf8f977208b6a17f09b185edbe38b7569c7",
+      "snapshot": {
+        "time": 1788695219999,
+        "direction": "LONG",
+        "qualified": false,
+        "reasons": [
+          "ADX too low",
+          "Low confluence"
+        ],
+        "longScore": 4,
+        "shortScore": 1,
+        "factors": {
+          "trend": true,
+          "vwap": true,
+          "delta": true,
+          "volume": true,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "longFactors": {
+          "trend": true,
+          "vwap": true,
+          "delta": true,
+          "volume": true,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "shortFactors": {
+          "trend": false,
+          "vwap": false,
+          "delta": false,
+          "volume": true,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "price": 106.59,
+        "sl": 106.35236951723327,
+        "tp": 107.3028914483002,
+        "adx": 12.483166939823624,
+        "atr": 0.09175365517781818,
+        "vwap": 105.36822075106105,
+        "delta": 630.4020315516187
+      },
+      "decision": "NO_SETUP",
+      "reasons": [
+        "ADX too low",
+        "Low confluence"
+      ],
+      "tradeId": null
+    },
+    {
+      "id": "BTCUSDT:2026-09-06T11:48:00.000Z",
+      "symbol": "BTCUSDT",
+      "observedAt": "2026-09-06T11:48:02.815Z",
+      "signalCloseTime": "2026-09-06T11:48:00.000Z",
+      "bar": {
+        "symbol": "BINANCE:BTCUSDT",
+        "tf": "1m",
+        "time": "2026-09-06T11:47:00.000Z",
+        "close_time": "2026-09-06T11:48:00.000Z",
+        "open": 79963.62,
+        "high": 79963.62,
+        "low": 79961.01,
+        "close": 79961.02
+      },
+      "inputHash": "18f36edbc32bf758d7a45c449cd1828470ea1f4f5a285971a72e0df085bcccbc",
+      "snapshot": {
+        "time": 1788695279999,
+        "direction": "LONG",
+        "qualified": false,
+        "reasons": [
+          "ADX too low",
+          "Volatility below average",
+          "Low confluence"
+        ],
+        "longScore": 3,
+        "shortScore": 0,
+        "factors": {
+          "trend": true,
+          "vwap": true,
+          "delta": true,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "longFactors": {
+          "trend": true,
+          "vwap": true,
+          "delta": true,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "shortFactors": {
+          "trend": false,
+          "vwap": false,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "price": 79961.02,
+        "sl": 79939.31411103679,
+        "tp": 80026.13766688966,
+        "adx": 18.25522245467609,
+        "atr": 14.463925975473883,
+        "vwap": 79862.3274704274,
+        "delta": 1.2764433467872023
+      },
+      "decision": "NO_SETUP",
+      "reasons": [
+        "ADX too low",
+        "Volatility below average",
+        "Low confluence"
+      ],
+      "tradeId": null
+    },
+    {
+      "id": "ETHUSDT:2026-09-06T11:48:00.000Z",
+      "symbol": "ETHUSDT",
+      "observedAt": "2026-09-06T11:48:02.821Z",
+      "signalCloseTime": "2026-09-06T11:48:00.000Z",
+      "bar": {
+        "symbol": "BINANCE:ETHUSDT",
+        "tf": "1m",
+        "time": "2026-09-06T11:47:00.000Z",
+        "close_time": "2026-09-06T11:48:00.000Z",
+        "open": 2503.01,
+        "high": 2503.01,
+        "low": 2502.48,
+        "close": 2502.5
+      },
+      "inputHash": "7151aa281a22b9f934e0dd090d4f2230e40c9839aa9f654888dc80c81b39a5c6",
+      "snapshot": {
+        "time": 1788695279999,
+        "direction": "LONG",
+        "qualified": false,
+        "reasons": [
+          "ADX too low",
+          "Volatility below average",
+          "Low confluence"
+        ],
+        "longScore": 4,
+        "shortScore": 1,
+        "factors": {
+          "trend": true,
+          "vwap": true,
+          "delta": true,
+          "volume": true,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "longFactors": {
+          "trend": true,
+          "vwap": true,
+          "delta": true,
+          "volume": true,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "shortFactors": {
+          "trend": false,
+          "vwap": false,
+          "delta": false,
+          "volume": true,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "price": 2502.5,
+        "sl": 2501.1641587302097,
+        "tp": 2506.507523809371,
+        "adx": 9.709244183751128,
+        "atr": 0.8772275131936558,
+        "vwap": 2497.392447886071,
+        "delta": 2.013357126150236
+      },
+      "decision": "NO_SETUP",
+      "reasons": [
+        "ADX too low",
+        "Volatility below average",
+        "Low confluence"
+      ],
+      "tradeId": null
+    },
+    {
+      "id": "SOLUSDT:2026-09-06T11:48:00.000Z",
+      "symbol": "SOLUSDT",
+      "observedAt": "2026-09-06T11:48:02.907Z",
+      "signalCloseTime": "2026-09-06T11:48:00.000Z",
+      "bar": {
+        "symbol": "BINANCE:SOLUSDT",
+        "tf": "1m",
+        "time": "2026-09-06T11:47:00.000Z",
+        "close_time": "2026-09-06T11:48:00.000Z",
+        "open": 106.59,
+        "high": 106.61,
+        "low": 106.53,
+        "close": 106.54
+      },
+      "inputHash": "e2836689e9a1692f702937dc4ae270345a834a819ea6716f146af189fbfb5ef5",
+      "snapshot": {
+        "time": 1788695279999,
+        "direction": "LONG",
+        "qualified": false,
+        "reasons": [
+          "ADX too low",
+          "Low confluence"
+        ],
+        "longScore": 3,
+        "shortScore": 0,
+        "factors": {
+          "trend": true,
+          "vwap": true,
+          "delta": true,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "longFactors": {
+          "trend": true,
+          "vwap": true,
+          "delta": true,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "shortFactors": {
+          "trend": false,
+          "vwap": false,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "price": 106.54,
+        "sl": 106.3936288374309,
+        "tp": 106.97911348770734,
+        "adx": 12.222013443415774,
+        "atr": 0.09091410837940248,
+        "vwap": 105.36927654560421,
+        "delta": 338.6146940114029
+      },
+      "decision": "NO_SETUP",
+      "reasons": [
+        "ADX too low",
+        "Low confluence"
+      ],
+      "tradeId": null
+    },
+    {
+      "id": "BTCUSDT:2026-09-06T11:49:00.000Z",
+      "symbol": "BTCUSDT",
+      "observedAt": "2026-09-06T11:49:03.219Z",
+      "signalCloseTime": "2026-09-06T11:49:00.000Z",
+      "bar": {
+        "symbol": "BINANCE:BTCUSDT",
+        "tf": "1m",
+        "time": "2026-09-06T11:48:00.000Z",
+        "close_time": "2026-09-06T11:49:00.000Z",
+        "open": 79961.01,
+        "high": 79961.02,
+        "low": 79961.01,
+        "close": 79961.02
+      },
+      "inputHash": "ab133d2545f24684c5379e7df44628f0c8e6267813217192e8b6315f5034549a",
+      "snapshot": {
+        "time": 1788695339999,
+        "direction": "LONG",
+        "qualified": false,
+        "reasons": [
+          "ADX too low",
+          "Volatility below average",
+          "Low confluence"
+        ],
+        "longScore": 3,
+        "shortScore": 0,
+        "factors": {
+          "trend": true,
+          "vwap": true,
+          "delta": true,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "longFactors": {
+          "trend": true,
+          "vwap": true,
+          "delta": true,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "shortFactors": {
+          "trend": false,
+          "vwap": false,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "price": 79961.02,
+        "sl": 79940.86274596273,
+        "tp": 80021.49176211182,
+        "adx": 18.52574680459883,
+        "atr": 13.431502691512128,
+        "vwap": 79862.3449862299,
+        "delta": 1.2606682338822421
+      },
+      "decision": "NO_SETUP",
+      "reasons": [
+        "ADX too low",
+        "Volatility below average",
+        "Low confluence"
+      ],
+      "tradeId": null
+    },
+    {
+      "id": "ETHUSDT:2026-09-06T11:49:00.000Z",
+      "symbol": "ETHUSDT",
+      "observedAt": "2026-09-06T11:49:03.069Z",
+      "signalCloseTime": "2026-09-06T11:49:00.000Z",
+      "bar": {
+        "symbol": "BINANCE:ETHUSDT",
+        "tf": "1m",
+        "time": "2026-09-06T11:48:00.000Z",
+        "close_time": "2026-09-06T11:49:00.000Z",
+        "open": 2502.5,
+        "high": 2502.91,
+        "low": 2502.5,
+        "close": 2502.91
+      },
+      "inputHash": "6fe126d3a8b7f987414cfce36cec8b1a128e3f6ca96e05d21a83f42a9654d52d",
+      "snapshot": {
+        "time": 1788695339999,
+        "direction": "LONG",
+        "qualified": false,
+        "reasons": [
+          "ADX too low",
+          "Volatility below average",
+          "Low confluence"
+        ],
+        "longScore": 3,
+        "shortScore": 0,
+        "factors": {
+          "trend": true,
+          "vwap": true,
+          "delta": true,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "longFactors": {
+          "trend": true,
+          "vwap": true,
+          "delta": true,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "shortFactors": {
+          "trend": false,
+          "vwap": false,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "price": 2502.91,
+        "sl": 2501.234218820909,
+        "tp": 2507.937343537272,
+        "adx": 9.691748054466386,
+        "atr": 0.8438541193940985,
+        "vwap": 2497.3938171705354,
+        "delta": 6.141456175996871
+      },
+      "decision": "NO_SETUP",
+      "reasons": [
+        "ADX too low",
+        "Volatility below average",
+        "Low confluence"
+      ],
+      "tradeId": null
+    },
+    {
+      "id": "SOLUSDT:2026-09-06T11:49:00.000Z",
+      "symbol": "SOLUSDT",
+      "observedAt": "2026-09-06T11:49:03.367Z",
+      "signalCloseTime": "2026-09-06T11:49:00.000Z",
+      "bar": {
+        "symbol": "BINANCE:SOLUSDT",
+        "tf": "1m",
+        "time": "2026-09-06T11:48:00.000Z",
+        "close_time": "2026-09-06T11:49:00.000Z",
+        "open": 106.54,
+        "high": 106.62,
+        "low": 106.53,
+        "close": 106.57
+      },
+      "inputHash": "fda52676d71ca0c8b30e2640957ec00f1d376bf5581c6ff7d2aa03bce3c30a6d",
+      "snapshot": {
+        "time": 1788695339999,
+        "direction": "LONG",
+        "qualified": false,
+        "reasons": [
+          "ADX too low",
+          "Low confluence"
+        ],
+        "longScore": 3,
+        "shortScore": 0,
+        "factors": {
+          "trend": true,
+          "vwap": true,
+          "delta": true,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "longFactors": {
+          "trend": true,
+          "vwap": true,
+          "delta": true,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "shortFactors": {
+          "trend": false,
+          "vwap": false,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "price": 106.57,
+        "sl": 106.3937267776144,
+        "tp": 107.09881966715676,
+        "adx": 12.085309685526388,
+        "atr": 0.0908488149237311,
+        "vwap": 105.37013365135822,
+        "delta": 460.50593480988255
+      },
+      "decision": "NO_SETUP",
+      "reasons": [
+        "ADX too low",
+        "Low confluence"
+      ],
+      "tradeId": null
+    },
+    {
+      "id": "BTCUSDT:2026-09-06T11:50:00.000Z",
+      "symbol": "BTCUSDT",
+      "observedAt": "2026-09-06T11:50:03.073Z",
+      "signalCloseTime": "2026-09-06T11:50:00.000Z",
+      "bar": {
+        "symbol": "BINANCE:BTCUSDT",
+        "tf": "1m",
+        "time": "2026-09-06T11:49:00.000Z",
+        "close_time": "2026-09-06T11:50:00.000Z",
+        "open": 79961.02,
+        "high": 79961.02,
+        "low": 79952.91,
+        "close": 79952.91
+      },
+      "inputHash": "5cd37164e38fdc9ecbb9b69ccafe908209f0216c1b6e9187682096c61b09697f",
+      "snapshot": {
+        "time": 1788695399999,
+        "direction": "LONG",
+        "qualified": false,
+        "reasons": [
+          "ADX too low",
+          "Volatility below average",
+          "Low confluence"
+        ],
+        "longScore": 3,
+        "shortScore": 2,
+        "factors": {
+          "trend": true,
+          "vwap": true,
+          "delta": false,
+          "volume": true,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "longFactors": {
+          "trend": true,
+          "vwap": true,
+          "delta": false,
+          "volume": true,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "shortFactors": {
+          "trend": false,
+          "vwap": false,
+          "delta": true,
+          "volume": true,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "price": 79952.91,
+        "sl": 79933.3329069654,
+        "tp": 80011.64127910382,
+        "adx": 18.23091784205521,
+        "atr": 13.051395356404159,
+        "vwap": 79862.50916229187,
+        "delta": -0.4416008639687232
+      },
+      "decision": "NO_SETUP",
+      "reasons": [
+        "ADX too low",
+        "Volatility below average",
+        "Low confluence"
+      ],
+      "tradeId": null
+    },
+    {
+      "id": "ETHUSDT:2026-09-06T11:50:00.000Z",
+      "symbol": "ETHUSDT",
+      "observedAt": "2026-09-06T11:50:03.012Z",
+      "signalCloseTime": "2026-09-06T11:50:00.000Z",
+      "bar": {
+        "symbol": "BINANCE:ETHUSDT",
+        "tf": "1m",
+        "time": "2026-09-06T11:49:00.000Z",
+        "close_time": "2026-09-06T11:50:00.000Z",
+        "open": 2502.91,
+        "high": 2503.24,
+        "low": 2502.65,
+        "close": 2502.89
+      },
+      "inputHash": "7210a1a2198c2b8f86fc8aa55a31a84a875ec221fc31fd1c2459158571c220c3",
+      "snapshot": {
+        "time": 1788695399999,
+        "direction": "LONG",
+        "qualified": false,
+        "reasons": [
+          "ADX too low",
+          "Volatility below average",
+          "Low confluence"
+        ],
+        "longScore": 3,
+        "shortScore": 3,
+        "factors": {
+          "trend": true,
+          "vwap": true,
+          "delta": false,
+          "volume": true,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "longFactors": {
+          "trend": true,
+          "vwap": true,
+          "delta": false,
+          "volume": true,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "shortFactors": {
+          "trend": false,
+          "vwap": false,
+          "delta": true,
+          "volume": true,
+          "sweep": true,
+          "fvg": false,
+          "ob": false
+        },
+        "price": 2502.89,
+        "sl": 2501.411417476558,
+        "tp": 2507.325747570325,
+        "adx": 9.999720910320898,
+        "atr": 0.8257216822944979,
+        "vwap": 2497.3990406874314,
+        "delta": -11.004017980802711
+      },
+      "decision": "NO_SETUP",
+      "reasons": [
+        "ADX too low",
+        "Volatility below average",
+        "Low confluence"
+      ],
+      "tradeId": null
+    },
+    {
+      "id": "SOLUSDT:2026-09-06T11:50:00.000Z",
+      "symbol": "SOLUSDT",
+      "observedAt": "2026-09-06T11:50:03.375Z",
+      "signalCloseTime": "2026-09-06T11:50:00.000Z",
+      "bar": {
+        "symbol": "BINANCE:SOLUSDT",
+        "tf": "1m",
+        "time": "2026-09-06T11:49:00.000Z",
+        "close_time": "2026-09-06T11:50:00.000Z",
+        "open": 106.56,
+        "high": 106.61,
+        "low": 106.56,
+        "close": 106.56
+      },
+      "inputHash": "e50045c756249adc1913dd57778a06618e35389f4c1e8151afb298edc0d5aee5",
+      "snapshot": {
+        "time": 1788695399999,
+        "direction": "LONG",
+        "qualified": false,
+        "reasons": [
+          "ADX too low",
+          "Low confluence"
+        ],
+        "longScore": 3,
+        "shortScore": 0,
+        "factors": {
+          "trend": true,
+          "vwap": true,
+          "delta": true,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "longFactors": {
+          "trend": true,
+          "vwap": true,
+          "delta": true,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "shortFactors": {
+          "trend": false,
+          "vwap": false,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "price": 106.56,
+        "sl": 106.42810343635624,
+        "tp": 106.9556896909313,
+        "adx": 11.95837048177196,
+        "atr": 0.08793104242917868,
+        "vwap": 105.37064004880365,
+        "delta": 399.1051435018982
+      },
+      "decision": "NO_SETUP",
+      "reasons": [
+        "ADX too low",
+        "Low confluence"
+      ],
+      "tradeId": null
+    },
+    {
+      "id": "BTCUSDT:2026-09-06T11:51:00.000Z",
+      "symbol": "BTCUSDT",
+      "observedAt": "2026-09-06T11:51:02.682Z",
+      "signalCloseTime": "2026-09-06T11:51:00.000Z",
+      "bar": {
+        "symbol": "BINANCE:BTCUSDT",
+        "tf": "1m",
+        "time": "2026-09-06T11:50:00.000Z",
+        "close_time": "2026-09-06T11:51:00.000Z",
+        "open": 79952.91,
+        "high": 79952.92,
+        "low": 79952.91,
+        "close": 79952.92
+      },
+      "inputHash": "e09cd16627619bc824d8bb61a113e40c4cbef83a4d67e833d808770c5d4c2c4c",
+      "snapshot": {
+        "time": 1788695459999,
+        "direction": "LONG",
+        "qualified": false,
+        "reasons": [
+          "ADX too low",
+          "Volatility below average",
+          "Low confluence"
+        ],
+        "longScore": 2,
+        "shortScore": 1,
+        "factors": {
+          "trend": true,
+          "vwap": true,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "longFactors": {
+          "trend": true,
+          "vwap": true,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "shortFactors": {
+          "trend": false,
+          "vwap": false,
+          "delta": true,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "price": 79952.92,
+        "sl": 79934.73019932501,
+        "tp": 80007.48940202495,
+        "adx": 17.957148091121848,
+        "atr": 12.11986711666063,
+        "vwap": 79862.52319600554,
+        "delta": -0.24740874877289348
+      },
+      "decision": "NO_SETUP",
+      "reasons": [
+        "ADX too low",
+        "Volatility below average",
+        "Low confluence"
+      ],
+      "tradeId": null
+    },
+    {
+      "id": "ETHUSDT:2026-09-06T11:51:00.000Z",
+      "symbol": "ETHUSDT",
+      "observedAt": "2026-09-06T11:51:02.790Z",
+      "signalCloseTime": "2026-09-06T11:51:00.000Z",
+      "bar": {
+        "symbol": "BINANCE:ETHUSDT",
+        "tf": "1m",
+        "time": "2026-09-06T11:50:00.000Z",
+        "close_time": "2026-09-06T11:51:00.000Z",
+        "open": 2502.89,
+        "high": 2502.89,
+        "low": 2502.01,
+        "close": 2502.14
+      },
+      "inputHash": "0b7792dd82c704a24cfdc014837faa590a7a99628c67fe8111fa4efbc2f1dac5",
+      "snapshot": {
+        "time": 1788695459999,
+        "direction": "LONG",
+        "qualified": false,
+        "reasons": [
+          "ADX too low",
+          "Volatility below average",
+          "Low confluence"
+        ],
+        "longScore": 2,
+        "shortScore": 1,
+        "factors": {
+          "trend": true,
+          "vwap": true,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "longFactors": {
+          "trend": true,
+          "vwap": true,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "shortFactors": {
+          "trend": false,
+          "vwap": false,
+          "delta": true,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "price": 2502.14,
+        "sl": 2500.7656019425185,
+        "tp": 2506.263194172444,
+        "adx": 9.513836387326577,
+        "atr": 0.8295987049877234,
+        "vwap": 2497.4030270683265,
+        "delta": -23.481668916695682
+      },
+      "decision": "NO_SETUP",
+      "reasons": [
+        "ADX too low",
+        "Volatility below average",
+        "Low confluence"
+      ],
+      "tradeId": null
+    },
+    {
+      "id": "SOLUSDT:2026-09-06T11:51:00.000Z",
+      "symbol": "SOLUSDT",
+      "observedAt": "2026-09-06T11:51:02.805Z",
+      "signalCloseTime": "2026-09-06T11:51:00.000Z",
+      "bar": {
+        "symbol": "BINANCE:SOLUSDT",
+        "tf": "1m",
+        "time": "2026-09-06T11:50:00.000Z",
+        "close_time": "2026-09-06T11:51:00.000Z",
+        "open": 106.57,
+        "high": 106.58,
+        "low": 106.51,
+        "close": 106.52
+      },
+      "inputHash": "77c16d34e51902c6793794ed100fe4531f2fb490055d768ea47e39722faeeece",
+      "snapshot": {
+        "time": 1788695459999,
+        "direction": "LONG",
+        "qualified": false,
+        "reasons": [
+          "ADX too low",
+          "Volatility below average",
+          "Low confluence"
+        ],
+        "longScore": 3,
+        "shortScore": 0,
+        "factors": {
+          "trend": true,
+          "vwap": true,
+          "delta": true,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "longFactors": {
+          "trend": true,
+          "vwap": true,
+          "delta": true,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "shortFactors": {
+          "trend": false,
+          "vwap": false,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "price": 106.52,
+        "sl": 106.38002461947364,
+        "tp": 106.93992614157905,
+        "adx": 11.162152165018927,
+        "atr": 0.08665025368423686,
+        "vwap": 105.37084010477628,
+        "delta": 305.6071243683118
+      },
+      "decision": "NO_SETUP",
+      "reasons": [
+        "ADX too low",
+        "Volatility below average",
+        "Low confluence"
+      ],
+      "tradeId": null
+    },
+    {
+      "id": "BTCUSDT:2026-09-06T11:52:00.000Z",
+      "symbol": "BTCUSDT",
+      "observedAt": "2026-09-06T11:52:02.739Z",
+      "signalCloseTime": "2026-09-06T11:52:00.000Z",
+      "bar": {
+        "symbol": "BINANCE:BTCUSDT",
+        "tf": "1m",
+        "time": "2026-09-06T11:51:00.000Z",
+        "close_time": "2026-09-06T11:52:00.000Z",
+        "open": 79952.92,
+        "high": 79952.92,
+        "low": 79952.91,
+        "close": 79952.91
+      },
+      "inputHash": "cee338b7df54bc8871aa247637b9472e3df5371343349dff4b7390539be60f9e",
+      "snapshot": {
+        "time": 1788695519999,
+        "direction": "LONG",
+        "qualified": false,
+        "reasons": [
+          "ADX too low",
+          "Volatility below average",
+          "Low confluence"
+        ],
+        "longScore": 2,
+        "shortScore": 1,
+        "factors": {
+          "trend": true,
+          "vwap": true,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "longFactors": {
+          "trend": true,
+          "vwap": true,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "shortFactors": {
+          "trend": false,
+          "vwap": false,
+          "delta": true,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "price": 79952.91,
+        "sl": 79936.02768508751,
+        "tp": 80003.55694473749,
+        "adx": 17.702933322398014,
+        "atr": 11.254876608327354,
+        "vwap": 79862.55239407757,
+        "delta": -0.49609158226984107
+      },
+      "decision": "NO_SETUP",
+      "reasons": [
+        "ADX too low",
+        "Volatility below average",
+        "Low confluence"
+      ],
+      "tradeId": null
+    },
+    {
+      "id": "ETHUSDT:2026-09-06T11:52:00.000Z",
+      "symbol": "ETHUSDT",
+      "observedAt": "2026-09-06T11:52:02.757Z",
+      "signalCloseTime": "2026-09-06T11:52:00.000Z",
+      "bar": {
+        "symbol": "BINANCE:ETHUSDT",
+        "tf": "1m",
+        "time": "2026-09-06T11:51:00.000Z",
+        "close_time": "2026-09-06T11:52:00.000Z",
+        "open": 2502.14,
+        "high": 2502.22,
+        "low": 2502.13,
+        "close": 2502.22
+      },
+      "inputHash": "4715c52132d287bc972fbb157ec9cee54bf3b0df43364c5c25407e1500e3b225",
+      "snapshot": {
+        "time": 1788695519999,
+        "direction": "LONG",
+        "qualified": false,
+        "reasons": [
+          "ADX too low",
+          "Volatility below average",
+          "Low confluence"
+        ],
+        "longScore": 2,
+        "shortScore": 1,
+        "factors": {
+          "trend": true,
+          "vwap": true,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "longFactors": {
+          "trend": true,
+          "vwap": true,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "shortFactors": {
+          "trend": false,
+          "vwap": false,
+          "delta": true,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "price": 2502.22,
+        "sl": 2500.96484466091,
+        "tp": 2505.9854660172696,
+        "adx": 9.062657901688995,
+        "atr": 0.7767702260600068,
+        "vwap": 2497.403700956285,
+        "delta": -17.913979727802925
+      },
+      "decision": "NO_SETUP",
+      "reasons": [
+        "ADX too low",
+        "Volatility below average",
+        "Low confluence"
+      ],
+      "tradeId": null
+    },
+    {
+      "id": "SOLUSDT:2026-09-06T11:52:00.000Z",
+      "symbol": "SOLUSDT",
+      "observedAt": "2026-09-06T11:52:02.887Z",
+      "signalCloseTime": "2026-09-06T11:52:00.000Z",
+      "bar": {
+        "symbol": "BINANCE:SOLUSDT",
+        "tf": "1m",
+        "time": "2026-09-06T11:51:00.000Z",
+        "close_time": "2026-09-06T11:52:00.000Z",
+        "open": 106.52,
+        "high": 106.54,
+        "low": 106.5,
+        "close": 106.52
+      },
+      "inputHash": "ef7a0fd5b9c2cb0605125171ca97ce1e60755a83a7917f1cf2f281bd773b331d",
+      "snapshot": {
+        "time": 1788695519999,
+        "direction": "LONG",
+        "qualified": false,
+        "reasons": [
+          "ADX too low",
+          "Volatility below average",
+          "Low confluence"
+        ],
+        "longScore": 3,
+        "shortScore": 0,
+        "factors": {
+          "trend": true,
+          "vwap": true,
+          "delta": true,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "longFactors": {
+          "trend": true,
+          "vwap": true,
+          "delta": true,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "shortFactors": {
+          "trend": false,
+          "vwap": false,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "price": 106.52,
+        "sl": 106.37502286093981,
+        "tp": 106.95493141718056,
+        "adx": 10.438000210168385,
+        "atr": 0.08331809270679182,
+        "vwap": 105.37121741325349,
+        "delta": 264.8595077858702
+      },
+      "decision": "NO_SETUP",
+      "reasons": [
+        "ADX too low",
+        "Volatility below average",
+        "Low confluence"
+      ],
+      "tradeId": null
+    },
+    {
+      "id": "BTCUSDT:2026-09-06T11:53:00.000Z",
+      "symbol": "BTCUSDT",
+      "observedAt": "2026-09-06T11:53:02.774Z",
+      "signalCloseTime": "2026-09-06T11:53:00.000Z",
+      "bar": {
+        "symbol": "BINANCE:BTCUSDT",
+        "tf": "1m",
+        "time": "2026-09-06T11:52:00.000Z",
+        "close_time": "2026-09-06T11:53:00.000Z",
+        "open": 79952.92,
+        "high": 79952.92,
+        "low": 79938,
+        "close": 79938
+      },
+      "inputHash": "276ce8556ac8b99dc2b3b3eeac955a603221c1ae7fc99e697abff0bec1c8d3c5",
+      "snapshot": {
+        "time": 1788695579999,
+        "direction": "LONG",
+        "qualified": false,
+        "reasons": [
+          "ADX too low",
+          "Volatility below average",
+          "Low confluence"
+        ],
+        "longScore": 2,
+        "shortScore": 1,
+        "factors": {
+          "trend": true,
+          "vwap": true,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "longFactors": {
+          "trend": true,
+          "vwap": true,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "shortFactors": {
+          "trend": false,
+          "vwap": false,
+          "delta": true,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "price": 79938,
+        "sl": 79920.72499329555,
+        "tp": 79989.82502011336,
+        "adx": 16.43859040017652,
+        "atr": 11.516671136303847,
+        "vwap": 79862.5852810171,
+        "delta": -0.7866767046338623
+      },
+      "decision": "NO_SETUP",
+      "reasons": [
+        "ADX too low",
+        "Volatility below average",
+        "Low confluence"
+      ],
+      "tradeId": null
+    },
+    {
+      "id": "ETHUSDT:2026-09-06T11:53:00.000Z",
+      "symbol": "ETHUSDT",
+      "observedAt": "2026-09-06T11:53:02.763Z",
+      "signalCloseTime": "2026-09-06T11:53:00.000Z",
+      "bar": {
+        "symbol": "BINANCE:ETHUSDT",
+        "tf": "1m",
+        "time": "2026-09-06T11:52:00.000Z",
+        "close_time": "2026-09-06T11:53:00.000Z",
+        "open": 2502.21,
+        "high": 2502.22,
+        "low": 2501.54,
+        "close": 2501.55
+      },
+      "inputHash": "32eeb7f1aa373dd0cb77d07f538e4735053db12fc0347657ec207e971114bf86",
+      "snapshot": {
+        "time": 1788695579999,
+        "direction": "LONG",
+        "qualified": false,
+        "reasons": [
+          "ADX too low",
+          "Volatility below average",
+          "Low confluence"
+        ],
+        "longScore": 2,
+        "shortScore": 1,
+        "factors": {
+          "trend": true,
+          "vwap": true,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "longFactors": {
+          "trend": true,
+          "vwap": true,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "shortFactors": {
+          "trend": false,
+          "vwap": false,
+          "delta": true,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "price": 2501.55,
+        "sl": 2500.3852128994163,
+        "tp": 2505.044361301752,
+        "adx": 8.865222553213604,
+        "atr": 0.7698580670557089,
+        "vwap": 2497.405207572122,
+        "delta": -21.500369097429203
+      },
+      "decision": "NO_SETUP",
+      "reasons": [
+        "ADX too low",
+        "Volatility below average",
+        "Low confluence"
+      ],
+      "tradeId": null
+    },
+    {
+      "id": "SOLUSDT:2026-09-06T11:53:00.000Z",
+      "symbol": "SOLUSDT",
+      "observedAt": "2026-09-06T11:53:02.901Z",
+      "signalCloseTime": "2026-09-06T11:53:00.000Z",
+      "bar": {
+        "symbol": "BINANCE:SOLUSDT",
+        "tf": "1m",
+        "time": "2026-09-06T11:52:00.000Z",
+        "close_time": "2026-09-06T11:53:00.000Z",
+        "open": 106.51,
+        "high": 106.52,
+        "low": 106.47,
+        "close": 106.5
+      },
+      "inputHash": "a923cf35ae430a2fcf09eebe1e7093dffca35e8b2bddbaf1735b5b7c6c2e7b65",
+      "snapshot": {
+        "time": 1788695579999,
+        "direction": "LONG",
+        "qualified": false,
+        "reasons": [
+          "ADX too low",
+          "Volatility below average",
+          "Low confluence"
+        ],
+        "longScore": 3,
+        "shortScore": 0,
+        "factors": {
+          "trend": true,
+          "vwap": true,
+          "delta": true,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "longFactors": {
+          "trend": true,
+          "vwap": true,
+          "delta": true,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "shortFactors": {
+          "trend": false,
+          "vwap": false,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "price": 106.5,
+        "sl": 106.34859265658697,
+        "tp": 106.95422203023908,
+        "adx": 10.158302609339117,
+        "atr": 0.08093822894202077,
+        "vwap": 105.37150114211518,
+        "delta": 170.31797341442086
+      },
+      "decision": "NO_SETUP",
+      "reasons": [
+        "ADX too low",
+        "Volatility below average",
+        "Low confluence"
+      ],
+      "tradeId": null
+    },
+    {
+      "id": "BTCUSDT:2026-09-06T11:54:00.000Z",
+      "symbol": "BTCUSDT",
+      "observedAt": "2026-09-06T11:54:03.127Z",
+      "signalCloseTime": "2026-09-06T11:54:00.000Z",
+      "bar": {
+        "symbol": "BINANCE:BTCUSDT",
+        "tf": "1m",
+        "time": "2026-09-06T11:53:00.000Z",
+        "close_time": "2026-09-06T11:54:00.000Z",
+        "open": 79938.01,
+        "high": 79938.01,
+        "low": 79918,
+        "close": 79918
+      },
+      "inputHash": "a84c7c092a9f1ae6bff83d6b72d85890a98ac7752875d28539f81ae517a44b97",
+      "snapshot": {
+        "time": 1788695639999,
+        "direction": null,
+        "qualified": false,
+        "reasons": [
+          "Neutral trend",
+          "ADX too low",
+          "Volatility below average",
+          "Low confluence",
+          "Invalid stop distance"
+        ],
+        "longScore": 1,
+        "shortScore": 2,
+        "factors": {
+          "trend": false,
+          "vwap": true,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "longFactors": {
+          "trend": false,
+          "vwap": true,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "shortFactors": {
+          "trend": false,
+          "vwap": false,
+          "delta": true,
+          "volume": false,
+          "sweep": false,
+          "fvg": true,
+          "ob": false
+        },
+        "price": 79918,
+        "sl": null,
+        "tp": null,
+        "adx": 16.363545627692734,
+        "atr": 12.12333748371034,
+        "vwap": 79862.61097281106,
+        "delta": -1.0429264773493474
+      },
+      "decision": "NO_SETUP",
+      "reasons": [
+        "Neutral trend",
+        "ADX too low",
+        "Volatility below average",
+        "Low confluence",
+        "Invalid stop distance"
+      ],
+      "tradeId": null
+    },
+    {
+      "id": "ETHUSDT:2026-09-06T11:54:00.000Z",
+      "symbol": "ETHUSDT",
+      "observedAt": "2026-09-06T11:54:03.274Z",
+      "signalCloseTime": "2026-09-06T11:54:00.000Z",
+      "bar": {
+        "symbol": "BINANCE:ETHUSDT",
+        "tf": "1m",
+        "time": "2026-09-06T11:53:00.000Z",
+        "close_time": "2026-09-06T11:54:00.000Z",
+        "open": 2501.54,
+        "high": 2501.55,
+        "low": 2501.17,
+        "close": 2501.17
+      },
+      "inputHash": "bce7f1b585e9bbdb32cac404b647c3525255f34ff66e15a00eda2358fcba2ac7",
+      "snapshot": {
+        "time": 1788695639999,
+        "direction": "LONG",
+        "qualified": false,
+        "reasons": [
+          "ADX too low",
+          "Volatility below average",
+          "Low confluence"
+        ],
+        "longScore": 2,
+        "shortScore": 1,
+        "factors": {
+          "trend": true,
+          "vwap": true,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "longFactors": {
+          "trend": true,
+          "vwap": true,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "shortFactors": {
+          "trend": false,
+          "vwap": false,
+          "delta": true,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "price": 2501.17,
+        "sl": 2500.056983406601,
+        "tp": 2504.5090497801975,
+        "adx": 9.073484344907083,
+        "atr": 0.7420110622660232,
+        "vwap": 2497.4061789519974,
+        "delta": -22.95707988443864
+      },
+      "decision": "NO_SETUP",
+      "reasons": [
+        "ADX too low",
+        "Volatility below average",
+        "Low confluence"
+      ],
+      "tradeId": null
+    },
+    {
+      "id": "SOLUSDT:2026-09-06T11:54:00.000Z",
+      "symbol": "SOLUSDT",
+      "observedAt": "2026-09-06T11:54:03.122Z",
+      "signalCloseTime": "2026-09-06T11:54:00.000Z",
+      "bar": {
+        "symbol": "BINANCE:SOLUSDT",
+        "tf": "1m",
+        "time": "2026-09-06T11:53:00.000Z",
+        "close_time": "2026-09-06T11:54:00.000Z",
+        "open": 106.49,
+        "high": 106.5,
+        "low": 106.44,
+        "close": 106.49
+      },
+      "inputHash": "df47e7fec285749c34069cbc677b14debbfd0701fd8696c319f3e48c2ac9117a",
+      "snapshot": {
+        "time": 1788695639999,
+        "direction": "LONG",
+        "qualified": false,
+        "reasons": [
+          "ADX too low",
+          "Volatility below average",
+          "Low confluence"
+        ],
+        "longScore": 3,
+        "shortScore": 0,
+        "factors": {
+          "trend": true,
+          "vwap": true,
+          "delta": true,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "longFactors": {
+          "trend": true,
+          "vwap": true,
+          "delta": true,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "shortFactors": {
+          "trend": false,
+          "vwap": false,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "price": 106.49,
+        "sl": 106.32083603825933,
+        "tp": 106.99749188522199,
+        "adx": 10.275480372807397,
+        "atr": 0.07944264116044801,
+        "vwap": 105.37212691959726,
+        "delta": 147.60891029249808
+      },
+      "decision": "NO_SETUP",
+      "reasons": [
+        "ADX too low",
+        "Volatility below average",
+        "Low confluence"
+      ],
+      "tradeId": null
+    },
+    {
+      "id": "BTCUSDT:2026-09-06T11:55:00.000Z",
+      "symbol": "BTCUSDT",
+      "observedAt": "2026-09-06T11:55:02.972Z",
+      "signalCloseTime": "2026-09-06T11:55:00.000Z",
+      "bar": {
+        "symbol": "BINANCE:BTCUSDT",
+        "tf": "1m",
+        "time": "2026-09-06T11:54:00.000Z",
+        "close_time": "2026-09-06T11:55:00.000Z",
+        "open": 79918.01,
+        "high": 79918.01,
+        "low": 79918,
+        "close": 79918.01
+      },
+      "inputHash": "a7ffaa9a2be7965801fa4e8b78f885123af4f1d20d35ce08a844dfef2daf30f4",
+      "snapshot": {
+        "time": 1788695699999,
+        "direction": null,
+        "qualified": false,
+        "reasons": [
+          "Neutral trend",
+          "ADX too low",
+          "Volatility below average",
+          "Low confluence",
+          "Invalid stop distance"
+        ],
+        "longScore": 1,
+        "shortScore": 1,
+        "factors": {
+          "trend": false,
+          "vwap": true,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "longFactors": {
+          "trend": false,
+          "vwap": true,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "shortFactors": {
+          "trend": false,
+          "vwap": false,
+          "delta": true,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "price": 79918.01,
+        "sl": null,
+        "tp": null,
+        "adx": 16.293861196100647,
+        "atr": 11.25809909201637,
+        "vwap": 79862.61678948706,
+        "delta": -0.9038696137027677
+      },
+      "decision": "NO_SETUP",
+      "reasons": [
+        "Neutral trend",
+        "ADX too low",
+        "Volatility below average",
+        "Low confluence",
+        "Invalid stop distance"
+      ],
+      "tradeId": null
+    },
+    {
+      "id": "ETHUSDT:2026-09-06T11:55:00.000Z",
+      "symbol": "ETHUSDT",
+      "observedAt": "2026-09-06T11:55:03.159Z",
+      "signalCloseTime": "2026-09-06T11:55:00.000Z",
+      "bar": {
+        "symbol": "BINANCE:ETHUSDT",
+        "tf": "1m",
+        "time": "2026-09-06T11:54:00.000Z",
+        "close_time": "2026-09-06T11:55:00.000Z",
+        "open": 2501.17,
+        "high": 2501.67,
+        "low": 2501.17,
+        "close": 2501.63
+      },
+      "inputHash": "5ebb45909aae98300c6043e5d9045c925c459ab05312c6ddb8c64fa01f68801a",
+      "snapshot": {
+        "time": 1788695699999,
+        "direction": "LONG",
+        "qualified": false,
+        "reasons": [
+          "ADX too low",
+          "Volatility below average",
+          "Low confluence"
+        ],
+        "longScore": 2,
+        "shortScore": 1,
+        "factors": {
+          "trend": true,
+          "vwap": true,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "longFactors": {
+          "trend": true,
+          "vwap": true,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "shortFactors": {
+          "trend": false,
+          "vwap": false,
+          "delta": true,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "price": 2501.63,
+        "sl": 2500.082913163272,
+        "tp": 2506.2712605101838,
+        "adx": 9.106974621086009,
+        "atr": 0.7247245578184501,
+        "vwap": 2497.4088707094975,
+        "delta": -8.472429233180154
+      },
+      "decision": "NO_SETUP",
+      "reasons": [
+        "ADX too low",
+        "Volatility below average",
+        "Low confluence"
+      ],
+      "tradeId": null
+    },
+    {
+      "id": "SOLUSDT:2026-09-06T11:55:00.000Z",
+      "symbol": "SOLUSDT",
+      "observedAt": "2026-09-06T11:55:03.361Z",
+      "signalCloseTime": "2026-09-06T11:55:00.000Z",
+      "bar": {
+        "symbol": "BINANCE:SOLUSDT",
+        "tf": "1m",
+        "time": "2026-09-06T11:54:00.000Z",
+        "close_time": "2026-09-06T11:55:00.000Z",
+        "open": 106.48,
+        "high": 106.5,
+        "low": 106.45,
+        "close": 106.46
+      },
+      "inputHash": "7a740f34e237b6fd4304b89ea5b3b8658181a6f1883d2c3715540e49068991cb",
+      "snapshot": {
+        "time": 1788695699999,
+        "direction": "LONG",
+        "qualified": false,
+        "reasons": [
+          "ADX too low",
+          "Volatility below average",
+          "Low confluence"
+        ],
+        "longScore": 2,
+        "shortScore": 1,
+        "factors": {
+          "trend": true,
+          "vwap": true,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "longFactors": {
+          "trend": true,
+          "vwap": true,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "shortFactors": {
+          "trend": false,
+          "vwap": false,
+          "delta": true,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "price": 106.46,
+        "sl": 106.3339906069551,
+        "tp": 106.83802817913468,
+        "adx": 10.384288296027945,
+        "atr": 0.07733959536327295,
+        "vwap": 105.37307779873274,
+        "delta": -75.84081107983498
+      },
+      "decision": "NO_SETUP",
+      "reasons": [
+        "ADX too low",
+        "Volatility below average",
+        "Low confluence"
+      ],
+      "tradeId": null
+    },
+    {
+      "id": "BTCUSDT:2026-09-06T11:56:00.000Z",
+      "symbol": "BTCUSDT",
+      "observedAt": "2026-09-06T11:56:03.124Z",
+      "signalCloseTime": "2026-09-06T11:56:00.000Z",
+      "bar": {
+        "symbol": "BINANCE:BTCUSDT",
+        "tf": "1m",
+        "time": "2026-09-06T11:55:00.000Z",
+        "close_time": "2026-09-06T11:56:00.000Z",
+        "open": 79918.01,
+        "high": 79918.01,
+        "low": 79918,
+        "close": 79918.01
+      },
+      "inputHash": "7012a508c3fbf0074d6d69278395e88fe64e725d2fbeb0e1c65af23d9bc8f9a7",
+      "snapshot": {
+        "time": 1788695759999,
+        "direction": null,
+        "qualified": false,
+        "reasons": [
+          "Neutral trend",
+          "ADX too low",
+          "Volatility below average",
+          "Low confluence",
+          "Invalid stop distance"
+        ],
+        "longScore": 1,
+        "shortScore": 1,
+        "factors": {
+          "trend": false,
+          "vwap": true,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "longFactors": {
+          "trend": false,
+          "vwap": true,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "shortFactors": {
+          "trend": false,
+          "vwap": false,
+          "delta": true,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "price": 79918.01,
+        "sl": null,
+        "tp": null,
+        "adx": 16.229154223907994,
+        "atr": 10.454663442586254,
+        "vwap": 79862.6238269507,
+        "delta": -0.7833536652090655
+      },
+      "decision": "NO_SETUP",
+      "reasons": [
+        "Neutral trend",
+        "ADX too low",
+        "Volatility below average",
+        "Low confluence",
+        "Invalid stop distance"
+      ],
+      "tradeId": null
+    },
+    {
+      "id": "ETHUSDT:2026-09-06T11:56:00.000Z",
+      "symbol": "ETHUSDT",
+      "observedAt": "2026-09-06T11:56:03.118Z",
+      "signalCloseTime": "2026-09-06T11:56:00.000Z",
+      "bar": {
+        "symbol": "BINANCE:ETHUSDT",
+        "tf": "1m",
+        "time": "2026-09-06T11:55:00.000Z",
+        "close_time": "2026-09-06T11:56:00.000Z",
+        "open": 2501.63,
+        "high": 2501.63,
+        "low": 2501.5,
+        "close": 2501.5
+      },
+      "inputHash": "184e79dd73acf63ee0e1fc25d8d9c66ac9b0a7d4c8fabb04b9bcb2ae8ab75ad7",
+      "snapshot": {
+        "time": 1788695759999,
+        "direction": "LONG",
+        "qualified": false,
+        "reasons": [
+          "ADX too low",
+          "Volatility below average",
+          "Low confluence"
+        ],
+        "longScore": 2,
+        "shortScore": 1,
+        "factors": {
+          "trend": true,
+          "vwap": true,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "longFactors": {
+          "trend": true,
+          "vwap": true,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "shortFactors": {
+          "trend": false,
+          "vwap": false,
+          "delta": true,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "price": 2501.5,
+        "sl": 2500.47663365161,
+        "tp": 2504.57009904517,
+        "adx": 9.138072734680724,
+        "atr": 0.6822442322599972,
+        "vwap": 2497.4104209640027,
+        "delta": -13.843838668756135
+      },
+      "decision": "NO_SETUP",
+      "reasons": [
+        "ADX too low",
+        "Volatility below average",
+        "Low confluence"
+      ],
+      "tradeId": null
+    },
+    {
+      "id": "SOLUSDT:2026-09-06T11:56:00.000Z",
+      "symbol": "SOLUSDT",
+      "observedAt": "2026-09-06T11:56:03.279Z",
+      "signalCloseTime": "2026-09-06T11:56:00.000Z",
+      "bar": {
+        "symbol": "BINANCE:SOLUSDT",
+        "tf": "1m",
+        "time": "2026-09-06T11:55:00.000Z",
+        "close_time": "2026-09-06T11:56:00.000Z",
+        "open": 106.46,
+        "high": 106.46,
+        "low": 106.4,
+        "close": 106.42
+      },
+      "inputHash": "4084b5435e5240a745bba866408930289dd7db13dd5e06732587ea411b40e24a",
+      "snapshot": {
+        "time": 1788695759999,
+        "direction": "LONG",
+        "qualified": false,
+        "reasons": [
+          "ADX too low",
+          "Volatility below average",
+          "Low confluence"
+        ],
+        "longScore": 2,
+        "shortScore": 1,
+        "factors": {
+          "trend": true,
+          "vwap": true,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "longFactors": {
+          "trend": true,
+          "vwap": true,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "shortFactors": {
+          "trend": false,
+          "vwap": false,
+          "delta": true,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "price": 106.42,
+        "sl": 106.28584842074402,
+        "tp": 106.82245473776796,
+        "adx": 11.10509736108375,
+        "atr": 0.07610105283732403,
+        "vwap": 105.37333883685145,
+        "delta": -124.03350293585699
+      },
+      "decision": "NO_SETUP",
+      "reasons": [
+        "ADX too low",
+        "Volatility below average",
+        "Low confluence"
+      ],
+      "tradeId": null
+    },
+    {
+      "id": "BTCUSDT:2026-09-06T11:57:00.000Z",
+      "symbol": "BTCUSDT",
+      "observedAt": "2026-09-06T11:57:03.031Z",
+      "signalCloseTime": "2026-09-06T11:57:00.000Z",
+      "bar": {
+        "symbol": "BINANCE:BTCUSDT",
+        "tf": "1m",
+        "time": "2026-09-06T11:56:00.000Z",
+        "close_time": "2026-09-06T11:57:00.000Z",
+        "open": 79918.01,
+        "high": 79918.01,
+        "low": 79918,
+        "close": 79918
+      },
+      "inputHash": "a7ef4e39c32d666bf3afaeb88400f8ce5649e7f0343b060f7513bd4504b4fcc2",
+      "snapshot": {
+        "time": 1788695819999,
+        "direction": null,
+        "qualified": false,
+        "reasons": [
+          "Neutral trend",
+          "ADX too low",
+          "Volatility below average",
+          "Low confluence",
+          "Invalid stop distance"
+        ],
+        "longScore": 1,
+        "shortScore": 1,
+        "factors": {
+          "trend": false,
+          "vwap": true,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "longFactors": {
+          "trend": false,
+          "vwap": true,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "shortFactors": {
+          "trend": false,
+          "vwap": false,
+          "delta": true,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "price": 79918,
+        "sl": null,
+        "tp": null,
+        "adx": 16.16906917830053,
+        "atr": 9.708616053829719,
+        "vwap": 79862.64080470776,
+        "delta": -0.94659584318119
+      },
+      "decision": "NO_SETUP",
+      "reasons": [
+        "Neutral trend",
+        "ADX too low",
+        "Volatility below average",
+        "Low confluence",
+        "Invalid stop distance"
+      ],
+      "tradeId": null
+    },
+    {
+      "id": "ETHUSDT:2026-09-06T11:57:00.000Z",
+      "symbol": "ETHUSDT",
+      "observedAt": "2026-09-06T11:57:03.050Z",
+      "signalCloseTime": "2026-09-06T11:57:00.000Z",
+      "bar": {
+        "symbol": "BINANCE:ETHUSDT",
+        "tf": "1m",
+        "time": "2026-09-06T11:56:00.000Z",
+        "close_time": "2026-09-06T11:57:00.000Z",
+        "open": 2501.5,
+        "high": 2501.55,
+        "low": 2501.38,
+        "close": 2501.39
+      },
+      "inputHash": "36c5acdd1b6f552483e61b51c2424daeb853d76df56867e4a3d0cd3cf912e3f7",
+      "snapshot": {
+        "time": 1788695819999,
+        "direction": "LONG",
+        "qualified": false,
+        "reasons": [
+          "ADX too low",
+          "Volatility below average",
+          "Low confluence"
+        ],
+        "longScore": 2,
+        "shortScore": 1,
+        "factors": {
+          "trend": true,
+          "vwap": true,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "longFactors": {
+          "trend": true,
+          "vwap": true,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "shortFactors": {
+          "trend": false,
+          "vwap": false,
+          "delta": true,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "price": 2501.39,
+        "sl": 2500.4115169622096,
+        "tp": 2504.3254491133707,
+        "adx": 9.313609812843529,
+        "atr": 0.6456553585271454,
+        "vwap": 2497.413105710787,
+        "delta": -23.557353512921985
+      },
+      "decision": "NO_SETUP",
+      "reasons": [
+        "ADX too low",
+        "Volatility below average",
+        "Low confluence"
+      ],
+      "tradeId": null
+    },
+    {
+      "id": "SOLUSDT:2026-09-06T11:57:00.000Z",
+      "symbol": "SOLUSDT",
+      "observedAt": "2026-09-06T11:57:03.036Z",
+      "signalCloseTime": "2026-09-06T11:57:00.000Z",
+      "bar": {
+        "symbol": "BINANCE:SOLUSDT",
+        "tf": "1m",
+        "time": "2026-09-06T11:56:00.000Z",
+        "close_time": "2026-09-06T11:57:00.000Z",
+        "open": 106.41,
+        "high": 106.42,
+        "low": 106.37,
+        "close": 106.38
+      },
+      "inputHash": "ad2faf98b3df28b187b2a49d8412f84f2298459b251335f94f82a9bc273570ae",
+      "snapshot": {
+        "time": 1788695819999,
+        "direction": "LONG",
+        "qualified": false,
+        "reasons": [
+          "ADX too low",
+          "Volatility below average",
+          "Low confluence"
+        ],
+        "longScore": 2,
+        "shortScore": 1,
+        "factors": {
+          "trend": true,
+          "vwap": true,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "longFactors": {
+          "trend": true,
+          "vwap": true,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "shortFactors": {
+          "trend": false,
+          "vwap": false,
+          "delta": true,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "price": 106.38,
+        "sl": 106.25864496211945,
+        "tp": 106.74406511364164,
+        "adx": 12.11391256042756,
+        "atr": 0.0742366919203721,
+        "vwap": 105.37359055567244,
+        "delta": -165.77556921107606
+      },
+      "decision": "NO_SETUP",
+      "reasons": [
+        "ADX too low",
+        "Volatility below average",
+        "Low confluence"
+      ],
+      "tradeId": null
+    },
+    {
+      "id": "BTCUSDT:2026-09-06T11:58:00.000Z",
+      "symbol": "BTCUSDT",
+      "observedAt": "2026-09-06T11:58:03.282Z",
+      "signalCloseTime": "2026-09-06T11:58:00.000Z",
+      "bar": {
+        "symbol": "BINANCE:BTCUSDT",
+        "tf": "1m",
+        "time": "2026-09-06T11:57:00.000Z",
+        "close_time": "2026-09-06T11:58:00.000Z",
+        "open": 79918.01,
+        "high": 79918.01,
+        "low": 79908,
+        "close": 79908
+      },
+      "inputHash": "ba7db04c24dd64d81259947ba8b57e01fce04b1d067af2558ee6a646f342fcab",
+      "snapshot": {
+        "time": 1788695879999,
+        "direction": null,
+        "qualified": false,
+        "reasons": [
+          "Neutral trend",
+          "ADX too low",
+          "Volatility below average",
+          "Low confluence",
+          "Invalid stop distance"
+        ],
+        "longScore": 1,
+        "shortScore": 1,
+        "factors": {
+          "trend": false,
+          "vwap": true,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "longFactors": {
+          "trend": false,
+          "vwap": true,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "shortFactors": {
+          "trend": false,
+          "vwap": false,
+          "delta": true,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "price": 79908,
+        "sl": null,
+        "tp": null,
+        "adx": 16.680011195911426,
+        "atr": 9.730143478555792,
+        "vwap": 79862.64940127001,
+        "delta": -0.9745563974236982
+      },
+      "decision": "NO_SETUP",
+      "reasons": [
+        "Neutral trend",
+        "ADX too low",
+        "Volatility below average",
+        "Low confluence",
+        "Invalid stop distance"
+      ],
+      "tradeId": null
+    },
+    {
+      "id": "ETHUSDT:2026-09-06T11:58:00.000Z",
+      "symbol": "ETHUSDT",
+      "observedAt": "2026-09-06T11:58:03.389Z",
+      "signalCloseTime": "2026-09-06T11:58:00.000Z",
+      "bar": {
+        "symbol": "BINANCE:ETHUSDT",
+        "tf": "1m",
+        "time": "2026-09-06T11:57:00.000Z",
+        "close_time": "2026-09-06T11:58:00.000Z",
+        "open": 2501.39,
+        "high": 2501.39,
+        "low": 2501.37,
+        "close": 2501.38
+      },
+      "inputHash": "1a769bc68786cb7771ea6901acdb1c19f1bb661592a22779e3866b0f4fb39013",
+      "snapshot": {
+        "time": 1788695879999,
+        "direction": "LONG",
+        "qualified": false,
+        "reasons": [
+          "ADX too low",
+          "Volatility below average",
+          "Low confluence"
+        ],
+        "longScore": 2,
+        "shortScore": 1,
+        "factors": {
+          "trend": true,
+          "vwap": true,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "longFactors": {
+          "trend": true,
+          "vwap": true,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "shortFactors": {
+          "trend": false,
+          "vwap": false,
+          "delta": true,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "price": 2501.38,
+        "sl": 2500.4685514649086,
+        "tp": 2504.1143456052746,
+        "adx": 9.489445444925538,
+        "atr": 0.6009656900609194,
+        "vwap": 2497.413980433123,
+        "delta": -24.242906377865722
+      },
+      "decision": "NO_SETUP",
+      "reasons": [
+        "ADX too low",
+        "Volatility below average",
+        "Low confluence"
+      ],
+      "tradeId": null
+    },
+    {
+      "id": "SOLUSDT:2026-09-06T11:58:00.000Z",
+      "symbol": "SOLUSDT",
+      "observedAt": "2026-09-06T11:58:03.192Z",
+      "signalCloseTime": "2026-09-06T11:58:00.000Z",
+      "bar": {
+        "symbol": "BINANCE:SOLUSDT",
+        "tf": "1m",
+        "time": "2026-09-06T11:57:00.000Z",
+        "close_time": "2026-09-06T11:58:00.000Z",
+        "open": 106.38,
+        "high": 106.39,
+        "low": 106.36,
+        "close": 106.39
+      },
+      "inputHash": "e34ffba468ecccd8787c48f2129424196295c74d7bd6d8663ff006bce0033476",
+      "snapshot": {
+        "time": 1788695879999,
+        "direction": "LONG",
+        "qualified": false,
+        "reasons": [
+          "ADX too low",
+          "Volatility below average",
+          "Low confluence"
+        ],
+        "longScore": 3,
+        "shortScore": 1,
+        "factors": {
+          "trend": true,
+          "vwap": true,
+          "delta": false,
+          "volume": false,
+          "sweep": true,
+          "fvg": false,
+          "ob": false
+        },
+        "longFactors": {
+          "trend": true,
+          "vwap": true,
+          "delta": false,
+          "volume": false,
+          "sweep": true,
+          "fvg": false,
+          "ob": false
+        },
+        "shortFactors": {
+          "trend": false,
+          "vwap": false,
+          "delta": true,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "price": 106.39,
+        "sl": 106.25338460768234,
+        "tp": 106.799846176953,
+        "adx": 13.16284818831672,
+        "atr": 0.07107692821177418,
+        "vwap": 105.37393187161511,
+        "delta": -63.81602664959925
+      },
+      "decision": "NO_SETUP",
+      "reasons": [
+        "ADX too low",
+        "Volatility below average",
+        "Low confluence"
+      ],
+      "tradeId": null
+    },
+    {
+      "id": "BTCUSDT:2026-09-06T11:59:00.000Z",
+      "symbol": "BTCUSDT",
+      "observedAt": "2026-09-06T11:59:03.170Z",
+      "signalCloseTime": "2026-09-06T11:59:00.000Z",
+      "bar": {
+        "symbol": "BINANCE:BTCUSDT",
+        "tf": "1m",
+        "time": "2026-09-06T11:58:00.000Z",
+        "close_time": "2026-09-06T11:59:00.000Z",
+        "open": 79908.01,
+        "high": 79908.01,
+        "low": 79908,
+        "close": 79908.01
+      },
+      "inputHash": "b9dc29426826c2dd274ca1b01432dad14c07e220c82609b885a59121ae3e5c39",
+      "snapshot": {
+        "time": 1788695939999,
+        "direction": null,
+        "qualified": false,
+        "reasons": [
+          "Neutral trend",
+          "ADX too low",
+          "Volatility below average",
+          "Low confluence",
+          "Invalid stop distance"
+        ],
+        "longScore": 1,
+        "shortScore": 1,
+        "factors": {
+          "trend": false,
+          "vwap": true,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "longFactors": {
+          "trend": false,
+          "vwap": true,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "shortFactors": {
+          "trend": false,
+          "vwap": false,
+          "delta": true,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "price": 79908.01,
+        "sl": null,
+        "tp": null,
+        "adx": 17.154457355121544,
+        "atr": 9.035847515801432,
+        "vwap": 79862.654549158,
+        "delta": -0.8446155444338718
+      },
+      "decision": "NO_SETUP",
+      "reasons": [
+        "Neutral trend",
+        "ADX too low",
+        "Volatility below average",
+        "Low confluence",
+        "Invalid stop distance"
+      ],
+      "tradeId": null
+    },
+    {
+      "id": "ETHUSDT:2026-09-06T11:59:00.000Z",
+      "symbol": "ETHUSDT",
+      "observedAt": "2026-09-06T11:59:03.151Z",
+      "signalCloseTime": "2026-09-06T11:59:00.000Z",
+      "bar": {
+        "symbol": "BINANCE:ETHUSDT",
+        "tf": "1m",
+        "time": "2026-09-06T11:58:00.000Z",
+        "close_time": "2026-09-06T11:59:00.000Z",
+        "open": 2501.37,
+        "high": 2501.38,
+        "low": 2501.37,
+        "close": 2501.37
+      },
+      "inputHash": "bfecb1bdd04e6f4168b727a6f581df0b3d85c82518bf6bf4f97d9ab704e1c8dc",
+      "snapshot": {
+        "time": 1788695939999,
+        "direction": "LONG",
+        "qualified": false,
+        "reasons": [
+          "ADX too low",
+          "Volatility below average",
+          "Low confluence"
+        ],
+        "longScore": 2,
+        "shortScore": 1,
+        "factors": {
+          "trend": true,
+          "vwap": true,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "longFactors": {
+          "trend": true,
+          "vwap": true,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "shortFactors": {
+          "trend": false,
+          "vwap": false,
+          "delta": true,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "price": 2501.37,
+        "sl": 2500.531869217415,
+        "tp": 2503.8843923477543,
+        "adx": 9.65272138900169,
+        "atr": 0.5587538550565836,
+        "vwap": 2497.414692357007,
+        "delta": -21.01051886081696
+      },
+      "decision": "NO_SETUP",
+      "reasons": [
+        "ADX too low",
+        "Volatility below average",
+        "Low confluence"
+      ],
+      "tradeId": null
+    },
+    {
+      "id": "SOLUSDT:2026-09-06T11:59:00.000Z",
+      "symbol": "SOLUSDT",
+      "observedAt": "2026-09-06T11:59:03.243Z",
+      "signalCloseTime": "2026-09-06T11:59:00.000Z",
+      "bar": {
+        "symbol": "BINANCE:SOLUSDT",
+        "tf": "1m",
+        "time": "2026-09-06T11:58:00.000Z",
+        "close_time": "2026-09-06T11:59:00.000Z",
+        "open": 106.39,
+        "high": 106.42,
+        "low": 106.38,
+        "close": 106.42
+      },
+      "inputHash": "e908b48d7eca31d819d4b1302f95cb58b8aed86c892867c63fe8edca19e55bbf",
+      "snapshot": {
+        "time": 1788695939999,
+        "direction": "LONG",
+        "qualified": false,
+        "reasons": [
+          "ADX too low",
+          "Volatility below average",
+          "Low confluence"
+        ],
+        "longScore": 3,
+        "shortScore": 0,
+        "factors": {
+          "trend": true,
+          "vwap": true,
+          "delta": true,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "longFactors": {
+          "trend": true,
+          "vwap": true,
+          "delta": true,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "shortFactors": {
+          "trend": false,
+          "vwap": false,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "price": 106.42,
+        "sl": 106.27671427856217,
+        "tp": 106.8498571643135,
+        "adx": 13.561311179245232,
+        "atr": 0.06885714762521933,
+        "vwap": 105.37419989098517,
+        "delta": 5.817443570347308
+      },
+      "decision": "NO_SETUP",
+      "reasons": [
+        "ADX too low",
+        "Volatility below average",
+        "Low confluence"
+      ],
+      "tradeId": null
+    },
+    {
+      "id": "BTCUSDT:2026-09-06T12:00:00.000Z",
+      "symbol": "BTCUSDT",
+      "observedAt": "2026-09-06T12:00:04.909Z",
+      "signalCloseTime": "2026-09-06T12:00:00.000Z",
+      "bar": {
+        "symbol": "BINANCE:BTCUSDT",
+        "tf": "1m",
+        "time": "2026-09-06T11:59:00.000Z",
+        "close_time": "2026-09-06T12:00:00.000Z",
+        "open": 79908,
+        "high": 79919.18,
+        "low": 79908,
+        "close": 79919.17
+      },
+      "inputHash": "678e5291b5ce2a012d3da658ab48ef02b79a542aa151faf8fc5063713fa851ac",
+      "snapshot": {
+        "time": 1788695999999,
+        "direction": null,
+        "qualified": false,
+        "reasons": [
+          "Neutral trend",
+          "ADX too low",
+          "Volatility below average",
+          "Low confluence",
+          "Invalid stop distance"
+        ],
+        "longScore": 1,
+        "shortScore": 1,
+        "factors": {
+          "trend": false,
+          "vwap": true,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "longFactors": {
+          "trend": false,
+          "vwap": true,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "shortFactors": {
+          "trend": false,
+          "vwap": false,
+          "delta": true,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "price": 79919.17,
+        "sl": null,
+        "tp": null,
+        "adx": 16.64085444728789,
+        "atr": 9.189001264672259,
+        "vwap": 79862.6769558427,
+        "delta": -0.3611561385093555
+      },
+      "decision": "NO_SETUP",
+      "reasons": [
+        "Neutral trend",
+        "ADX too low",
+        "Volatility below average",
+        "Low confluence",
+        "Invalid stop distance"
+      ],
+      "tradeId": null
+    },
+    {
+      "id": "ETHUSDT:2026-09-06T12:00:00.000Z",
+      "symbol": "ETHUSDT",
+      "observedAt": "2026-09-06T12:00:04.457Z",
+      "signalCloseTime": "2026-09-06T12:00:00.000Z",
+      "bar": {
+        "symbol": "BINANCE:ETHUSDT",
+        "tf": "1m",
+        "time": "2026-09-06T11:59:00.000Z",
+        "close_time": "2026-09-06T12:00:00.000Z",
+        "open": 2501.37,
+        "high": 2501.94,
+        "low": 2501.37,
+        "close": 2501.93
+      },
+      "inputHash": "14ad1ea250d66cec78882c63e6c094c562926f94db9239856b523d09cc508539",
+      "snapshot": {
+        "time": 1788695999999,
+        "direction": "LONG",
+        "qualified": false,
+        "reasons": [
+          "ADX too low",
+          "Volatility below average",
+          "Low confluence"
+        ],
+        "longScore": 2,
+        "shortScore": 1,
+        "factors": {
+          "trend": true,
+          "vwap": true,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "longFactors": {
+          "trend": true,
+          "vwap": true,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "shortFactors": {
+          "trend": false,
+          "vwap": false,
+          "delta": true,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "price": 2501.93,
+        "sl": 2500.530664273314,
+        "tp": 2506.1280071800575,
+        "adx": 9.053324687244514,
+        "atr": 0.5595571511239822,
+        "vwap": 2497.416270263065,
+        "delta": -11.884743012708032
+      },
+      "decision": "NO_SETUP",
+      "reasons": [
+        "ADX too low",
+        "Volatility below average",
+        "Low confluence"
+      ],
+      "tradeId": null
+    },
+    {
+      "id": "SOLUSDT:2026-09-06T12:00:00.000Z",
+      "symbol": "SOLUSDT",
+      "observedAt": "2026-09-06T12:00:04.246Z",
+      "signalCloseTime": "2026-09-06T12:00:00.000Z",
+      "bar": {
+        "symbol": "BINANCE:SOLUSDT",
+        "tf": "1m",
+        "time": "2026-09-06T11:59:00.000Z",
+        "close_time": "2026-09-06T12:00:00.000Z",
+        "open": 106.42,
+        "high": 106.47,
+        "low": 106.41,
+        "close": 106.47
+      },
+      "inputHash": "71731991bcbdd24a58c2bc52520cd4933900e70730e05a8694840e61eeaa2d56",
+      "snapshot": {
+        "time": 1788695999999,
+        "direction": "LONG",
+        "qualified": false,
+        "reasons": [
+          "ADX too low",
+          "Volatility below average",
+          "Low confluence"
+        ],
+        "longScore": 3,
+        "shortScore": 0,
+        "factors": {
+          "trend": true,
+          "vwap": true,
+          "delta": true,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "longFactors": {
+          "trend": true,
+          "vwap": true,
+          "delta": true,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "shortFactors": {
+          "trend": false,
+          "vwap": false,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "price": 106.47,
+        "sl": 106.30766325866487,
+        "tp": 106.95701022400537,
+        "adx": 13.06296508721818,
+        "atr": 0.06822449422341811,
+        "vwap": 105.37438609264748,
+        "delta": 45.81418442763433
+      },
+      "decision": "NO_SETUP",
+      "reasons": [
+        "ADX too low",
+        "Volatility below average",
+        "Low confluence"
+      ],
+      "tradeId": null
+    },
+    {
+      "id": "BTCUSDT:2026-09-06T12:01:00.000Z",
+      "symbol": "BTCUSDT",
+      "observedAt": "2026-09-06T12:01:02.966Z",
+      "signalCloseTime": "2026-09-06T12:01:00.000Z",
+      "bar": {
+        "symbol": "BINANCE:BTCUSDT",
+        "tf": "1m",
+        "time": "2026-09-06T12:00:00.000Z",
+        "close_time": "2026-09-06T12:01:00.000Z",
+        "open": 79919.17,
+        "high": 79919.18,
+        "low": 79919.17,
+        "close": 79919.18
+      },
+      "inputHash": "89d13b7e833bee8533f035e4b661d9dc4606d3388af5672b807fb72e16d16bec",
+      "snapshot": {
+        "time": 1788696059999,
+        "direction": null,
+        "qualified": false,
+        "reasons": [
+          "Neutral trend",
+          "ADX too low",
+          "Volatility below average",
+          "Low confluence",
+          "Invalid stop distance"
+        ],
+        "longScore": 1,
+        "shortScore": 1,
+        "factors": {
+          "trend": false,
+          "vwap": true,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "longFactors": {
+          "trend": false,
+          "vwap": true,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "shortFactors": {
+          "trend": false,
+          "vwap": false,
+          "delta": true,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "price": 79919.18,
+        "sl": null,
+        "tp": null,
+        "adx": 16.16393746144235,
+        "atr": 8.533358317195296,
+        "vwap": 79862.68229246572,
+        "delta": -0.23046065337477478
+      },
+      "decision": "NO_SETUP",
+      "reasons": [
+        "Neutral trend",
+        "ADX too low",
+        "Volatility below average",
+        "Low confluence",
+        "Invalid stop distance"
+      ],
+      "tradeId": null
+    },
+    {
+      "id": "ETHUSDT:2026-09-06T12:01:00.000Z",
+      "symbol": "ETHUSDT",
+      "observedAt": "2026-09-06T12:01:02.960Z",
+      "signalCloseTime": "2026-09-06T12:01:00.000Z",
+      "bar": {
+        "symbol": "BINANCE:ETHUSDT",
+        "tf": "1m",
+        "time": "2026-09-06T12:00:00.000Z",
+        "close_time": "2026-09-06T12:01:00.000Z",
+        "open": 2501.94,
+        "high": 2501.94,
+        "low": 2501.38,
+        "close": 2501.38
+      },
+      "inputHash": "fb1a181b1a7cc8b6b6d7a06e332611f7882cff3ed4e6728406c8ad3636065f42",
+      "snapshot": {
+        "time": 1788696059999,
+        "direction": "LONG",
+        "qualified": false,
+        "reasons": [
+          "ADX too low",
+          "Volatility below average",
+          "Low confluence"
+        ],
+        "longScore": 2,
+        "shortScore": 1,
+        "factors": {
+          "trend": true,
+          "vwap": true,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "longFactors": {
+          "trend": true,
+          "vwap": true,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "shortFactors": {
+          "trend": false,
+          "vwap": false,
+          "delta": true,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "price": 2501.38,
+        "sl": 2500.5406168252202,
+        "tp": 2503.8981495243397,
+        "adx": 8.49674203561285,
+        "atr": 0.559588783186551,
+        "vwap": 2497.4172845220437,
+        "delta": -14.544230611013628
+      },
+      "decision": "NO_SETUP",
+      "reasons": [
+        "ADX too low",
+        "Volatility below average",
+        "Low confluence"
+      ],
+      "tradeId": null
+    },
+    {
+      "id": "SOLUSDT:2026-09-06T12:01:00.000Z",
+      "symbol": "SOLUSDT",
+      "observedAt": "2026-09-06T12:01:03.057Z",
+      "signalCloseTime": "2026-09-06T12:01:00.000Z",
+      "bar": {
+        "symbol": "BINANCE:SOLUSDT",
+        "tf": "1m",
+        "time": "2026-09-06T12:00:00.000Z",
+        "close_time": "2026-09-06T12:01:00.000Z",
+        "open": 106.46,
+        "high": 106.5,
+        "low": 106.45,
+        "close": 106.5
+      },
+      "inputHash": "e1ae44a575d8b55de0fa2ba9dcf74550de588b553b8dca0652a3e1d13d4a15e4",
+      "snapshot": {
+        "time": 1788696059999,
+        "direction": "LONG",
+        "qualified": false,
+        "reasons": [
+          "ADX too low",
+          "Volatility below average",
+          "Low confluence"
+        ],
+        "longScore": 3,
+        "shortScore": 0,
+        "factors": {
+          "trend": true,
+          "vwap": true,
+          "delta": true,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "longFactors": {
+          "trend": true,
+          "vwap": true,
+          "delta": true,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "shortFactors": {
+          "trend": false,
+          "vwap": false,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "price": 106.5,
+        "sl": 106.34961588304596,
+        "tp": 106.95115235086213,
+        "adx": 12.131968098358781,
+        "atr": 0.0669227446360309,
+        "vwap": 105.37472198814524,
+        "delta": 111.06571539283863
+      },
+      "decision": "NO_SETUP",
+      "reasons": [
+        "ADX too low",
+        "Volatility below average",
+        "Low confluence"
+      ],
+      "tradeId": null
+    },
+    {
+      "id": "BTCUSDT:2026-09-06T12:02:00.000Z",
+      "symbol": "BTCUSDT",
+      "observedAt": "2026-09-06T12:02:05.464Z",
+      "signalCloseTime": "2026-09-06T12:02:00.000Z",
+      "bar": {
+        "symbol": "BINANCE:BTCUSDT",
+        "tf": "1m",
+        "time": "2026-09-06T12:01:00.000Z",
+        "close_time": "2026-09-06T12:02:00.000Z",
+        "open": 79919.17,
+        "high": 79919.18,
+        "low": 79919.17,
+        "close": 79919.17
+      },
+      "inputHash": "166ea187a5c583176dd03562cfad3286897902b453977fbe2df3ac3e7a8c1881",
+      "snapshot": {
+        "time": 1788696119999,
+        "direction": null,
+        "qualified": false,
+        "reasons": [
+          "Neutral trend",
+          "ADX too low",
+          "Volatility below average",
+          "Low confluence",
+          "Invalid stop distance"
+        ],
+        "longScore": 1,
+        "shortScore": 1,
+        "factors": {
+          "trend": false,
+          "vwap": true,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "longFactors": {
+          "trend": false,
+          "vwap": true,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "shortFactors": {
+          "trend": false,
+          "vwap": false,
+          "delta": true,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "price": 79919.17,
+        "sl": null,
+        "tp": null,
+        "adx": 15.721085974585781,
+        "atr": 7.924547008823829,
+        "vwap": 79862.69224615018,
+        "delta": -0.19973256625813815
+      },
+      "decision": "NO_SETUP",
+      "reasons": [
+        "Neutral trend",
+        "ADX too low",
+        "Volatility below average",
+        "Low confluence",
+        "Invalid stop distance"
+      ],
+      "tradeId": null
+    },
+    {
+      "id": "ETHUSDT:2026-09-06T12:02:00.000Z",
+      "symbol": "ETHUSDT",
+      "observedAt": "2026-09-06T12:02:05.518Z",
+      "signalCloseTime": "2026-09-06T12:02:00.000Z",
+      "bar": {
+        "symbol": "BINANCE:ETHUSDT",
+        "tf": "1m",
+        "time": "2026-09-06T12:01:00.000Z",
+        "close_time": "2026-09-06T12:02:00.000Z",
+        "open": 2501.38,
+        "high": 2501.96,
+        "low": 2501.38,
+        "close": 2501.78
+      },
+      "inputHash": "acc377d9f0a26dae84aae4d4e95c315ddf586224e0e8b6a681a9b461ad703a58",
+      "snapshot": {
+        "time": 1788696119999,
+        "direction": "LONG",
+        "qualified": false,
+        "reasons": [
+          "ADX too low",
+          "Volatility below average",
+          "Low confluence"
+        ],
+        "longScore": 2,
+        "shortScore": 1,
+        "factors": {
+          "trend": true,
+          "vwap": true,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "longFactors": {
+          "trend": true,
+          "vwap": true,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "shortFactors": {
+          "trend": false,
+          "vwap": false,
+          "delta": true,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "price": 2501.78,
+        "sl": 2500.5384299091334,
+        "tp": 2505.5047102726007,
+        "adx": 8.013822544511255,
+        "atr": 0.5610467272446493,
+        "vwap": 2497.418864737023,
+        "delta": -6.204559862878477
+      },
+      "decision": "NO_SETUP",
+      "reasons": [
+        "ADX too low",
+        "Volatility below average",
+        "Low confluence"
+      ],
+      "tradeId": null
+    },
+    {
+      "id": "SOLUSDT:2026-09-06T12:02:00.000Z",
+      "symbol": "SOLUSDT",
+      "observedAt": "2026-09-06T12:02:05.459Z",
+      "signalCloseTime": "2026-09-06T12:02:00.000Z",
+      "bar": {
+        "symbol": "BINANCE:SOLUSDT",
+        "tf": "1m",
+        "time": "2026-09-06T12:01:00.000Z",
+        "close_time": "2026-09-06T12:02:00.000Z",
+        "open": 106.49,
+        "high": 106.52,
+        "low": 106.49,
+        "close": 106.52
+      },
+      "inputHash": "e5a4224f52f7aa901655224f042ee259d494922800327f2713152a55c5b874ea",
+      "snapshot": {
+        "time": 1788696119999,
+        "direction": "LONG",
+        "qualified": false,
+        "reasons": [
+          "ADX too low",
+          "Volatility below average",
+          "Low confluence"
+        ],
+        "longScore": 3,
+        "shortScore": 0,
+        "factors": {
+          "trend": true,
+          "vwap": true,
+          "delta": true,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "longFactors": {
+          "trend": true,
+          "vwap": true,
+          "delta": true,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "shortFactors": {
+          "trend": false,
+          "vwap": false,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "price": 106.52,
+        "sl": 106.39357189139982,
+        "tp": 106.89928432580054,
+        "adx": 11.572012500618879,
+        "atr": 0.06428540573345734,
+        "vwap": 105.3748900836387,
+        "delta": 131.15202000712682
+      },
+      "decision": "NO_SETUP",
+      "reasons": [
+        "ADX too low",
+        "Volatility below average",
+        "Low confluence"
+      ],
+      "tradeId": null
+    },
+    {
+      "id": "BTCUSDT:2026-09-06T12:03:00.000Z",
+      "symbol": "BTCUSDT",
+      "observedAt": "2026-09-06T12:03:05.551Z",
+      "signalCloseTime": "2026-09-06T12:03:00.000Z",
+      "bar": {
+        "symbol": "BINANCE:BTCUSDT",
+        "tf": "1m",
+        "time": "2026-09-06T12:02:00.000Z",
+        "close_time": "2026-09-06T12:03:00.000Z",
+        "open": 79919.18,
+        "high": 79919.18,
+        "low": 79919.17,
+        "close": 79919.18
+      },
+      "inputHash": "6f48b61f286a406ac8a9e24c79674b3c9fe5a3905fd19ddad818fdc618d2ca2a",
+      "snapshot": {
+        "time": 1788696179999,
+        "direction": null,
+        "qualified": false,
+        "reasons": [
+          "Neutral trend",
+          "ADX too low",
+          "Volatility below average",
+          "Low confluence",
+          "Invalid stop distance"
+        ],
+        "longScore": 1,
+        "shortScore": 1,
+        "factors": {
+          "trend": false,
+          "vwap": true,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "longFactors": {
+          "trend": false,
+          "vwap": true,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "shortFactors": {
+          "trend": false,
+          "vwap": false,
+          "delta": true,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "price": 79919.18,
+        "sl": null,
+        "tp": null,
+        "adx": 15.309866736790395,
+        "atr": 7.359222222478896,
+        "vwap": 79862.69887530021,
+        "delta": -0.17310155742371974
+      },
+      "decision": "NO_SETUP",
+      "reasons": [
+        "Neutral trend",
+        "ADX too low",
+        "Volatility below average",
+        "Low confluence",
+        "Invalid stop distance"
+      ],
+      "tradeId": null
+    },
+    {
+      "id": "ETHUSDT:2026-09-06T12:03:00.000Z",
+      "symbol": "ETHUSDT",
+      "observedAt": "2026-09-06T12:03:05.408Z",
+      "signalCloseTime": "2026-09-06T12:03:00.000Z",
+      "bar": {
+        "symbol": "BINANCE:ETHUSDT",
+        "tf": "1m",
+        "time": "2026-09-06T12:02:00.000Z",
+        "close_time": "2026-09-06T12:03:00.000Z",
+        "open": 2501.78,
+        "high": 2501.79,
+        "low": 2501.37,
+        "close": 2501.37
+      },
+      "inputHash": "75c6739c854a276a11c3726eee249d03486e1bc371f9aa5865867ae6d5738d24",
+      "snapshot": {
+        "time": 1788696179999,
+        "direction": "LONG",
+        "qualified": false,
+        "reasons": [
+          "ADX too low",
+          "Volatility below average",
+          "Low confluence"
+        ],
+        "longScore": 2,
+        "shortScore": 1,
+        "factors": {
+          "trend": true,
+          "vwap": true,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "longFactors": {
+          "trend": true,
+          "vwap": true,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "shortFactors": {
+          "trend": false,
+          "vwap": false,
+          "delta": true,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "price": 2501.37,
+        "sl": 2500.5435420584804,
+        "tp": 2503.8493738245584,
+        "adx": 7.5466339417055535,
+        "atr": 0.5509719610128939,
+        "vwap": 2497.4200409391747,
+        "delta": -10.373618547828013
+      },
+      "decision": "NO_SETUP",
+      "reasons": [
+        "ADX too low",
+        "Volatility below average",
+        "Low confluence"
+      ],
+      "tradeId": null
+    },
+    {
+      "id": "SOLUSDT:2026-09-06T12:03:00.000Z",
+      "symbol": "SOLUSDT",
+      "observedAt": "2026-09-06T12:03:05.520Z",
+      "signalCloseTime": "2026-09-06T12:03:00.000Z",
+      "bar": {
+        "symbol": "BINANCE:SOLUSDT",
+        "tf": "1m",
+        "time": "2026-09-06T12:02:00.000Z",
+        "close_time": "2026-09-06T12:03:00.000Z",
+        "open": 106.52,
+        "high": 106.53,
+        "low": 106.49,
+        "close": 106.5
+      },
+      "inputHash": "3ba8b3262e1faddc718ed1b09cf2f14bf670fddb682a3a3e60fcac14efbcd53e",
+      "snapshot": {
+        "time": 1788696179999,
+        "direction": "LONG",
+        "qualified": false,
+        "reasons": [
+          "ADX too low",
+          "Volatility below average",
+          "Low confluence"
+        ],
+        "longScore": 2,
+        "shortScore": 2,
+        "factors": {
+          "trend": true,
+          "vwap": true,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "longFactors": {
+          "trend": true,
+          "vwap": true,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "shortFactors": {
+          "trend": false,
+          "vwap": false,
+          "delta": true,
+          "volume": false,
+          "sweep": true,
+          "fvg": false,
+          "ob": false
+        },
+        "price": 106.5,
+        "sl": 106.39617389915696,
+        "tp": 106.81147830252911,
+        "adx": 11.20551979569518,
+        "atr": 0.06255073389535369,
+        "vwap": 105.37569108842229,
+        "delta": -53.248649327156755
+      },
+      "decision": "NO_SETUP",
+      "reasons": [
+        "ADX too low",
+        "Volatility below average",
+        "Low confluence"
+      ],
+      "tradeId": null
+    },
+    {
+      "id": "BTCUSDT:2026-09-06T12:04:00.000Z",
+      "symbol": "BTCUSDT",
+      "observedAt": "2026-09-06T12:04:04.448Z",
+      "signalCloseTime": "2026-09-06T12:04:00.000Z",
+      "bar": {
+        "symbol": "BINANCE:BTCUSDT",
+        "tf": "1m",
+        "time": "2026-09-06T12:03:00.000Z",
+        "close_time": "2026-09-06T12:04:00.000Z",
+        "open": 79919.18,
+        "high": 79919.18,
+        "low": 79919.17,
+        "close": 79919.17
+      },
+      "inputHash": "068a4d7dbf7ccc1afb1c7d7d3b1214ad6b00fa176f25331e48136f595490accd",
+      "snapshot": {
+        "time": 1788696239999,
+        "direction": null,
+        "qualified": false,
+        "reasons": [
+          "Neutral trend",
+          "ADX too low",
+          "Volatility below average",
+          "Low confluence",
+          "Invalid stop distance"
+        ],
+        "longScore": 1,
+        "shortScore": 1,
+        "factors": {
+          "trend": false,
+          "vwap": true,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "longFactors": {
+          "trend": false,
+          "vwap": true,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "shortFactors": {
+          "trend": false,
+          "vwap": false,
+          "delta": true,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "price": 79919.17,
+        "sl": null,
+        "tp": null,
+        "adx": 14.928020301694682,
+        "atr": 6.8342777780157435,
+        "vwap": 79862.70397837479,
+        "delta": -0.22901601643389044
+      },
+      "decision": "NO_SETUP",
+      "reasons": [
+        "Neutral trend",
+        "ADX too low",
+        "Volatility below average",
+        "Low confluence",
+        "Invalid stop distance"
+      ],
+      "tradeId": null
+    },
+    {
+      "id": "ETHUSDT:2026-09-06T12:04:00.000Z",
+      "symbol": "ETHUSDT",
+      "observedAt": "2026-09-06T12:04:04.531Z",
+      "signalCloseTime": "2026-09-06T12:04:00.000Z",
+      "bar": {
+        "symbol": "BINANCE:ETHUSDT",
+        "tf": "1m",
+        "time": "2026-09-06T12:03:00.000Z",
+        "close_time": "2026-09-06T12:04:00.000Z",
+        "open": 2501.38,
+        "high": 2501.38,
+        "low": 2501.17,
+        "close": 2501.18
+      },
+      "inputHash": "3b9d3855424ca2137587b2289aaa9b211faaf87930456cb6963ad6dde5dad66e",
+      "snapshot": {
+        "time": 1788696239999,
+        "direction": "LONG",
+        "qualified": false,
+        "reasons": [
+          "ADX too low",
+          "Volatility below average",
+          "Low confluence"
+        ],
+        "longScore": 2,
+        "shortScore": 1,
+        "factors": {
+          "trend": true,
+          "vwap": true,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "longFactors": {
+          "trend": true,
+          "vwap": true,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "shortFactors": {
+          "trend": false,
+          "vwap": false,
+          "delta": true,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "price": 2501.18,
+        "sl": 2500.380074768589,
+        "tp": 2503.579775694232,
+        "adx": 7.284215601115052,
+        "atr": 0.526616820940547,
+        "vwap": 2497.42098575569,
+        "delta": -13.286136074784277
+      },
+      "decision": "NO_SETUP",
+      "reasons": [
+        "ADX too low",
+        "Volatility below average",
+        "Low confluence"
+      ],
+      "tradeId": null
+    },
+    {
+      "id": "SOLUSDT:2026-09-06T12:04:00.000Z",
+      "symbol": "SOLUSDT",
+      "observedAt": "2026-09-06T12:04:04.387Z",
+      "signalCloseTime": "2026-09-06T12:04:00.000Z",
+      "bar": {
+        "symbol": "BINANCE:SOLUSDT",
+        "tf": "1m",
+        "time": "2026-09-06T12:03:00.000Z",
+        "close_time": "2026-09-06T12:04:00.000Z",
+        "open": 106.5,
+        "high": 106.5,
+        "low": 106.48,
+        "close": 106.49
+      },
+      "inputHash": "613315fa344667d260507ed4355dc513d3950d6b274d7a5e56ef021ed270b459",
+      "snapshot": {
+        "time": 1788696239999,
+        "direction": "LONG",
+        "qualified": false,
+        "reasons": [
+          "ADX too low",
+          "Volatility below average",
+          "Low confluence"
+        ],
+        "longScore": 2,
+        "shortScore": 1,
+        "factors": {
+          "trend": true,
+          "vwap": true,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "longFactors": {
+          "trend": true,
+          "vwap": true,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "shortFactors": {
+          "trend": false,
+          "vwap": false,
+          "delta": true,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "price": 106.49,
+        "sl": 106.39073290636004,
+        "tp": 106.78780128091985,
+        "adx": 10.685737394421563,
+        "atr": 0.059511395759971,
+        "vwap": 105.3759314916741,
+        "delta": -97.04042941686919
+      },
+      "decision": "NO_SETUP",
+      "reasons": [
+        "ADX too low",
+        "Volatility below average",
+        "Low confluence"
+      ],
+      "tradeId": null
+    },
+    {
+      "id": "BTCUSDT:2026-09-06T12:05:00.000Z",
+      "symbol": "BTCUSDT",
+      "observedAt": "2026-09-06T12:05:05.522Z",
+      "signalCloseTime": "2026-09-06T12:05:00.000Z",
+      "bar": {
+        "symbol": "BINANCE:BTCUSDT",
+        "tf": "1m",
+        "time": "2026-09-06T12:04:00.000Z",
+        "close_time": "2026-09-06T12:05:00.000Z",
+        "open": 79919.17,
+        "high": 79919.18,
+        "low": 79919.17,
+        "close": 79919.17
+      },
+      "inputHash": "a8bc436e1c69e3055890221d30febeea921cb2b0895a4fd0852bdf6392029100",
+      "snapshot": {
+        "time": 1788696299999,
+        "direction": null,
+        "qualified": false,
+        "reasons": [
+          "Neutral trend",
+          "ADX too low",
+          "Volatility below average",
+          "Low confluence",
+          "Invalid stop distance"
+        ],
+        "longScore": 1,
+        "shortScore": 1,
+        "factors": {
+          "trend": false,
+          "vwap": true,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "longFactors": {
+          "trend": false,
+          "vwap": true,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "shortFactors": {
+          "trend": false,
+          "vwap": false,
+          "delta": true,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "price": 79919.17,
+        "sl": null,
+        "tp": null,
+        "adx": 14.573448611962947,
+        "atr": 6.34682936529996,
+        "vwap": 79862.71387741118,
+        "delta": -0.1984805475760384
+      },
+      "decision": "NO_SETUP",
+      "reasons": [
+        "Neutral trend",
+        "ADX too low",
+        "Volatility below average",
+        "Low confluence",
+        "Invalid stop distance"
+      ],
+      "tradeId": null
+    },
+    {
+      "id": "ETHUSDT:2026-09-06T12:05:00.000Z",
+      "symbol": "ETHUSDT",
+      "observedAt": "2026-09-06T12:05:05.536Z",
+      "signalCloseTime": "2026-09-06T12:05:00.000Z",
+      "bar": {
+        "symbol": "BINANCE:ETHUSDT",
+        "tf": "1m",
+        "time": "2026-09-06T12:04:00.000Z",
+        "close_time": "2026-09-06T12:05:00.000Z",
+        "open": 2501.17,
+        "high": 2501.18,
+        "low": 2500.33,
+        "close": 2500.54
+      },
+      "inputHash": "4967d897c6627e7872c3e1eb71c59f23bba820ba25152876ef15df0b02fcdc9d",
+      "snapshot": {
+        "time": 1788696299999,
+        "direction": "LONG",
+        "qualified": false,
+        "reasons": [
+          "ADX too low",
+          "Volatility below average",
+          "Low confluence"
+        ],
+        "longScore": 2,
+        "shortScore": 2,
+        "factors": {
+          "trend": true,
+          "vwap": true,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "longFactors": {
+          "trend": true,
+          "vwap": true,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "shortFactors": {
+          "trend": false,
+          "vwap": false,
+          "delta": true,
+          "volume": false,
+          "sweep": false,
+          "fvg": true,
+          "ob": false
+        },
+        "price": 2500.54,
+        "sl": 2499.5054265708327,
+        "tp": 2503.6437202875018,
+        "adx": 8.361848771948324,
+        "atr": 0.5497156194447871,
+        "vwap": 2497.4225014312983,
+        "delta": -19.59441126481304
+      },
+      "decision": "NO_SETUP",
+      "reasons": [
+        "ADX too low",
+        "Volatility below average",
+        "Low confluence"
+      ],
+      "tradeId": null
+    },
+    {
+      "id": "SOLUSDT:2026-09-06T12:05:00.000Z",
+      "symbol": "SOLUSDT",
+      "observedAt": "2026-09-06T12:05:05.444Z",
+      "signalCloseTime": "2026-09-06T12:05:00.000Z",
+      "bar": {
+        "symbol": "BINANCE:SOLUSDT",
+        "tf": "1m",
+        "time": "2026-09-06T12:04:00.000Z",
+        "close_time": "2026-09-06T12:05:00.000Z",
+        "open": 106.49,
+        "high": 106.49,
+        "low": 106.42,
+        "close": 106.45
+      },
+      "inputHash": "21cafef781d8ddad63b3a0c9858cc862cc91896ebf00b35f09d5f00964f0a92f",
+      "snapshot": {
+        "time": 1788696299999,
+        "direction": "LONG",
+        "qualified": false,
+        "reasons": [
+          "ADX too low",
+          "Volatility below average",
+          "Low confluence"
+        ],
+        "longScore": 2,
+        "shortScore": 1,
+        "factors": {
+          "trend": true,
+          "vwap": true,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "longFactors": {
+          "trend": true,
+          "vwap": true,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "shortFactors": {
+          "trend": false,
+          "vwap": false,
+          "delta": true,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "price": 106.45,
+        "sl": 106.32960912733432,
+        "tp": 106.81117261799704,
+        "adx": 10.624279302791104,
+        "atr": 0.06026058177711544,
+        "vwap": 105.37636163934921,
+        "delta": -178.31770549461996
+      },
+      "decision": "NO_SETUP",
+      "reasons": [
+        "ADX too low",
+        "Volatility below average",
+        "Low confluence"
+      ],
+      "tradeId": null
+    },
+    {
+      "id": "BTCUSDT:2026-09-06T12:06:00.000Z",
+      "symbol": "BTCUSDT",
+      "observedAt": "2026-09-06T12:06:04.942Z",
+      "signalCloseTime": "2026-09-06T12:06:00.000Z",
+      "bar": {
+        "symbol": "BINANCE:BTCUSDT",
+        "tf": "1m",
+        "time": "2026-09-06T12:05:00.000Z",
+        "close_time": "2026-09-06T12:06:00.000Z",
+        "open": 79919.18,
+        "high": 79919.18,
+        "low": 79908,
+        "close": 79908
+      },
+      "inputHash": "1e8c352d822231bbc5a0305e41f7adc866c2b36311d97485c267c584c2a6342c",
+      "snapshot": {
+        "time": 1788696359999,
+        "direction": null,
+        "qualified": false,
+        "reasons": [
+          "Neutral trend",
+          "ADX too low",
+          "Volatility below average",
+          "Low confluence",
+          "Invalid stop distance"
+        ],
+        "longScore": 2,
+        "shortScore": 2,
+        "factors": {
+          "trend": false,
+          "vwap": true,
+          "delta": false,
+          "volume": true,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "longFactors": {
+          "trend": false,
+          "vwap": true,
+          "delta": false,
+          "volume": true,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "shortFactors": {
+          "trend": false,
+          "vwap": false,
+          "delta": true,
+          "volume": true,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "price": 79908,
+        "sl": null,
+        "tp": null,
+        "adx": 15.173811149503303,
+        "atr": 6.692055839206607,
+        "vwap": 79862.75458227792,
+        "delta": -0.8987778078992333
+      },
+      "decision": "NO_SETUP",
+      "reasons": [
+        "Neutral trend",
+        "ADX too low",
+        "Volatility below average",
+        "Low confluence",
+        "Invalid stop distance"
+      ],
+      "tradeId": null
+    },
+    {
+      "id": "ETHUSDT:2026-09-06T12:06:00.000Z",
+      "symbol": "ETHUSDT",
+      "observedAt": "2026-09-06T12:06:05.121Z",
+      "signalCloseTime": "2026-09-06T12:06:00.000Z",
+      "bar": {
+        "symbol": "BINANCE:ETHUSDT",
+        "tf": "1m",
+        "time": "2026-09-06T12:05:00.000Z",
+        "close_time": "2026-09-06T12:06:00.000Z",
+        "open": 2500.54,
+        "high": 2500.83,
+        "low": 2500,
+        "close": 2500
+      },
+      "inputHash": "e4ed7a8f60ee106613be6d348d30927638a6c6dda6f005043fd295d761919e23",
+      "snapshot": {
+        "time": 1788696359999,
+        "direction": null,
+        "qualified": false,
+        "reasons": [
+          "Neutral trend",
+          "ADX too low",
+          "Volatility below average",
+          "Low confluence",
+          "Invalid stop distance"
+        ],
+        "longScore": 1,
+        "shortScore": 2,
+        "factors": {
+          "trend": false,
+          "vwap": true,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "longFactors": {
+          "trend": false,
+          "vwap": true,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "shortFactors": {
+          "trend": false,
+          "vwap": false,
+          "delta": true,
+          "volume": false,
+          "sweep": false,
+          "fvg": true,
+          "ob": false
+        },
+        "price": 2500,
+        "sl": null,
+        "tp": null,
+        "adx": 9.779961461222486,
+        "atr": 0.5697359323415828,
+        "vwap": 2497.4231215932014,
+        "delta": -20.761396429504636
+      },
+      "decision": "NO_SETUP",
+      "reasons": [
+        "Neutral trend",
+        "ADX too low",
+        "Volatility below average",
+        "Low confluence",
+        "Invalid stop distance"
+      ],
+      "tradeId": null
+    },
+    {
+      "id": "SOLUSDT:2026-09-06T12:06:00.000Z",
+      "symbol": "SOLUSDT",
+      "observedAt": "2026-09-06T12:06:05.129Z",
+      "signalCloseTime": "2026-09-06T12:06:00.000Z",
+      "bar": {
+        "symbol": "BINANCE:SOLUSDT",
+        "tf": "1m",
+        "time": "2026-09-06T12:05:00.000Z",
+        "close_time": "2026-09-06T12:06:00.000Z",
+        "open": 106.45,
+        "high": 106.47,
+        "low": 106.4,
+        "close": 106.4
+      },
+      "inputHash": "e2592fb3fc20ffa1b69975016ee3a463df3b5d3e686ba8c452cb799d4d629cd0",
+      "snapshot": {
+        "time": 1788696359999,
+        "direction": "LONG",
+        "qualified": false,
+        "reasons": [
+          "ADX too low",
+          "Volatility below average",
+          "Low confluence"
+        ],
+        "longScore": 2,
+        "shortScore": 2,
+        "factors": {
+          "trend": true,
+          "vwap": true,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "longFactors": {
+          "trend": true,
+          "vwap": true,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "shortFactors": {
+          "trend": false,
+          "vwap": false,
+          "delta": true,
+          "volume": false,
+          "sweep": false,
+          "fvg": true,
+          "ob": false
+        },
+        "price": 106.4,
+        "sl": 106.30856561823903,
+        "tp": 106.67430314528293,
+        "adx": 10.859326056132703,
+        "atr": 0.060956254507321,
+        "vwap": 105.37670934961898,
+        "delta": -232.94121142867064
+      },
+      "decision": "NO_SETUP",
+      "reasons": [
+        "ADX too low",
+        "Volatility below average",
+        "Low confluence"
+      ],
+      "tradeId": null
+    },
+    {
+      "id": "BTCUSDT:2026-09-06T12:07:00.000Z",
+      "symbol": "BTCUSDT",
+      "observedAt": "2026-09-06T12:07:05.092Z",
+      "signalCloseTime": "2026-09-06T12:07:00.000Z",
+      "bar": {
+        "symbol": "BINANCE:BTCUSDT",
+        "tf": "1m",
+        "time": "2026-09-06T12:06:00.000Z",
+        "close_time": "2026-09-06T12:07:00.000Z",
+        "open": 79908.01,
+        "high": 79908.01,
+        "low": 79902.1,
+        "close": 79902.11
+      },
+      "inputHash": "6c2126f25bac205e618809e468877243a7a42d8e9e6ff97cfd1fccf01dbb7a27",
+      "snapshot": {
+        "time": 1788696419999,
+        "direction": null,
+        "qualified": false,
+        "reasons": [
+          "Neutral trend",
+          "ADX too low",
+          "Volatility below average",
+          "Low confluence",
+          "Invalid stop distance"
+        ],
+        "longScore": 1,
+        "shortScore": 2,
+        "factors": {
+          "trend": false,
+          "vwap": true,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "longFactors": {
+          "trend": false,
+          "vwap": true,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "shortFactors": {
+          "trend": false,
+          "vwap": false,
+          "delta": true,
+          "volume": false,
+          "sweep": false,
+          "fvg": true,
+          "ob": false
+        },
+        "price": 79902.11,
+        "sl": null,
+        "tp": null,
+        "adx": 16.14927695051963,
+        "atr": 6.6361947078339165,
+        "vwap": 79862.77298712544,
+        "delta": -1.1689127668460022
+      },
+      "decision": "NO_SETUP",
+      "reasons": [
+        "Neutral trend",
+        "ADX too low",
+        "Volatility below average",
+        "Low confluence",
+        "Invalid stop distance"
+      ],
+      "tradeId": null
+    },
+    {
+      "id": "ETHUSDT:2026-09-06T12:07:00.000Z",
+      "symbol": "ETHUSDT",
+      "observedAt": "2026-09-06T12:07:05.189Z",
+      "signalCloseTime": "2026-09-06T12:07:00.000Z",
+      "bar": {
+        "symbol": "BINANCE:ETHUSDT",
+        "tf": "1m",
+        "time": "2026-09-06T12:06:00.000Z",
+        "close_time": "2026-09-06T12:07:00.000Z",
+        "open": 2500.01,
+        "high": 2500.01,
+        "low": 2499.7,
+        "close": 2499.71
+      },
+      "inputHash": "b04c4b0123545e2fc3cbba07184ac135546c3a1869e8a7a2982c4e54a7441541",
+      "snapshot": {
+        "time": 1788696419999,
+        "direction": null,
+        "qualified": false,
+        "reasons": [
+          "Neutral trend",
+          "ADX too low",
+          "Volatility below average",
+          "Low confluence",
+          "Invalid stop distance"
+        ],
+        "longScore": 1,
+        "shortScore": 1,
+        "factors": {
+          "trend": false,
+          "vwap": true,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "longFactors": {
+          "trend": false,
+          "vwap": true,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "shortFactors": {
+          "trend": false,
+          "vwap": false,
+          "delta": true,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "price": 2499.71,
+        "sl": null,
+        "tp": null,
+        "adx": 11.448763645254234,
+        "atr": 0.5511833657457841,
+        "vwap": 2497.4244973786767,
+        "delta": -28.039250238904017
+      },
+      "decision": "NO_SETUP",
+      "reasons": [
+        "Neutral trend",
+        "ADX too low",
+        "Volatility below average",
+        "Low confluence",
+        "Invalid stop distance"
+      ],
+      "tradeId": null
+    },
+    {
+      "id": "SOLUSDT:2026-09-06T12:07:00.000Z",
+      "symbol": "SOLUSDT",
+      "observedAt": "2026-09-06T12:07:05.361Z",
+      "signalCloseTime": "2026-09-06T12:07:00.000Z",
+      "bar": {
+        "symbol": "BINANCE:SOLUSDT",
+        "tf": "1m",
+        "time": "2026-09-06T12:06:00.000Z",
+        "close_time": "2026-09-06T12:07:00.000Z",
+        "open": 106.41,
+        "high": 106.45,
+        "low": 106.39,
+        "close": 106.44
+      },
+      "inputHash": "62492018f6cea498c0a19875a2723f550f0abfc8b565e8711a54918af3308d17",
+      "snapshot": {
+        "time": 1788696419999,
+        "direction": "LONG",
+        "qualified": false,
+        "reasons": [
+          "ADX too low",
+          "Volatility below average",
+          "Low confluence"
+        ],
+        "longScore": 3,
+        "shortScore": 2,
+        "factors": {
+          "trend": true,
+          "vwap": true,
+          "delta": false,
+          "volume": true,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "longFactors": {
+          "trend": true,
+          "vwap": true,
+          "delta": false,
+          "volume": true,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "shortFactors": {
+          "trend": false,
+          "vwap": false,
+          "delta": true,
+          "volume": true,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "price": 106.44,
+        "sl": 106.29866807407909,
+        "tp": 106.86399577776272,
+        "adx": 11.224163360586214,
+        "atr": 0.06088795061394109,
+        "vwap": 105.37745435095836,
+        "delta": -34.26358323818121
+      },
+      "decision": "NO_SETUP",
+      "reasons": [
+        "ADX too low",
+        "Volatility below average",
+        "Low confluence"
+      ],
+      "tradeId": null
+    },
+    {
+      "id": "BTCUSDT:2026-09-06T12:08:00.000Z",
+      "symbol": "BTCUSDT",
+      "observedAt": "2026-09-06T12:08:08.131Z",
+      "signalCloseTime": "2026-09-06T12:08:00.000Z",
+      "bar": {
+        "symbol": "BINANCE:BTCUSDT",
+        "tf": "1m",
+        "time": "2026-09-06T12:07:00.000Z",
+        "close_time": "2026-09-06T12:08:00.000Z",
+        "open": 79902.11,
+        "high": 79902.11,
+        "low": 79902.1,
+        "close": 79902.11
+      },
+      "inputHash": "cc63dbe21d09971602dd2c58acb7253fdddf0425b2c2804fbbed37fbdf75352e",
+      "snapshot": {
+        "time": 1788696479999,
+        "direction": null,
+        "qualified": false,
+        "reasons": [
+          "Neutral trend",
+          "ADX too low",
+          "Volatility below average",
+          "Low confluence",
+          "Invalid stop distance"
+        ],
+        "longScore": 2,
+        "shortScore": 2,
+        "factors": {
+          "trend": false,
+          "vwap": true,
+          "delta": false,
+          "volume": true,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "longFactors": {
+          "trend": false,
+          "vwap": true,
+          "delta": false,
+          "volume": true,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "shortFactors": {
+          "trend": false,
+          "vwap": false,
+          "delta": true,
+          "volume": true,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "price": 79902.11,
+        "sl": null,
+        "tp": null,
+        "adx": 17.055066622891935,
+        "atr": 6.162895085845405,
+        "vwap": 79862.82962597447,
+        "delta": -1.0130577312665352
+      },
+      "decision": "NO_SETUP",
+      "reasons": [
+        "Neutral trend",
+        "ADX too low",
+        "Volatility below average",
+        "Low confluence",
+        "Invalid stop distance"
+      ],
+      "tradeId": null
+    },
+    {
+      "id": "ETHUSDT:2026-09-06T12:08:00.000Z",
+      "symbol": "ETHUSDT",
+      "observedAt": "2026-09-06T12:08:08.206Z",
+      "signalCloseTime": "2026-09-06T12:08:00.000Z",
+      "bar": {
+        "symbol": "BINANCE:ETHUSDT",
+        "tf": "1m",
+        "time": "2026-09-06T12:07:00.000Z",
+        "close_time": "2026-09-06T12:08:00.000Z",
+        "open": 2499.71,
+        "high": 2499.71,
+        "low": 2499.49,
+        "close": 2499.5
+      },
+      "inputHash": "947ca27c23673847be48e6034d896a057d6d8b25b559c38d6bef7b0f106238d7",
+      "snapshot": {
+        "time": 1788696479999,
+        "direction": null,
+        "qualified": false,
+        "reasons": [
+          "Neutral trend",
+          "ADX too low",
+          "Volatility below average",
+          "Low confluence",
+          "Invalid stop distance"
+        ],
+        "longScore": 1,
+        "shortScore": 1,
+        "factors": {
+          "trend": false,
+          "vwap": true,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "longFactors": {
+          "trend": false,
+          "vwap": true,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "shortFactors": {
+          "trend": false,
+          "vwap": false,
+          "delta": true,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "price": 2499.5,
+        "sl": null,
+        "tp": null,
+        "adx": 13.233332824432813,
+        "atr": 0.5275274110496748,
+        "vwap": 2497.4248278638142,
+        "delta": -26.98623020705015
+      },
+      "decision": "NO_SETUP",
+      "reasons": [
+        "Neutral trend",
+        "ADX too low",
+        "Volatility below average",
+        "Low confluence",
+        "Invalid stop distance"
+      ],
+      "tradeId": null
+    },
+    {
+      "id": "SOLUSDT:2026-09-06T12:08:00.000Z",
+      "symbol": "SOLUSDT",
+      "observedAt": "2026-09-06T12:08:08.107Z",
+      "signalCloseTime": "2026-09-06T12:08:00.000Z",
+      "bar": {
+        "symbol": "BINANCE:SOLUSDT",
+        "tf": "1m",
+        "time": "2026-09-06T12:07:00.000Z",
+        "close_time": "2026-09-06T12:08:00.000Z",
+        "open": 106.44,
+        "high": 106.45,
+        "low": 106.37,
+        "close": 106.45
+      },
+      "inputHash": "c2357c7014f106320b6257f5f7b72a437759b21528141af96ae87420f6b07486",
+      "snapshot": {
+        "time": 1788696479999,
+        "direction": "LONG",
+        "qualified": false,
+        "reasons": [
+          "ADX too low",
+          "Volatility below average",
+          "Low confluence"
+        ],
+        "longScore": 4,
+        "shortScore": 1,
+        "factors": {
+          "trend": true,
+          "vwap": true,
+          "delta": true,
+          "volume": true,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "longFactors": {
+          "trend": true,
+          "vwap": true,
+          "delta": true,
+          "volume": true,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "shortFactors": {
+          "trend": false,
+          "vwap": false,
+          "delta": false,
+          "volume": true,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "price": 106.45,
+        "sl": 106.27662035450201,
+        "tp": 106.97013893649397,
+        "adx": 11.856074218627771,
+        "atr": 0.062253096998659455,
+        "vwap": 105.38015995137282,
+        "delta": 583.0000945269096
+      },
+      "decision": "NO_SETUP",
+      "reasons": [
+        "ADX too low",
+        "Volatility below average",
+        "Low confluence"
+      ],
+      "tradeId": null
+    },
+    {
+      "id": "BTCUSDT:2026-09-06T12:09:00.000Z",
+      "symbol": "BTCUSDT",
+      "observedAt": "2026-09-06T12:09:07.369Z",
+      "signalCloseTime": "2026-09-06T12:09:00.000Z",
+      "bar": {
+        "symbol": "BINANCE:BTCUSDT",
+        "tf": "1m",
+        "time": "2026-09-06T12:08:00.000Z",
+        "close_time": "2026-09-06T12:09:00.000Z",
+        "open": 79902.1,
+        "high": 79902.11,
+        "low": 79902.1,
+        "close": 79902.1
+      },
+      "inputHash": "eefc38504ce3a7ef048851a83ae46c05ffe316388a687c1d04e916c1f2042470",
+      "snapshot": {
+        "time": 1788696539999,
+        "direction": null,
+        "qualified": false,
+        "reasons": [
+          "Neutral trend",
+          "ADX too low",
+          "Volatility below average",
+          "Low confluence",
+          "Invalid stop distance"
+        ],
+        "longScore": 1,
+        "shortScore": 1,
+        "factors": {
+          "trend": false,
+          "vwap": true,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "longFactors": {
+          "trend": false,
+          "vwap": true,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "shortFactors": {
+          "trend": false,
+          "vwap": false,
+          "delta": true,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "price": 79902.1,
+        "sl": null,
+        "tp": null,
+        "adx": 17.89615703295193,
+        "atr": 5.723402579713216,
+        "vwap": 79862.83322069766,
+        "delta": -0.8779833670976639
+      },
+      "decision": "NO_SETUP",
+      "reasons": [
+        "Neutral trend",
+        "ADX too low",
+        "Volatility below average",
+        "Low confluence",
+        "Invalid stop distance"
+      ],
+      "tradeId": null
+    },
+    {
+      "id": "ETHUSDT:2026-09-06T12:09:00.000Z",
+      "symbol": "ETHUSDT",
+      "observedAt": "2026-09-06T12:09:07.339Z",
+      "signalCloseTime": "2026-09-06T12:09:00.000Z",
+      "bar": {
+        "symbol": "BINANCE:ETHUSDT",
+        "tf": "1m",
+        "time": "2026-09-06T12:08:00.000Z",
+        "close_time": "2026-09-06T12:09:00.000Z",
+        "open": 2499.49,
+        "high": 2499.65,
+        "low": 2499.49,
+        "close": 2499.65
+      },
+      "inputHash": "4a8c8dfa916c3f26970b4d7c2c0849fdaee3d0d9b8602d313f95c38a828a17e8",
+      "snapshot": {
+        "time": 1788696539999,
+        "direction": null,
+        "qualified": false,
+        "reasons": [
+          "Neutral trend",
+          "ADX too low",
+          "Volatility below average",
+          "Low confluence",
+          "Invalid stop distance"
+        ],
+        "longScore": 1,
+        "shortScore": 1,
+        "factors": {
+          "trend": false,
+          "vwap": true,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "longFactors": {
+          "trend": false,
+          "vwap": true,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "shortFactors": {
+          "trend": false,
+          "vwap": false,
+          "delta": true,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "price": 2499.65,
+        "sl": null,
+        "tp": null,
+        "adx": 14.890432776527208,
+        "atr": 0.5012754531175773,
+        "vwap": 2497.42519642383,
+        "delta": -20.43353284611013
+      },
+      "decision": "NO_SETUP",
+      "reasons": [
+        "Neutral trend",
+        "ADX too low",
+        "Volatility below average",
+        "Low confluence",
+        "Invalid stop distance"
+      ],
+      "tradeId": null
+    },
+    {
+      "id": "SOLUSDT:2026-09-06T12:09:00.000Z",
+      "symbol": "SOLUSDT",
+      "observedAt": "2026-09-06T12:09:07.365Z",
+      "signalCloseTime": "2026-09-06T12:09:00.000Z",
+      "bar": {
+        "symbol": "BINANCE:SOLUSDT",
+        "tf": "1m",
+        "time": "2026-09-06T12:08:00.000Z",
+        "close_time": "2026-09-06T12:09:00.000Z",
+        "open": 106.45,
+        "high": 106.5,
+        "low": 106.44,
+        "close": 106.5
+      },
+      "inputHash": "ca9243f8670d037d1f4c7b7867d1faa658e94a4fae8954c69977f09012057e0e",
+      "snapshot": {
+        "time": 1788696539999,
+        "direction": "LONG",
+        "qualified": false,
+        "reasons": [
+          "ADX too low",
+          "Volatility below average",
+          "Low confluence"
+        ],
+        "longScore": 3,
+        "shortScore": 0,
+        "factors": {
+          "trend": true,
+          "vwap": true,
+          "delta": true,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "longFactors": {
+          "trend": true,
+          "vwap": true,
+          "delta": true,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "shortFactors": {
+          "trend": false,
+          "vwap": false,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "price": 106.5,
+        "sl": 106.34686175775187,
+        "tp": 106.9594147267444,
+        "adx": 11.446227081093358,
+        "atr": 0.06209216149875537,
+        "vwap": 105.38040595166912,
+        "delta": 558.2532819233217
+      },
+      "decision": "NO_SETUP",
+      "reasons": [
+        "ADX too low",
+        "Volatility below average",
+        "Low confluence"
+      ],
+      "tradeId": null
+    },
+    {
+      "id": "BTCUSDT:2026-09-06T12:10:00.000Z",
+      "symbol": "BTCUSDT",
+      "observedAt": "2026-09-06T12:10:04.873Z",
+      "signalCloseTime": "2026-09-06T12:10:00.000Z",
+      "bar": {
+        "symbol": "BINANCE:BTCUSDT",
+        "tf": "1m",
+        "time": "2026-09-06T12:09:00.000Z",
+        "close_time": "2026-09-06T12:10:00.000Z",
+        "open": 79902.1,
+        "high": 79902.11,
+        "low": 79896,
+        "close": 79896.01
+      },
+      "inputHash": "6bae3237dd357c3b7b8932fefa6eaaec947eaad975c1d7facc23b0351a105e9f",
+      "snapshot": {
+        "time": 1788696599999,
+        "direction": null,
+        "qualified": false,
+        "reasons": [
+          "Neutral trend",
+          "ADX too low",
+          "Volatility below average",
+          "Low confluence",
+          "Invalid stop distance"
+        ],
+        "longScore": 1,
+        "shortScore": 1,
+        "factors": {
+          "trend": false,
+          "vwap": true,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "longFactors": {
+          "trend": false,
+          "vwap": true,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "shortFactors": {
+          "trend": false,
+          "vwap": false,
+          "delta": true,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "price": 79896.01,
+        "sl": null,
+        "tp": null,
+        "adx": 19.131353168395663,
+        "atr": 5.751016681162314,
+        "vwap": 79862.84462062984,
+        "delta": -1.0449269181513088
+      },
+      "decision": "NO_SETUP",
+      "reasons": [
+        "Neutral trend",
+        "ADX too low",
+        "Volatility below average",
+        "Low confluence",
+        "Invalid stop distance"
+      ],
+      "tradeId": null
+    },
+    {
+      "id": "ETHUSDT:2026-09-06T12:10:00.000Z",
+      "symbol": "ETHUSDT",
+      "observedAt": "2026-09-06T12:10:04.889Z",
+      "signalCloseTime": "2026-09-06T12:10:00.000Z",
+      "bar": {
+        "symbol": "BINANCE:ETHUSDT",
+        "tf": "1m",
+        "time": "2026-09-06T12:09:00.000Z",
+        "close_time": "2026-09-06T12:10:00.000Z",
+        "open": 2499.65,
+        "high": 2501.38,
+        "low": 2499.64,
+        "close": 2501.38
+      },
+      "inputHash": "8806f619727aa16152c042d6d4220aebdbbb9896ae0ee372967e309e737e8791",
+      "snapshot": {
+        "time": 1788696599999,
+        "direction": "LONG",
+        "qualified": false,
+        "reasons": [
+          "ADX too low",
+          "Volatility below average",
+          "Low confluence"
+        ],
+        "longScore": 3,
+        "shortScore": 2,
+        "factors": {
+          "trend": true,
+          "vwap": true,
+          "delta": false,
+          "volume": true,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "longFactors": {
+          "trend": true,
+          "vwap": true,
+          "delta": false,
+          "volume": true,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "shortFactors": {
+          "trend": false,
+          "vwap": false,
+          "delta": true,
+          "volume": true,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "price": 2501.38,
+        "sl": 2498.7553663331573,
+        "tp": 2509.2539010005285,
+        "adx": 14.34073197334152,
+        "atr": 0.5897557778949102,
+        "vwap": 2497.4272447567005,
+        "delta": -7.135435133295445
+      },
+      "decision": "NO_SETUP",
+      "reasons": [
+        "ADX too low",
+        "Volatility below average",
+        "Low confluence"
+      ],
+      "tradeId": null
+    },
+    {
+      "id": "SOLUSDT:2026-09-06T12:10:00.000Z",
+      "symbol": "SOLUSDT",
+      "observedAt": "2026-09-06T12:10:04.854Z",
+      "signalCloseTime": "2026-09-06T12:10:00.000Z",
+      "bar": {
+        "symbol": "BINANCE:SOLUSDT",
+        "tf": "1m",
+        "time": "2026-09-06T12:09:00.000Z",
+        "close_time": "2026-09-06T12:10:00.000Z",
+        "open": 106.5,
+        "high": 106.53,
+        "low": 106.48,
+        "close": 106.51
+      },
+      "inputHash": "c6482224a74d5d130ca1cb1f55228d300189e194672ec4fe9342b5f3ab184434",
+      "snapshot": {
+        "time": 1788696599999,
+        "direction": "LONG",
+        "qualified": false,
+        "reasons": [
+          "ADX too low",
+          "Volatility below average",
+          "Low confluence"
+        ],
+        "longScore": 3,
+        "shortScore": 0,
+        "factors": {
+          "trend": true,
+          "vwap": true,
+          "delta": true,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "longFactors": {
+          "trend": true,
+          "vwap": true,
+          "delta": true,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "shortFactors": {
+          "trend": false,
+          "vwap": false,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "price": 106.51,
+        "sl": 106.38815734648388,
+        "tp": 106.87552796054838,
+        "adx": 10.721013564316578,
+        "atr": 0.061228435677415496,
+        "vwap": 105.38097304887307,
+        "delta": 603.1624443335454
+      },
+      "decision": "NO_SETUP",
+      "reasons": [
+        "ADX too low",
+        "Volatility below average",
+        "Low confluence"
+      ],
+      "tradeId": null
+    },
+    {
+      "id": "BTCUSDT:2026-09-06T12:11:00.000Z",
+      "symbol": "BTCUSDT",
+      "observedAt": "2026-09-06T12:11:04.489Z",
+      "signalCloseTime": "2026-09-06T12:11:00.000Z",
+      "bar": {
+        "symbol": "BINANCE:BTCUSDT",
+        "tf": "1m",
+        "time": "2026-09-06T12:10:00.000Z",
+        "close_time": "2026-09-06T12:11:00.000Z",
+        "open": 79896.01,
+        "high": 79896.01,
+        "low": 79884,
+        "close": 79884.01
+      },
+      "inputHash": "7a4bd91db38e6dbd78b5792233624cbbb25a7b0c8f5f61deeca582b104873824",
+      "snapshot": {
+        "time": 1788696659999,
+        "direction": null,
+        "qualified": false,
+        "reasons": [
+          "Neutral trend",
+          "Volatility below average",
+          "Low confluence",
+          "Invalid stop distance"
+        ],
+        "longScore": 2,
+        "shortScore": 3,
+        "factors": {
+          "trend": false,
+          "vwap": true,
+          "delta": false,
+          "volume": true,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "longFactors": {
+          "trend": false,
+          "vwap": true,
+          "delta": false,
+          "volume": true,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "shortFactors": {
+          "trend": false,
+          "vwap": false,
+          "delta": true,
+          "volume": true,
+          "sweep": false,
+          "fvg": true,
+          "ob": false
+        },
+        "price": 79884.01,
+        "sl": null,
+        "tp": null,
+        "adx": 21.015102185914454,
+        "atr": 6.198086918221775,
+        "vwap": 79862.85979189833,
+        "delta": -1.4347699957311342
+      },
+      "decision": "NO_SETUP",
+      "reasons": [
+        "Neutral trend",
+        "Volatility below average",
+        "Low confluence",
+        "Invalid stop distance"
+      ],
+      "tradeId": null
+    },
+    {
+      "id": "ETHUSDT:2026-09-06T12:11:00.000Z",
+      "symbol": "ETHUSDT",
+      "observedAt": "2026-09-06T12:11:04.500Z",
+      "signalCloseTime": "2026-09-06T12:11:00.000Z",
+      "bar": {
+        "symbol": "BINANCE:ETHUSDT",
+        "tf": "1m",
+        "time": "2026-09-06T12:10:00.000Z",
+        "close_time": "2026-09-06T12:11:00.000Z",
+        "open": 2501.37,
+        "high": 2501.38,
+        "low": 2500.28,
+        "close": 2500.28
+      },
+      "inputHash": "c59c1e2f1150d1fc5a93d43ed60b54e0c89431804f790548f9cc3d85b11f9d60",
+      "snapshot": {
+        "time": 1788696659999,
+        "direction": null,
+        "qualified": false,
+        "reasons": [
+          "Neutral trend",
+          "ADX too low",
+          "Low confluence",
+          "Invalid stop distance"
+        ],
+        "longScore": 1,
+        "shortScore": 1,
+        "factors": {
+          "trend": false,
+          "vwap": true,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "longFactors": {
+          "trend": false,
+          "vwap": true,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "shortFactors": {
+          "trend": false,
+          "vwap": false,
+          "delta": true,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "price": 2500.28,
+        "sl": null,
+        "tp": null,
+        "adx": 13.83029551324052,
+        "atr": 0.626201793759553,
+        "vwap": 2497.4280539280353,
+        "delta": -10.56373711552272
+      },
+      "decision": "NO_SETUP",
+      "reasons": [
+        "Neutral trend",
+        "ADX too low",
+        "Low confluence",
+        "Invalid stop distance"
+      ],
+      "tradeId": null
+    },
+    {
+      "id": "SOLUSDT:2026-09-06T12:11:00.000Z",
+      "symbol": "SOLUSDT",
+      "observedAt": "2026-09-06T12:11:04.530Z",
+      "signalCloseTime": "2026-09-06T12:11:00.000Z",
+      "bar": {
+        "symbol": "BINANCE:SOLUSDT",
+        "tf": "1m",
+        "time": "2026-09-06T12:10:00.000Z",
+        "close_time": "2026-09-06T12:11:00.000Z",
+        "open": 106.51,
+        "high": 106.51,
+        "low": 106.47,
+        "close": 106.5
+      },
+      "inputHash": "e8c6501f2abeec353cb6069caa25090e37c80c60a23e60bb2f3f24251661814c",
+      "snapshot": {
+        "time": 1788696659999,
+        "direction": "LONG",
+        "qualified": false,
+        "reasons": [
+          "ADX too low",
+          "Volatility below average",
+          "Low confluence"
+        ],
+        "longScore": 3,
+        "shortScore": 0,
+        "factors": {
+          "trend": true,
+          "vwap": true,
+          "delta": true,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "longFactors": {
+          "trend": true,
+          "vwap": true,
+          "delta": true,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "shortFactors": {
+          "trend": false,
+          "vwap": false,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "price": 106.5,
+        "sl": 106.38043182173503,
+        "tp": 106.85870453479491,
+        "adx": 10.039812765189142,
+        "atr": 0.059712118843314836,
+        "vwap": 105.38177368147738,
+        "delta": 352.02305175573935
+      },
+      "decision": "NO_SETUP",
+      "reasons": [
+        "ADX too low",
+        "Volatility below average",
+        "Low confluence"
+      ],
+      "tradeId": null
+    },
+    {
+      "id": "BTCUSDT:2026-09-06T12:12:00.000Z",
+      "symbol": "BTCUSDT",
+      "observedAt": "2026-09-06T12:12:04.561Z",
+      "signalCloseTime": "2026-09-06T12:12:00.000Z",
+      "bar": {
+        "symbol": "BINANCE:BTCUSDT",
+        "tf": "1m",
+        "time": "2026-09-06T12:11:00.000Z",
+        "close_time": "2026-09-06T12:12:00.000Z",
+        "open": 79884,
+        "high": 79884.01,
+        "low": 79861.2,
+        "close": 79867.87
+      },
+      "inputHash": "6986587c6aa3f1ef9827acaae34ab0084a44f02ae17631d344d2bf542cb71c02",
+      "snapshot": {
+        "time": 1788696719999,
+        "direction": null,
+        "qualified": false,
+        "reasons": [
+          "Neutral trend",
+          "Volatility below average",
+          "Low confluence",
+          "Invalid stop distance"
+        ],
+        "longScore": 2,
+        "shortScore": 3,
+        "factors": {
+          "trend": false,
+          "vwap": true,
+          "delta": false,
+          "volume": true,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "longFactors": {
+          "trend": false,
+          "vwap": true,
+          "delta": false,
+          "volume": true,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "shortFactors": {
+          "trend": false,
+          "vwap": false,
+          "delta": true,
+          "volume": true,
+          "sweep": false,
+          "fvg": true,
+          "ob": false
+        },
+        "price": 79867.87,
+        "sl": null,
+        "tp": null,
+        "adx": 23.72052995077323,
+        "atr": 7.384652138348625,
+        "vwap": 79862.86726889588,
+        "delta": -2.0477073296336497
+      },
+      "decision": "NO_SETUP",
+      "reasons": [
+        "Neutral trend",
+        "Volatility below average",
+        "Low confluence",
+        "Invalid stop distance"
+      ],
+      "tradeId": null
+    },
+    {
+      "id": "ETHUSDT:2026-09-06T12:12:00.000Z",
+      "symbol": "ETHUSDT",
+      "observedAt": "2026-09-06T12:12:04.823Z",
+      "signalCloseTime": "2026-09-06T12:12:00.000Z",
+      "bar": {
+        "symbol": "BINANCE:ETHUSDT",
+        "tf": "1m",
+        "time": "2026-09-06T12:11:00.000Z",
+        "close_time": "2026-09-06T12:12:00.000Z",
+        "open": 2500.29,
+        "high": 2500.29,
+        "low": 2499.56,
+        "close": 2499.56
+      },
+      "inputHash": "32c2de34b7830d2c1431ce314c6c0875cdeb4f728bef493b46e0506ecee27e1c",
+      "snapshot": {
+        "time": 1788696719999,
+        "direction": null,
+        "qualified": false,
+        "reasons": [
+          "Neutral trend",
+          "ADX too low",
+          "Low confluence",
+          "Invalid stop distance"
+        ],
+        "longScore": 2,
+        "shortScore": 2,
+        "factors": {
+          "trend": false,
+          "vwap": true,
+          "delta": false,
+          "volume": true,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "longFactors": {
+          "trend": false,
+          "vwap": true,
+          "delta": false,
+          "volume": true,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "shortFactors": {
+          "trend": false,
+          "vwap": false,
+          "delta": true,
+          "volume": true,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "price": 2499.56,
+        "sl": null,
+        "tp": null,
+        "adx": 13.35229167015109,
+        "atr": 0.6336159513481576,
+        "vwap": 2497.4298203690096,
+        "delta": -22.12370550011969
+      },
+      "decision": "NO_SETUP",
+      "reasons": [
+        "Neutral trend",
+        "ADX too low",
+        "Low confluence",
+        "Invalid stop distance"
+      ],
+      "tradeId": null
+    },
+    {
+      "id": "SOLUSDT:2026-09-06T12:12:00.000Z",
+      "symbol": "SOLUSDT",
+      "observedAt": "2026-09-06T12:12:04.520Z",
+      "signalCloseTime": "2026-09-06T12:12:00.000Z",
+      "bar": {
+        "symbol": "BINANCE:SOLUSDT",
+        "tf": "1m",
+        "time": "2026-09-06T12:11:00.000Z",
+        "close_time": "2026-09-06T12:12:00.000Z",
+        "open": 106.49,
+        "high": 106.5,
+        "low": 106.49,
+        "close": 106.5
+      },
+      "inputHash": "d2d10e1315ca8c3d319e7d64331c1971d2feb5b00392f6021bdc083e9b487e38",
+      "snapshot": {
+        "time": 1788696719999,
+        "direction": "LONG",
+        "qualified": false,
+        "reasons": [
+          "ADX too low",
+          "Volatility below average",
+          "Low confluence"
+        ],
+        "longScore": 3,
+        "shortScore": 0,
+        "factors": {
+          "trend": true,
+          "vwap": true,
+          "delta": true,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "longFactors": {
+          "trend": true,
+          "vwap": true,
+          "delta": true,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "shortFactors": {
+          "trend": false,
+          "vwap": false,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "price": 106.5,
+        "sl": 106.40575812018253,
+        "tp": 106.78272563945242,
+        "adx": 9.407269165999379,
+        "atr": 0.05616125321164985,
+        "vwap": 105.38195284819493,
+        "delta": 343.2094448549741
+      },
+      "decision": "NO_SETUP",
+      "reasons": [
+        "ADX too low",
+        "Volatility below average",
+        "Low confluence"
+      ],
+      "tradeId": null
+    },
+    {
+      "id": "BTCUSDT:2026-09-06T12:13:00.000Z",
+      "symbol": "BTCUSDT",
+      "observedAt": "2026-09-06T12:13:04.261Z",
+      "signalCloseTime": "2026-09-06T12:13:00.000Z",
+      "bar": {
+        "symbol": "BINANCE:BTCUSDT",
+        "tf": "1m",
+        "time": "2026-09-06T12:12:00.000Z",
+        "close_time": "2026-09-06T12:13:00.000Z",
+        "open": 79867.86,
+        "high": 79868.38,
+        "low": 79858.1,
+        "close": 79868.38
+      },
+      "inputHash": "2ab6bd18dac9a26b0288572b44e62d9a9f156423201052a788d3365acd0864b3",
+      "snapshot": {
+        "time": 1788696779999,
+        "direction": null,
+        "qualified": false,
+        "reasons": [
+          "Neutral trend",
+          "Volatility below average",
+          "Low confluence",
+          "Invalid stop distance"
+        ],
+        "longScore": 3,
+        "shortScore": 2,
+        "factors": {
+          "trend": false,
+          "vwap": true,
+          "delta": false,
+          "volume": true,
+          "sweep": true,
+          "fvg": false,
+          "ob": false
+        },
+        "longFactors": {
+          "trend": false,
+          "vwap": true,
+          "delta": false,
+          "volume": true,
+          "sweep": true,
+          "fvg": false,
+          "ob": false
+        },
+        "shortFactors": {
+          "trend": false,
+          "vwap": false,
+          "delta": true,
+          "volume": true,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "price": 79868.38,
+        "sl": null,
+        "tp": null,
+        "adx": 26.33466538029927,
+        "atr": 7.591462699895069,
+        "vwap": 79862.86861640976,
+        "delta": -1.2068730190158299
+      },
+      "decision": "NO_SETUP",
+      "reasons": [
+        "Neutral trend",
+        "Volatility below average",
+        "Low confluence",
+        "Invalid stop distance"
+      ],
+      "tradeId": null
+    },
+    {
+      "id": "ETHUSDT:2026-09-06T12:13:00.000Z",
+      "symbol": "ETHUSDT",
+      "observedAt": "2026-09-06T12:13:04.233Z",
+      "signalCloseTime": "2026-09-06T12:13:00.000Z",
+      "bar": {
+        "symbol": "BINANCE:ETHUSDT",
+        "tf": "1m",
+        "time": "2026-09-06T12:12:00.000Z",
+        "close_time": "2026-09-06T12:13:00.000Z",
+        "open": 2499.72,
+        "high": 2499.81,
+        "low": 2499.51,
+        "close": 2499.8
+      },
+      "inputHash": "e93ad0712211835607f4da62feaa27e1b7b438d2956c4d6663c884271daf5b3e",
+      "snapshot": {
+        "time": 1788696779999,
+        "direction": null,
+        "qualified": false,
+        "reasons": [
+          "Neutral trend",
+          "ADX too low",
+          "Low confluence",
+          "Invalid stop distance"
+        ],
+        "longScore": 2,
+        "shortScore": 2,
+        "factors": {
+          "trend": false,
+          "vwap": true,
+          "delta": false,
+          "volume": true,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "longFactors": {
+          "trend": false,
+          "vwap": true,
+          "delta": false,
+          "volume": true,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "shortFactors": {
+          "trend": false,
+          "vwap": false,
+          "delta": true,
+          "volume": true,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "price": 2499.8,
+        "sl": null,
+        "tp": null,
+        "adx": 12.97410138309235,
+        "atr": 0.6097862405375555,
+        "vwap": 2497.431218209731,
+        "delta": -8.461278100103732
+      },
+      "decision": "NO_SETUP",
+      "reasons": [
+        "Neutral trend",
+        "ADX too low",
+        "Low confluence",
+        "Invalid stop distance"
+      ],
+      "tradeId": null
+    },
+    {
+      "id": "SOLUSDT:2026-09-06T12:13:00.000Z",
+      "symbol": "SOLUSDT",
+      "observedAt": "2026-09-06T12:13:04.340Z",
+      "signalCloseTime": "2026-09-06T12:13:00.000Z",
+      "bar": {
+        "symbol": "BINANCE:SOLUSDT",
+        "tf": "1m",
+        "time": "2026-09-06T12:12:00.000Z",
+        "close_time": "2026-09-06T12:13:00.000Z",
+        "open": 106.5,
+        "high": 106.5,
+        "low": 106.46,
+        "close": 106.5
+      },
+      "inputHash": "c5fb8beab5ba1cfd4b8b5b71c2c6f516b27c8b70996c22005d3a567c5b5745d2",
+      "snapshot": {
+        "time": 1788696779999,
+        "direction": "LONG",
+        "qualified": false,
+        "reasons": [
+          "ADX too low",
+          "Volatility below average",
+          "Low confluence"
+        ],
+        "longScore": 3,
+        "shortScore": 0,
+        "factors": {
+          "trend": true,
+          "vwap": true,
+          "delta": true,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "longFactors": {
+          "trend": true,
+          "vwap": true,
+          "delta": true,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "shortFactors": {
+          "trend": false,
+          "vwap": false,
+          "delta": false,
+          "volume": false,
+          "sweep": false,
+          "fvg": false,
+          "ob": false
+        },
+        "price": 106.5,
+        "sl": 106.37748968302662,
+        "tp": 106.86753095092013,
+        "adx": 9.37343985396487,
+        "atr": 0.05500687798224674,
+        "vwap": 105.3822567491508,
+        "delta": 297.44818554097753
+      },
+      "decision": "NO_SETUP",
+      "reasons": [
+        "ADX too low",
+        "Volatility below average",
+        "Low confluence"
+      ],
+      "tradeId": null
+    }
+  ],
+  "bars": [],
+  "warnings": [],
+  "runs": [
+    {
+      "id": "b52711e8-3d4f-4924-840a-c863b8840cf7",
+      "startedAt": "2026-09-06T11:43:57.686Z",
+      "finishedAt": "2026-09-06T12:13:57.688Z",
+      "minutes": 30,
+      "reason": "DURATION_COMPLETE"
+    }
+  ],
+  "summary": {
+    "observations": 93,
+    "closedTrades": 0,
+    "openTrades": 0,
+    "realizedPnl": 0,
+    "capital": 100000,
+    "markedUnrealizedPnl": 0,
+    "winRate": null,
+    "profitFactor": null,
+    "grossProfit": 0,
+    "grossLoss": 0,
+    "note": "Unvalidated forward paper sample. Fees excluded. Null profit factor means no realized losses; open marks can be stale."
+  }
+}
