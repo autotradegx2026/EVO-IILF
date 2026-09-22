@@ -2,7 +2,7 @@
 
 Repository: https://github.com/autotradegx2026/EVO-IILF
 
-The user will import this repository in Netlify. `netlify.toml` sets `npm run build`, `.next` as the publish directory and Node 22. Netlify detects Next.js and installs its OpenNext adapter automatically. Keep the Next.js API routes and middleware; do not configure this application as a static export or add a catch-all redirect to `index.html`.
+The user will import this repository in Netlify. `netlify.toml` sets `npm run build`, `.next` as the publish directory and Node 22, and explicitly enables `@netlify/plugin-nextjs`. The initial import detected Next.js but did not run its adapter, publishing raw build files with no server functions and returning 404. The explicit plugin declaration ensures the adapter runs without pinning its version. Keep the Next.js API routes and middleware; do not configure this application as a static export or add a catch-all redirect to `index.html`.
 
 ## Environment before the first build
 
