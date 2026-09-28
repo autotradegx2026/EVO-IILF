@@ -6,6 +6,7 @@ import { Play, Square } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import type { PaperConfiguration } from '@/lib/paper/status'
+import { sessionLabel } from '@/lib/trading/session'
 
 export function PaperControls({ configuration, loading, refresh }: { configuration: PaperConfiguration | null; loading: boolean; refresh: () => Promise<void> }) {
   const [source, setSource] = useState('binance'), [symbols, setSymbols] = useState(''), [timeframe, setTimeframe] = useState('15m')
@@ -44,7 +45,7 @@ export function PaperControls({ configuration, loading, refresh }: { configurati
         {source === 'binance' && <><label className="text-sm">Paper candle timeframe<select className={field} value={timeframe} onChange={e => {dirty.current=true;setTimeframe(e.target.value)}}>{['1m','5m','15m','1h'].map(tf=><option key={tf}>{tf}</option>)}</select></label><label className="text-sm md:col-span-2">Paper watchlist<input className={field} value={symbols} placeholder="BINANCE:BTCUSDT, BINANCE:ETHUSDT" onChange={e=>{dirty.current=true;setSymbols(e.target.value)}} /><span className="mt-1 block text-xs text-muted-foreground">Enter one to five Binance USDT pairs. This watchlist is separate from broker trading.</span></label></>}
       </fieldset>
       {source === 'tradingview' && <p className="text-sm text-muted-foreground">Uses the TradingView paper delivery mode, token and watchlist saved in <Link href="/screener" className="underline">Strategy & Screener</Link>. Keep candle alerts running for position exits.</p>}
-      {configuration && <p className="text-sm text-muted-foreground">Session {configuration.session_start.slice(0,5)}–{configuration.session_end.slice(0,5)} ({configuration.session_timezone ?? 'Asia/Kolkata'}). Strategy parameters and risk limits are shared with your saved strategy. <Link className="underline" href="/screener">Edit strategy and session</Link>.</p>}
+      {configuration && <p className="text-sm text-muted-foreground">Session: {sessionLabel(configuration.session_start, configuration.session_end)} · Timezone: {configuration.session_timezone ?? 'Asia/Kolkata'}. Strategy parameters and risk limits are shared with your saved strategy. <Link className="underline" href="/screener">Edit strategy and session</Link>.</p>}
       <div className="flex flex-wrap gap-3">
         <Button size="lg" disabled={busy || loading || !configuration || enabled || configuration.kill_switch_active} onClick={()=>void change(true)}><Play />{busy ? 'Saving…' : 'Start paper trading'}</Button>
         <Button variant="destructive" size="lg" disabled={busy || (!!configuration && !enabled)} onClick={()=>void change(false)}><Square />Stop paper trading</Button>

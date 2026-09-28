@@ -150,6 +150,7 @@ export default function ScreenerPage() {
         <label className="text-xs text-muted-foreground">Session timezone<select className={`${fieldClass} mt-1`} value={config.sessionTimezone} onChange={e => change('sessionTimezone', e.target.value as StrategyConfig['sessionTimezone'])}>{['Asia/Kolkata', 'Etc/UTC', 'America/New_York', 'Europe/London'].map(v => <option key={v}>{v}</option>)}</select></label>
         <label className="text-xs text-muted-foreground">Session start<input className={`${fieldClass} mt-1`} type="time" value={config.sessionStart} onChange={e => change('sessionStart', e.target.value)} /></label>
         <label className="text-xs text-muted-foreground">Session end<input className={`${fieldClass} mt-1`} type="time" value={config.sessionEnd} onChange={e => change('sessionEnd', e.target.value)} /></label>
+        <p className="text-xs text-muted-foreground sm:col-span-2">For a 24/7 session, set both times to 00:00. Strategy filters and daily risk limits still apply; orders depend on market availability.</p>
       </fieldset>
       <div className="mt-5 flex flex-wrap gap-6">{(['vwapEnabled', 'deltaEnabled', 'fvgEnabled', 'obEnabled'] as const).map((key, i) => <label className="flex items-center gap-2 text-sm" key={key}><input type="checkbox" disabled={loading || busy} checked={config[key]} onChange={e => change(key, e.target.checked)} />{['VWAP', 'Delta proxy', 'FVG', 'Order block'][i]}</label>)}</div>
     </section>

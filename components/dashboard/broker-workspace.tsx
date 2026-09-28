@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import type { Environment, Execution } from '@/lib/execution/model'
+import { sessionLabel } from '@/lib/trading/session'
 
 const DEMO = process.env.NEXT_PUBLIC_DEMO_MODE === 'true'
 type Account = { id: string; broker: 'binance' | 'angelone'; environment: Environment; label: string; connected: boolean; last_checked_at: string | null; error: string | null }
@@ -174,7 +175,7 @@ export function BrokerWorkspace({ view, onRunChange }: { view: 'credentials' | '
         <Button asChild variant="outline" size="lg"><Link href="/automation">View broker orders</Link></Button>
       </div>
       <p className="mt-4 text-xs text-muted-foreground">Last started: {time(data?.settings.started_at ?? null)} · Last stopped: {time(data?.settings.stopped_at ?? null)}. Switching account requires stopping first. Starting does not force a trade.</p>
-      <p className="mt-2 text-xs text-muted-foreground">Broker watchlist: {data?.configuration?.screener_symbols.join(', ') || 'Not configured'} · Session: {data?.configuration ? `${data.configuration.session_start}–${data.configuration.session_end} (${data.configuration.session_timezone})` : 'Unavailable'}. <Link href="/screener" className="underline">Edit strategy and watchlist</Link>.</p>
+      <p className="mt-2 text-xs text-muted-foreground">Broker watchlist: {data?.configuration?.screener_symbols.join(', ') || 'Not configured'} · Session: {data?.configuration ? `${sessionLabel(data.configuration.session_start, data.configuration.session_end)} (${data.configuration.session_timezone})` : 'Unavailable'}. <Link href="/screener" className="underline">Edit strategy and watchlist</Link>.</p>
       <p className="mt-2 text-xs text-muted-foreground">Binance Spot scans long setups and places a broker stop/target OCO. Angel One requires TradingView alerts and a continuous execution worker. The worker continues while this page is closed.</p>
     </section>}
 

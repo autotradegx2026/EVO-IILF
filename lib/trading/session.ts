@@ -1,5 +1,10 @@
 import { localParts } from '../strategy/config'
 
+export function sessionLabel(start: string, end: string): string {
+  const first = start.slice(0, 5), last = end.slice(0, 5)
+  return first === last ? '24/7 (all day, every day)' : `${first}–${last}`
+}
+
 export function marketDayStart(now = new Date(), timezone = 'Asia/Kolkata'): string {
   const formatter = new Intl.DateTimeFormat('en-CA', { timeZone: timezone, year: 'numeric', month: '2-digit', day: '2-digit' })
   const day = (time: number) => {

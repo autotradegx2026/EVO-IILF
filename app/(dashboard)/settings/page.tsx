@@ -213,6 +213,7 @@ export default function SettingsPage() {
 
       {/* Session */}
       <Section title={`Trading Session (${form.session_timezone ?? 'Asia/Kolkata'})`}>
+        <p className="text-xs text-muted-foreground">Set both times to 00:00 for 24/7. Strategy filters and daily risk limits still apply; orders depend on market availability.</p>
         <Row label="Session Start">
           <TimeInput value={form.session_start} onChange={v => set('session_start', v)} />
         </Row>
