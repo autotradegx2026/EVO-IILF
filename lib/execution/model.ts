@@ -18,13 +18,15 @@ export type Instrument = {
 }
 export type Submission = { outcome: 'ACCEPTED'; orderId?: string } | { outcome: 'REJECTED'; reason: string } | { outcome: 'UNKNOWN'; reason: string }
 export interface ExecutionBroker {
-  readonly venue: 'angelone' | 'binance'
+  readonly venue: 'angelone' | 'binance' | 'mt5'
   readonly environment: Environment
   readonly nativeOco: boolean
   readonly longOnly: boolean
   connect(): Promise<void>
   instrument(symbol: string): Promise<Instrument>
   availableQuote(symbol: string): Promise<number>
+  /** Margin venues: equity for risk sizing, in quote currency. Spot venues size risk from availableQuote. */
+  riskCapital?(symbol: string): Promise<number>
   availableBase(symbol: string): Promise<number>
   lookup(symbol: string, intent: Intent): Promise<OrderSnapshot | null>
   submit(symbol: string, intent: Intent): Promise<Submission>

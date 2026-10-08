@@ -270,8 +270,8 @@ export type Database = {
         Relationships: []
       }
       execution_accounts: {
-        Row: R<{id:string;user_id:string;broker:'angelone'|'binance';environment:'testnet'|'live';label:string;credentials_encrypted:string;connected:boolean;last_checked_at:string|null;error:string|null;created_at:string}>
-        Insert: R<{user_id:string;broker:'angelone'|'binance';environment:'testnet'|'live';label:string;credentials_encrypted:string}>
+        Row: R<{id:string;user_id:string;broker:'angelone'|'binance'|'mt5';environment:'testnet'|'live';label:string;credentials_encrypted:string;connected:boolean;last_checked_at:string|null;error:string|null;created_at:string}>
+        Insert: R<{user_id:string;broker:'angelone'|'binance'|'mt5';environment:'testnet'|'live';label:string;credentials_encrypted:string}>
         Update: R<{connected?:boolean;last_checked_at?:string;error?:string|null}>
         Relationships: []
       }
@@ -291,6 +291,30 @@ export type Database = {
         Row: R<import('../lib/execution/model').Execution>
         Insert: R<Partial<import('../lib/execution/model').Execution>>
         Update: R<Partial<import('../lib/execution/model').Execution>>
+        Relationships: []
+      }
+      mt5_bridges: {
+        Row: R<{account_id:string;token_hash:string;login:number|null;server:string|null;company:string|null;trade_mode:'DEMO'|'CONTEST'|'REAL'|null;margin_mode:string|null;currency:string|null;balance:number|null;equity:number|null;margin_free:number|null;leverage:number|null;trade_allowed:boolean;connected:boolean;build:number|null;untracked_positions:number;heartbeat_at:string|null;last_error:string|null;created_at:string}>
+        Insert: R<{account_id:string;token_hash:string}>
+        Update: R<Partial<{token_hash:string;login:number|null;server:string|null;company:string|null;trade_mode:'DEMO'|'CONTEST'|'REAL'|null;margin_mode:string|null;currency:string|null;balance:number|null;equity:number|null;margin_free:number|null;leverage:number|null;trade_allowed:boolean;connected:boolean;build:number|null;untracked_positions:number;heartbeat_at:string|null;last_error:string|null}>>
+        Relationships: []
+      }
+      mt5_symbols: {
+        Row: R<{account_id:string;request:string;resolved:string|null;base:string|null;quote:string|null;digits:number|null;tick_size:number|null;tick_value:number|null;contract_size:number|null;volume_min:number|null;volume_max:number|null;volume_step:number|null;bid:number|null;ask:number|null;margin_per_lot:number|null;trade_mode:number|null;quote_time:string|null;updated_at:string}>
+        Insert: R<{account_id:string;request:string;resolved?:string|null;base?:string|null;quote?:string|null;digits?:number|null;tick_size?:number|null;tick_value?:number|null;contract_size?:number|null;volume_min?:number|null;volume_max?:number|null;volume_step?:number|null;bid?:number|null;ask?:number|null;margin_per_lot?:number|null;trade_mode?:number|null;quote_time?:string|null;updated_at?:string}>
+        Update: R<Partial<{resolved:string|null;updated_at:string}>>
+        Relationships: []
+      }
+      mt5_commands: {
+        Row: R<{id:number;account_id:string;client_id:string;kind:'ENTRY'|'PROTECT'|'UNPROTECT'|'CLOSE';entry_client_id:string;request:string;side:'BUY'|'SELL'|null;volume:number|null;sl:number|null;tp:number|null;status:'PENDING'|'SENT'|'DONE'|'FAILED';retcode:number|null;message:string|null;order_ticket:number|null;deal_ticket:number|null;position_id:number|null;price:number|null;volume_done:number|null;created_at:string;sent_at:string|null;done_at:string|null}>
+        Insert: R<{account_id:string;client_id:string;kind:'ENTRY'|'PROTECT'|'UNPROTECT'|'CLOSE';entry_client_id:string;request:string;side?:'BUY'|'SELL';volume?:number;sl?:number;tp?:number}>
+        Update: R<Partial<{status:'PENDING'|'SENT'|'DONE'|'FAILED';retcode:number|null;message:string|null;order_ticket:number|null;deal_ticket:number|null;position_id:number|null;price:number|null;volume_done:number|null;done_at:string}>>
+        Relationships: []
+      }
+      mt5_positions: {
+        Row: R<{account_id:string;position_id:number;symbol:string|null;open:boolean;sl:number|null;tp:number|null;deals:unknown;updated_at:string}>
+        Insert: R<{account_id:string;position_id:number;symbol?:string|null;open:boolean;sl?:number|null;tp?:number|null;deals:unknown;updated_at?:string}>
+        Update: R<Partial<{open:boolean;sl:number|null;tp:number|null;deals:unknown;updated_at:string}>>
         Relationships: []
       }
       execution_events: {

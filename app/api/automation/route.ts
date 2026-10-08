@@ -1,14 +1,15 @@
 import { z } from 'zod'
-import { randomUUID } from 'node:crypto'
+import { createHash, randomBytes, randomUUID } from 'node:crypto'
 import { requireAuth } from '@/lib/supabase/auth'
 import { encrypt } from '@/lib/crypto'
 import { readWebhookBody } from '@/lib/webhook/body'
-import { executionDB,executionBroker,executionGates,AngelCredentials,BinanceCredentials,queueExecution } from '@/lib/execution/service'
+import { executionDB,executionBroker,executionGates,AngelCredentials,BinanceCredentials,Mt5Credentials,queueExecution } from '@/lib/execution/service'
 
 const id=z.string().uuid()
 const Input=z.discriminatedUnion('action',[
-  z.object({action:z.literal('connect'),account_id:id.optional(),broker:z.enum(['angelone','binance']),environment:z.enum(['testnet','live']),label:z.string().trim().min(1).max(80),credentials:z.unknown()}).strict(),
+  z.object({action:z.literal('connect'),account_id:id.optional(),broker:z.enum(['angelone','binance','mt5']),environment:z.enum(['testnet','live']),label:z.string().trim().min(1).max(80),credentials:z.unknown()}).strict(),
   z.object({action:z.literal('verify'),account_id:id}).strict(),
+  z.object({action:z.literal('bridge_token'),account_id:id}).strict(),
   z.object({action:z.literal('configure'),account_id:id,auto_enabled:z.boolean(),max_price_drift_bps:z.number().int().min(1).max(500),symbol:z.string().trim().toUpperCase().regex(/^[A-Z0-9_&.:-]{2,50}$/).optional(),timeframe:z.enum(['1m','5m','15m','1h']).optional(),acknowledgement:z.literal('ENABLE_BROKER_AUTOMATION').optional()}).strict(),
   z.object({action:z.literal('stop')}).strict(),
   z.object({action:z.literal('close'),execution_id:id}).strict(),
@@ -21,22 +22,26 @@ const replacing=(error:string|null)=>{
   const started=Number(error.slice(replacementPrefix.length).split(':')[0])
   return !Number.isFinite(started)||Date.now()-started<120000
 }
+// The bridge token is shown once; only its SHA-256 is stored.
+const bridgeToken=()=>{const token=randomBytes(32).toString('hex');return {token,hash:createHash('sha256').update(token).digest('hex')}}
+const bridgeColumns='account_id,login,server,company,trade_mode,margin_mode,currency,balance,equity,margin_free,leverage,trade_allowed,connected,build,untracked_positions,heartbeat_at,last_error' as const
 const code=(e:unknown)=>e instanceof Error&&/^[A-Z0-9_:-]{1,120}$/.test(e.message)?e.message:'AUTOMATION_REQUEST_FAILED'
 const failure=(e:unknown)=> e instanceof Response?e:Response.json({error:code(e),code:code(e)},{status:400})
 export async function GET(){
   try{
     const {user}=await requireAuth();const db=executionDB()
-    const [accounts,settings,executions,worker,configuration]=await Promise.all([
+    const [accounts,settings,executions,worker,configuration,bridges]=await Promise.all([
       db.from('execution_accounts').select(publicColumns).eq('user_id',user.id).order('created_at',{ascending:false}),
       db.from('execution_settings').select('*').eq('user_id',user.id).maybeSingle(),
       db.from('broker_executions').select('*').eq('user_id',user.id).order('created_at',{ascending:false}).limit(100),
       db.from('execution_worker').select('heartbeat_at,last_error,enabled_environments').eq('name','broker').maybeSingle(),
       db.from('settings').select('kill_switch_active,signal_delivery_mode,screener_symbols,screener_timeframe,session_start,session_end,session_timezone').eq('user_id',user.id).single(),
+      db.from('mt5_bridges').select(`${bridgeColumns},execution_accounts!inner(user_id)`).eq('execution_accounts.user_id',user.id),
     ])
-    if(accounts.error||settings.error||executions.error||worker.error)throw new Error('AUTOMATION_DATABASE_UNAVAILABLE')
+    if(accounts.error||settings.error||executions.error||worker.error||bridges.error)throw new Error('AUTOMATION_DATABASE_UNAVAILABLE')
     // Global worker errors may identify another user's instrument; expose only availability globally.
     const health=worker.data?{...worker.data,last_error:worker.data.last_error?'Worker reported an issue; inspect your execution records.':null}:null
-    return Response.json({data:{accounts:accounts.data.map(account=>({...account,error:account.error?.startsWith(replacementPrefix)?'CREDENTIAL_REPLACEMENT_IN_PROGRESS':account.error})),settings:settings.data??{account_id:null,auto_enabled:false,max_price_drift_bps:50},executions:executions.data,worker:health,configuration:configuration.error?null:configuration.data,gates:executionGates()}})
+    return Response.json({data:{accounts:accounts.data.map(account=>({...account,error:account.error?.startsWith(replacementPrefix)?'CREDENTIAL_REPLACEMENT_IN_PROGRESS':account.error})),settings:settings.data??{account_id:null,auto_enabled:false,max_price_drift_bps:50},executions:executions.data,worker:health,configuration:configuration.error?null:configuration.data,gates:executionGates(),bridges:bridges.data.map(({execution_accounts:_owner,...bridge})=>bridge)}})
   }catch(e){return failure(e)}
 }
 export async function POST(request:Request){
@@ -52,7 +57,8 @@ export async function POST(request:Request){
     }
     if(body.action==='connect'){
       if(body.broker==='angelone'&&body.environment!=='live')throw new Error('ANGEL_HAS_NO_TESTNET_ADAPTER')
-      const credentials=(body.broker==='binance'?BinanceCredentials:AngelCredentials).parse(body.credentials)
+      if(body.broker==='mt5'&&body.account_id)throw new Error('MT5_USE_BRIDGE_TOKEN_ROTATION')
+      const credentials=(body.broker==='binance'?BinanceCredentials:body.broker==='mt5'?Mt5Credentials:AngelCredentials).parse(body.credentials)
       if(body.account_id){
         const existing=await db.from('execution_accounts').select('*').eq('id',body.account_id).eq('user_id',user.id).single()
         if(existing.error||!existing.data)return Response.json({error:'BROKER_NOT_FOUND',code:'BROKER_NOT_FOUND'},{status:404})
@@ -99,10 +105,18 @@ export async function POST(request:Request){
       }
       const saved=await db.from('execution_accounts').insert({user_id:user.id,broker:body.broker,environment:body.environment,label:body.label,credentials_encrypted:encrypt(JSON.stringify(credentials))}).select('*').single()
       if(saved.error)throw new Error('BROKER_SAVE_FAILED')
+      let issued:string|null=null
+      if(body.broker==='mt5'){
+        const {token,hash}=bridgeToken()
+        const bridge=await db.from('mt5_bridges').insert({account_id:saved.data.id,token_hash:hash})
+        if(bridge.error){await db.from('execution_accounts').delete().eq('id',saved.data.id).eq('user_id',user.id);throw new Error('BRIDGE_SAVE_FAILED')}
+        issued=token
+      }
       let error:string|null=null
       try{await executionBroker(saved.data).connect()}catch(e){error=code(e)}
       const checked=await db.from('execution_accounts').update({connected:!error,last_checked_at:new Date().toISOString(),error}).eq('id',saved.data.id).eq('user_id',user.id).eq('credentials_encrypted',saved.data.credentials_encrypted).is('error',null).select(publicColumns).single()
       if(checked.error)throw new Error('BROKER_CONNECTION_SAVE_FAILED')
+      if(issued)return Response.json({data:{...checked.data,bridge_token:issued},message:'MT5 account saved. Install the bridge token in its terminal, then verify the connection. This token is shown once.'})
       return Response.json({data:checked.data,message:error?'Credentials saved; connection check failed.':'Broker connection verified. No order placed.'})
     }
     if(body.action==='close'){
@@ -115,6 +129,20 @@ export async function POST(request:Request){
     }
     const account=await db.from('execution_accounts').select('*').eq('id',body.account_id).eq('user_id',user.id).single()
     if(account.error)return Response.json({error:'BROKER_NOT_FOUND',code:'BROKER_NOT_FOUND'},{status:404})
+    if(body.action==='bridge_token'){
+      if(account.data.broker!=='mt5')throw new Error('NOT_AN_MT5_ACCOUNT')
+      const active=await db.from('broker_executions').select('id',{count:'exact',head:true}).eq('broker_account_id',body.account_id).not('state','in','(CLOSED,REJECTED)')
+      if(active.error)throw new Error('EXECUTION_STATUS_UNAVAILABLE')
+      if((active.count??0)>0)throw new Error('ACTIVE_EXECUTIONS_BLOCK_TOKEN_ROTATION')
+      const stopped=await db.from('execution_settings').update({auto_enabled:false,updated_at:new Date().toISOString()}).eq('user_id',user.id).eq('account_id',body.account_id)
+      if(stopped.error)throw new Error('AUTOMATION_DISABLE_FAILED')
+      const {token,hash}=bridgeToken()
+      const rotated=await db.from('mt5_bridges').update({token_hash:hash,heartbeat_at:null,connected:false,trade_allowed:false}).eq('account_id',body.account_id).select('account_id').single()
+      if(rotated.error)throw new Error('BRIDGE_SAVE_FAILED')
+      const marked=await db.from('execution_accounts').update({connected:false,error:'MT5_BRIDGE_OFFLINE',last_checked_at:new Date().toISOString()}).eq('id',body.account_id).eq('user_id',user.id)
+      if(marked.error)throw new Error('BROKER_CONNECTION_SAVE_FAILED')
+      return Response.json({data:{account_id:body.account_id,bridge_token:token},message:'New bridge token issued; the previous token no longer works. Install it in the terminal, then verify. Shown once.'})
+    }
     if(body.action==='verify'){
       if(replacing(account.data.error))return Response.json({error:'CREDENTIAL_REPLACEMENT_IN_PROGRESS',code:'CREDENTIAL_REPLACEMENT_IN_PROGRESS'},{status:409})
       let error:string|null=null

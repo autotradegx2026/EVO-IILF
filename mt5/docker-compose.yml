@@ -1,0 +1,37 @@
+# MetaTrader 5 terminals for the AutotradeX Bridge (deployed to /opt/mt5 on the VPS).
+# One terminal per broker account. VNC is published on loopback only: reach it through an SSH tunnel
+# for the one-time broker login. Bridge traffic leaves over IPv4 91.108.104.102 (Docker bridge network).
+x-terminal: &terminal
+  image: autotradex-mt5:latest
+  build: ./build
+  restart: unless-stopped
+  stop_grace_period: 40s       # MT5 closes normally on SIGTERM and saves its session
+  mem_limit: 1536m
+  logging:
+    driver: json-file
+    options: { max-size: "10m", max-file: "3" }
+
+services:
+  mt5-xm:
+    <<: *terminal
+    container_name: mt5-xm
+    volumes:
+      - mt5_xm:/home/mt5/wine
+      - ./bridge:/bridge:ro
+      - ./vnc_password:/run/secrets/vnc_password:ro
+    ports:
+      - 127.0.0.1:5901:5900
+
+  mt5-vantage:
+    <<: *terminal
+    container_name: mt5-vantage
+    volumes:
+      - mt5_vantage:/home/mt5/wine
+      - ./bridge:/bridge:ro
+      - ./vnc_password:/run/secrets/vnc_password:ro
+    ports:
+      - 127.0.0.1:5902:5900
+
+volumes:
+  mt5_xm:
+  mt5_vantage:

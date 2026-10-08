@@ -3,6 +3,7 @@ import { z } from 'zod'
 import { decrypt } from '../crypto'
 import { AngelExecutionBroker } from './angelone'
 import { BinanceExecutionBroker } from './binance'
+import { Mt5ExecutionBroker, mt5Store } from './mt5'
 import { assertQuantity, roundStep, type Execution, type ExecutionBroker } from './model'
 import { isWithinSession } from '../trading/session'
 import { signalFresh } from '../strategy/signal-state'
@@ -13,6 +14,8 @@ export type ExecutionAccount = Database['public']['Tables']['execution_accounts'
 export type ExecutionDB = SupabaseClient<Database>
 const secret=z.string().min(1).max(1024)
 export const BinanceCredentials=z.object({apiKey:secret,apiSecret:secret}).strict()
+// MT5 logins stay inside the broker terminal; the account record only names the platform.
+export const Mt5Credentials=z.object({platform:z.enum(['XM','Vantage','Other'])}).strict()
 export const AngelCredentials=z.object({apiKey:secret,password:secret,totpSecret:secret,clientCode:secret,localIp:z.string().ip(),publicIp:z.string().ip()}).strict()
 export function executionDB(): ExecutionDB {
   return createClient<Database>(process.env.NEXT_PUBLIC_SUPABASE_URL!,process.env.SUPABASE_SERVICE_ROLE_KEY!,{auth:{persistSession:false}})
@@ -25,12 +28,14 @@ export function executionBroker(account: ExecutionAccount,refresh=false): Execut
   const credentials: unknown=JSON.parse(decrypt(account.credentials_encrypted))
   const broker=account.broker==='binance'
     ? new BinanceExecutionBroker({...BinanceCredentials.parse(credentials),environment:account.environment})
-    : new AngelExecutionBroker(AngelCredentials.parse(credentials))
+    : account.broker==='mt5'
+      ? (Mt5Credentials.parse(credentials),new Mt5ExecutionBroker(mt5Store(executionDB(),account.id),account.environment))
+      : new AngelExecutionBroker(AngelCredentials.parse(credentials))
   if(brokers.size>1000)brokers.clear()
   brokers.set(account.id,{encrypted:account.credentials_encrypted,environment:account.environment,broker})
   return broker
 }
-export function executionDeadline(settings: Settings,broker:'angelone'|'binance',now=Date.now()): string {
+export function executionDeadline(settings: Settings,broker:ExecutionAccount['broker'],now=Date.now()): string {
   const zone=settings.session_timezone??'Asia/Kolkata'
   if (!isWithinSession(new Date(now),settings.session_start,settings.session_end,zone)) throw new Error('SESSION_CLOSED')
   let end=now+24*3600000 // explicit maximum holding window for all-day configurations
@@ -80,11 +85,13 @@ export async function queueExecution(db:ExecutionDB,userId:string,signalId:strin
   const long=setup.direction==='LONG'
   const stop=roundStep(setup.stop_loss,rules.tick,long?'floor':'ceil')
   if(long?rules.price<=stop:rules.price>=stop)throw new Error('STOP_ALREADY_CROSSED')
-  const risk=balance*settings.risk_percent/100
+  // Margin venues: balance is margin capacity (caps position value); risk comes from equity.
+  const capital=broker.riskCapital?await broker.riskCapital(setup.symbol):null
+  const risk=(capital??balance)*settings.risk_percent/100
   const quantity=roundStep(Math.min(risk/Math.max(Math.abs(rules.price-stop),Math.abs(setup.entry_price-stop)),balance/Math.max(rules.price,setup.entry_price),rules.maxQuantity),rules.step)
   assertQuantity(quantity,rules.price,rules)
   const target=roundStep(rules.price+(long?1:-1)*Math.abs(rules.price-stop)*settings.rr_ratio,rules.tick,long?'ceil':'floor')
-  const queued=await db.rpc('queue_broker_execution',{p_user:userId,p_signal:signalId,p_account:accountId,p_quantity:quantity,p_balance:balance,p_stop:stop,p_target:target,p_currency:rules.quote,p_deadline:deadline,p_auto:automatic})
+  const queued=await db.rpc('queue_broker_execution',{p_user:userId,p_signal:signalId,p_account:accountId,p_quantity:quantity,p_balance:balance,p_stop:stop,p_target:target,p_currency:rules.quote,p_deadline:deadline,p_auto:automatic,...(capital===null?{}:{p_capital:capital})})
   if(queued.error)throw new Error(queued.error.code==='P0001'?queued.error.message:queued.error.code==='23505'?'EXECUTION_ALREADY_RESERVED':'EXECUTION_QUEUE_FAILED')
   return queued.data as Execution
 }

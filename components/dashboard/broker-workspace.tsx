@@ -7,23 +7,43 @@ import type { Environment, Execution } from '@/lib/execution/model'
 import { sessionLabel } from '@/lib/trading/session'
 
 const DEMO = process.env.NEXT_PUBLIC_DEMO_MODE === 'true'
-type Account = { id: string; broker: 'binance' | 'angelone'; environment: Environment; label: string; connected: boolean; last_checked_at: string | null; error: string | null }
+type BrokerName = 'binance' | 'angelone' | 'mt5'
+type Bridge = { account_id: string; login: number | null; server: string | null; company: string | null; trade_mode: string | null; margin_mode: string | null; currency: string | null; balance: number | null; equity: number | null; margin_free: number | null; leverage: number | null; trade_allowed: boolean; connected: boolean; untracked_positions: number; heartbeat_at: string | null; last_error: string | null }
+type Account = { id: string; broker: BrokerName; environment: Environment; label: string; connected: boolean; last_checked_at: string | null; error: string | null }
 type AutomationData = {
   accounts: Account[]
   settings: { account_id: string | null; auto_enabled: boolean; max_price_drift_bps: number; updated_at?: string; started_at?: string | null; stopped_at?: string | null }
   executions: Execution[]
   worker: { heartbeat_at: string | null; last_error: string | null; enabled_environments: Environment[] } | null
   gates: { testnet: boolean; live: boolean }
+  bridges?: Bridge[]
   configuration: { kill_switch_active: boolean; signal_delivery_mode: string; screener_symbols: string[]; screener_timeframe:string; session_start: string; session_end: string; session_timezone: string } | null
 }
 const EMPTY_CREDENTIALS = { apiKey: '', apiSecret: '', password: '', totpSecret: '', clientCode: '', localIp: '', publicIp: '' }
+const MT5_SYMBOL = /^[A-Z0-9_]+:[A-Z0-9._]+$/
+const DEFAULT_LABEL: Record<BrokerName, string> = { binance: 'Binance Spot testnet', angelone: 'Angel One live', mt5: 'XM MT5 demo' }
 const inputClass = 'mt-1 w-full rounded-md border border-border bg-background px-3 py-2 text-sm'
 const buttonClass = 'rounded-md border border-border px-3 py-2 text-sm disabled:cursor-not-allowed disabled:opacity-40'
 const number = (value: number) => Number.isFinite(value) ? value.toLocaleString('en-IN', { maximumFractionDigits: 12 }) : 'Unavailable'
 const time = (value: string | null) => value && Number.isFinite(Date.parse(value)) ? new Date(value).toLocaleString() : 'Not recorded'
 const fees = (values: Record<string, number>) => Object.entries(values).map(([currency, value]) => `${number(value)} ${currency}`).join(', ') || 'None recorded'
-function EnvironmentBadge({ environment }: { environment: Environment }) {
-  return <span className={`rounded px-2 py-1 text-[10px] font-semibold uppercase ${environment === 'live' ? 'bg-red-500/10 text-red-600' : 'bg-blue-500/10 text-blue-600'}`}>{environment === 'live' ? 'LIVE · real funds' : 'TESTNET · test funds'}</span>
+function EnvironmentBadge({ environment, broker }: { environment: Environment; broker?: BrokerName }) {
+  const test = broker === 'mt5' ? 'DEMO · test funds' : 'TESTNET · test funds'
+  return <span className={`rounded px-2 py-1 text-[10px] font-semibold uppercase ${environment === 'live' ? 'bg-red-500/10 text-red-600' : 'bg-blue-500/10 text-blue-600'}`}>{environment === 'live' ? 'LIVE · real funds' : test}</span>
+}
+function BridgeStatus({ bridge, now }: { bridge: Bridge | undefined; now: number }) {
+  const beat = Date.parse(bridge?.heartbeat_at ?? '')
+  const fresh = Number.isFinite(beat) && now - beat <= 10000
+  if (!bridge || !Number.isFinite(beat)) return <p className="mt-2 text-xs text-amber-600">MT5 bridge has not connected yet. Install the token in the terminal and attach the AutotradeX Bridge EA.</p>
+  return <div className="mt-2 space-y-1 text-xs text-muted-foreground">
+    <p><span className={fresh ? 'text-green-600' : 'text-amber-600'}>{fresh ? '● Bridge online' : '● Bridge offline'}</span> · last report {time(bridge.heartbeat_at)}</p>
+    <p>{bridge.company ?? 'Broker'} · {bridge.server} · login {bridge.login} · {bridge.trade_mode} · {bridge.margin_mode} · 1:{bridge.leverage}</p>
+    <p>Balance {number(bridge.balance ?? NaN)} · Equity {number(bridge.equity ?? NaN)} · Free margin {number(bridge.margin_free ?? NaN)} {bridge.currency}</p>
+    {!bridge.connected && <p className="text-amber-600">Terminal is not connected to the broker server.</p>}
+    {!bridge.trade_allowed && <p className="text-amber-600">Algo Trading is off in the terminal or not permitted for this account.</p>}
+    {bridge.untracked_positions > 0 && <p className="text-red-600">{bridge.untracked_positions} open position(s) carry the bridge&apos;s magic number but are not in the ledger. New entries are blocked until reviewed.</p>}
+    {bridge.last_error && <p className="text-red-600">{bridge.last_error}</p>}
+  </div>
 }
 
 export function BrokerWorkspace({ view, onRunChange }: { view: 'credentials' | 'control' | 'ledger'; onRunChange?:(symbol:string|null)=>void }) {
@@ -36,7 +56,7 @@ export function BrokerWorkspace({ view, onRunChange }: { view: 'credentials' | '
   const [accountId, setAccountId] = useState(''), [drift, setDrift] = useState(50), [acknowledged, setAcknowledged] = useState(false)
   const [runSymbol,setRunSymbol]=useState(''),[runTimeframe,setRunTimeframe]=useState('')
   const [ledgerEnvironment, setLedgerEnvironment] = useState<Environment>('live')
-  const [broker, setBroker] = useState<'binance' | 'angelone'>('binance'), [environment, setEnvironment] = useState<Environment>('testnet')
+  const [broker, setBroker] = useState<BrokerName>('binance'), [platform, setPlatform] = useState<'XM' | 'Vantage' | 'Other'>('XM'), [issuedToken, setIssuedToken] = useState<{ label: string; token: string } | null>(null), [environment, setEnvironment] = useState<Environment>('testnet')
   const [label, setLabel] = useState('Binance Spot testnet'), [credentials, setCredentials] = useState(EMPTY_CREDENTIALS)
   const [editingAccountId, setEditingAccountId] = useState<string | null>(null)
   const pending = useRef(false), draftChanged = useRef(false), mounted = useRef(true), revision = useRef(0), mutating = useRef(false)
@@ -76,13 +96,13 @@ export function BrokerWorkspace({ view, onRunChange }: { view: 'credentials' | '
   const heartbeat = Date.parse(data?.worker?.heartbeat_at ?? '')
   const freshWorker = !loadError && Number.isFinite(heartbeat) && now - heartbeat <= 15000 && now - heartbeat >= -5000
   const environmentEnabled = !!selected && !!data?.gates[selected.environment] && !!data?.worker?.enabled_environments.includes(selected.environment)
-  const strategyReady = !!data?.configuration && !data.configuration.kill_switch_active && !!runTimeframe && !!selected && (selected.broker==='binance'?/^BINANCE:[A-Z0-9]+USDT$/.test(runSymbol):/^(NSE|BSE):[A-Z0-9&.-]+-EQ$/.test(runSymbol))
+  const strategyReady = !!data?.configuration && !data.configuration.kill_switch_active && !!runTimeframe && !!selected && (selected.broker==='binance'?/^BINANCE:[A-Z0-9]+USDT$/.test(runSymbol):selected.broker==='mt5'?MT5_SYMBOL.test(runSymbol)&&!/^(NSE|BSE|BINANCE):/.test(runSymbol):/^(NSE|BSE):[A-Z0-9&.-]+-EQ$/.test(runSymbol))
   const running = !!data?.settings.auto_enabled
   useEffect(()=>{onRunChange?.(running?data?.configuration?.screener_symbols[0]??null:null)},[running,data?.configuration?.screener_symbols[0],onRunChange])
   const canEnable = strategyReady && !!selected?.connected && freshWorker && environmentEnabled && !data?.worker?.last_error && !loadError && (running || !activeExecutions)
   const changeDraft = () => { draftChanged.current = true; setAcknowledged(false); setMessage('') }
 
-  async function post(action: string, payload: Record<string, unknown>, success: string) {
+  async function post(action: string, payload: Record<string, unknown>, success: string): Promise<{ data?: Record<string, unknown> } | false> {
     if (DEMO || mutating.current) return false
     mutating.current = true; revision.current += 1
     setBusy(action); setError(''); setMessage('')
@@ -94,7 +114,7 @@ export function BrokerWorkspace({ view, onRunChange }: { view: 'credentials' | '
       if ((action === 'configure' || action === 'stop')) { draftChanged.current = false; setAcknowledged(false) }
       mutating.current = false
       await refresh(true)
-      return true
+      return json
     } catch (cause) { setError(cause instanceof Error ? cause.message : 'AUTOMATION_REQUEST_FAILED'); return false }
     finally { mutating.current = false; setBusy('') }
   }
@@ -105,16 +125,24 @@ export function BrokerWorkspace({ view, onRunChange }: { view: 'credentials' | '
   }
   function cancelReplacement() {
     setEditingAccountId(null); setBroker('binance'); setEnvironment('testnet')
-    setLabel('Binance Spot testnet'); setCredentials(EMPTY_CREDENTIALS)
+    setLabel(DEFAULT_LABEL.binance); setCredentials(EMPTY_CREDENTIALS)
+  }
+  async function rotateToken(account: Account) {
+    if (!window.confirm(`Issue a new bridge token for ${account.label}? The current token stops working and automatic entries for this account are stopped.`)) return
+    const result = await post('bridge_token', { account_id: account.id }, 'New bridge token issued. Install it in the terminal; it is shown once.')
+    const token = result && typeof result.data?.bridge_token === 'string' ? result.data.bridge_token : null
+    if (token) setIssuedToken({ label: account.label, token })
   }
   async function connect(event: React.FormEvent) {
     event.preventDefault()
-    const secretFields = broker === 'binance' ? { apiKey: credentials.apiKey, apiSecret: credentials.apiSecret } : {
+    const secretFields = broker === 'mt5' ? { platform } : broker === 'binance' ? { apiKey: credentials.apiKey, apiSecret: credentials.apiSecret } : {
       apiKey: credentials.apiKey, password: credentials.password, totpSecret: credentials.totpSecret,
       clientCode: credentials.clientCode, localIp: credentials.localIp, publicIp: credentials.publicIp,
     }
     try {
       const completed = await post('connect', { broker, environment, label: label.trim(), credentials: secretFields, ...(editingAccountId ? { account_id: editingAccountId } : {}) }, editingAccountId ? 'Credentials replaced and verified for this saved account. Automatic entries remain disabled; explicitly enable them when ready.' : 'Connection request completed. Check the saved account verification status below.')
+      const token = completed && typeof completed.data?.bridge_token === 'string' ? completed.data.bridge_token : null
+      if (token) setIssuedToken({ label: label.trim(), token })
       if (completed && editingAccountId) cancelReplacement()
     } finally {
       setCredentials(EMPTY_CREDENTIALS)
@@ -137,23 +165,26 @@ export function BrokerWorkspace({ view, onRunChange }: { view: 'credentials' | '
 
     {apiSettings && <section id="broker-credentials" className="scroll-mt-5 rounded-xl border border-border bg-card p-5">
       <h2 className="font-semibold">{editingAccountId ? 'Replace saved broker credentials' : 'Broker API credentials'}</h2>
-      <p className="mt-2 text-sm text-muted-foreground">Binance defaults to Spot testnet. Angel One uses live cash-equity execution. Enter credentials directly in this dashboard; no locally configured broker keys are needed. Connecting an account does not enable automatic entries.</p>
+      <p className="mt-2 text-sm text-muted-foreground">Binance defaults to Spot testnet. Angel One uses live cash-equity execution. MetaTrader 5 (XM, Vantage) connects through a bridge in a server-hosted terminal, demo or real. Enter credentials directly in this dashboard; no locally configured broker keys are needed. Connecting an account does not enable automatic entries.</p>
       {editingAccountId && <p className="mt-3 rounded-lg border border-amber-500/30 bg-amber-500/5 p-3 text-sm">Replacing credentials preserves this account and its execution history. The broker and environment stay fixed. New automatic entries are disabled before replacement; all existing executions must be closed or rejected. Failed verification keeps the old credentials and requires a connection recheck.</p>}
       <form onSubmit={connect} autoComplete="off" className="mt-4">
         <fieldset disabled={DEMO || !!busy} className="grid gap-4 md:grid-cols-2">
-          <label className="text-sm">Broker<select disabled={!!editingAccountId} className={inputClass} value={broker} onChange={event => { const value = event.target.value as 'binance' | 'angelone'; setBroker(value); setEnvironment(value === 'binance' ? 'testnet' : 'live'); setLabel(value === 'binance' ? 'Binance Spot testnet' : 'Angel One live'); setCredentials(EMPTY_CREDENTIALS) }}><option value="binance">Binance Spot</option><option value="angelone">Angel One</option></select></label>
-          <label className="text-sm">Environment<select disabled={!!editingAccountId} className={inputClass} value={environment} onChange={event => setEnvironment(event.target.value as Environment)}>{broker === 'binance' && <option value="testnet">Testnet — test funds</option>}<option value="live">Live — real funds</option></select></label>
+          <label className="text-sm">Broker<select disabled={!!editingAccountId} className={inputClass} value={broker} onChange={event => { const value = event.target.value as BrokerName; setBroker(value); setEnvironment(value === 'angelone' ? 'live' : 'testnet'); setLabel(DEFAULT_LABEL[value]); setCredentials(EMPTY_CREDENTIALS) }}><option value="binance">Binance Spot</option><option value="angelone">Angel One</option><option value="mt5">MetaTrader 5 (XM, Vantage)</option></select></label>
+          <label className="text-sm">Environment<select disabled={!!editingAccountId} className={inputClass} value={environment} onChange={event => setEnvironment(event.target.value as Environment)}>{broker === 'binance' && <option value="testnet">Testnet — test funds</option>}{broker === 'mt5' && <option value="testnet">Demo account — test funds</option>}<option value="live">{broker === 'mt5' ? 'Real account — real funds' : 'Live — real funds'}</option></select></label>
           <label className="text-sm">Account label<input className={inputClass} value={label} maxLength={80} required onChange={event => setLabel(event.target.value)} /></label>
-          <label className="text-sm">API key<input className={inputClass} type="password" autoComplete="new-password" value={credentials.apiKey} required onChange={event => setCredentials({ ...credentials, apiKey: event.target.value })} /></label>
-          {(broker === 'binance' ? [{ key: 'apiSecret', label: 'API secret', secret: true }] : [
+          {broker === 'mt5' && <label className="text-sm">Broker platform<select className={inputClass} value={platform} onChange={event => { const value = event.target.value as 'XM' | 'Vantage' | 'Other'; setPlatform(value); setLabel(`${value === 'Other' ? 'MT5' : value} MT5 ${environment === 'live' ? 'real' : 'demo'}`) }}><option value="XM">XM</option><option value="Vantage">Vantage</option><option value="Other">Other MT5 broker</option></select></label>}
+          {broker !== 'mt5' && <label className="text-sm">API key<input className={inputClass} type="password" autoComplete="new-password" value={credentials.apiKey} required onChange={event => setCredentials({ ...credentials, apiKey: event.target.value })} /></label>}
+          {broker !== 'mt5' && (broker === 'binance' ? [{ key: 'apiSecret', label: 'API secret', secret: true }] : [
             { key: 'clientCode', label: 'Client code', secret: false }, { key: 'password', label: 'Password / PIN', secret: true }, { key: 'totpSecret', label: 'TOTP secret', secret: true }, { key: 'localIp', label: 'Configured local IP', secret: false }, { key: 'publicIp', label: 'Configured public IP', secret: false },
           ]).map(field => <label key={field.key} className="text-sm">{field.label}<input className={inputClass} type={field.secret ? 'password' : 'text'} autoComplete={field.secret ? 'new-password' : 'off'} required value={credentials[field.key as keyof typeof credentials]} onChange={event => setCredentials({ ...credentials, [field.key]: event.target.value })} /></label>)}
+          {broker === 'mt5' && <p className="text-xs text-muted-foreground md:col-span-2">MT5 has no API keys. Your MT5 login and password are entered only inside the MetaTrader terminal on the AutotradeX server and are never stored here. Saving issues a one-time bridge token for that terminal&apos;s AutotradeX Bridge Expert Advisor.</p>}
         </fieldset>
-        <div className="mt-4 flex flex-wrap items-center gap-3"><EnvironmentBadge environment={environment} /><button disabled={DEMO || !!busy || !label.trim()} className={buttonClass} type="submit">{busy === 'connect' ? 'Verifying…' : editingAccountId ? 'Replace and verify credentials' : 'Connect and verify'}</button>{editingAccountId && <button type="button" disabled={!!busy} onClick={cancelReplacement} className={buttonClass}>Cancel replacement</button>}</div>
+        <div className="mt-4 flex flex-wrap items-center gap-3"><EnvironmentBadge environment={environment} broker={broker} /><button disabled={DEMO || !!busy || !label.trim()} className={buttonClass} type="submit">{busy === 'connect' ? 'Verifying…' : editingAccountId ? 'Replace and verify credentials' : 'Connect and verify'}</button>{editingAccountId && <button type="button" disabled={!!busy} onClick={cancelReplacement} className={buttonClass}>Cancel replacement</button>}</div>
         <p className="mt-2 text-xs text-muted-foreground">Use keys for the selected environment. Credential fields clear after the request and are never included in the account listing.</p>
       </form>
+      {issuedToken && <div role="status" className="mt-4 rounded-lg border border-green-500/30 bg-green-500/5 p-4 text-sm"><p className="font-semibold">Bridge token for {issuedToken.label}</p><p className="mt-1 text-xs text-muted-foreground">Shown once. Install it as MQL5/Files/autotradex_token.txt in this account&apos;s MT5 terminal. Anyone holding it can act as this account&apos;s bridge, so keep it private.</p><div className="mt-3 flex flex-wrap items-center gap-2"><code className="break-all rounded bg-background px-2 py-1 text-xs">{issuedToken.token}</code><button type="button" className={buttonClass} onClick={() => void navigator.clipboard?.writeText(issuedToken.token)}>Copy</button><button type="button" className={buttonClass} onClick={() => setIssuedToken(null)}>I have saved it</button></div></div>}
       {activeExecutions && <p className="mt-4 text-xs text-muted-foreground">Credential replacement is unavailable while any execution is active or needs attention. Resolve those executions first so their broker access stays intact.</p>}
-      <div className="mt-5 space-y-3">{data?.accounts.map(account => <div key={account.id} className="flex flex-wrap items-start justify-between gap-3 rounded-lg border border-border p-3"><div><div className="flex flex-wrap items-center gap-2"><strong className="text-sm">{account.label}</strong><EnvironmentBadge environment={account.environment} /></div><p className="mt-2 text-xs text-muted-foreground">{account.broker} · {account.connected ? 'Verified connection' : 'Connection not verified'} · Checked {time(account.last_checked_at)}</p>{account.error && <p className="mt-2 text-xs text-red-600">{account.error}</p>}</div><div className="flex flex-wrap gap-2"><button disabled={DEMO || !!busy} className={buttonClass} onClick={() => void post('verify', { account_id: account.id }, 'Verification request completed. Review the latest connection status.')}>Verify connection</button><button disabled={DEMO || !!busy || activeExecutions} title={activeExecutions ? 'Close all active executions before replacing credentials' : 'Replace credentials while retaining this account history'} className={buttonClass} onClick={() => replaceCredentials(account)}>Replace credentials</button></div></div>)}{data && !data.accounts.length && <p className="text-sm text-muted-foreground">No execution accounts connected.</p>}</div>
+      <div className="mt-5 space-y-3">{data?.accounts.map(account => <div key={account.id} className="flex flex-wrap items-start justify-between gap-3 rounded-lg border border-border p-3"><div><div className="flex flex-wrap items-center gap-2"><strong className="text-sm">{account.label}</strong><EnvironmentBadge environment={account.environment} broker={account.broker} /></div><p className="mt-2 text-xs text-muted-foreground">{account.broker === 'mt5' ? 'MetaTrader 5' : account.broker} · {account.connected ? 'Verified connection' : 'Connection not verified'} · Checked {time(account.last_checked_at)}</p>{account.error && <p className="mt-2 text-xs text-red-600">{account.error}</p>}{account.broker === 'mt5' && <BridgeStatus bridge={data.bridges?.find(b => b.account_id === account.id)} now={now} />}</div><div className="flex flex-wrap gap-2"><button disabled={DEMO || !!busy} className={buttonClass} onClick={() => void post('verify', { account_id: account.id }, 'Verification request completed. Review the latest connection status.')}>Verify connection</button>{account.broker === 'mt5' ? <button disabled={DEMO || !!busy || activeExecutions} title={activeExecutions ? 'Close all active executions before rotating the token' : 'Issue a new bridge token for this terminal'} className={buttonClass} onClick={() => void rotateToken(account)}>New bridge token</button> : <button disabled={DEMO || !!busy || activeExecutions} title={activeExecutions ? 'Close all active executions before replacing credentials' : 'Replace credentials while retaining this account history'} className={buttonClass} onClick={() => replaceCredentials(account)}>Replace credentials</button>}</div></div>)}{data && !data.accounts.length && <p className="text-sm text-muted-foreground">No execution accounts connected.</p>}</div>
     </section>}
 
     {view === 'control' && <section aria-label="Broker trading controls" className="rounded-2xl border border-border bg-card p-5 sm:p-6">
@@ -161,7 +192,7 @@ export function BrokerWorkspace({ view, onRunChange }: { view: 'credentials' | '
       <p className="mt-2 text-sm text-muted-foreground">Start authorizes automatic orders for the selected broker account. Stop prevents new automatic entries; existing orders and positions continue reconciliation and protection.</p>
       <fieldset disabled={DEMO || loading || !!busy || running || !data} className="mt-5 grid gap-4 md:grid-cols-2">
         <label className="text-sm">Execution account<select className={inputClass} value={accountId} onChange={event => { setAccountId(event.target.value); changeDraft() }}><option value="">Select a connected account</option>{data?.accounts.map(account => <option key={account.id} value={account.id}>{account.label} · {account.environment.toUpperCase()}</option>)}</select></label>
-        <label className="text-sm">Trading symbol<input className={inputClass} placeholder={selected?.broker==='angelone'?'NSE:RELIANCE-EQ':'BINANCE:BTCUSDT'} value={runSymbol} onChange={event=>{setRunSymbol(event.target.value.trim().toUpperCase());changeDraft()}}/><span className="mt-1 block text-xs text-muted-foreground">This symbol is locked until you stop trading.</span></label>
+        <label className="text-sm">Trading symbol<input className={inputClass} placeholder={selected?.broker==='angelone'?'NSE:RELIANCE-EQ':selected?.broker==='mt5'?'OANDA:EURUSD':'BINANCE:BTCUSDT'} value={runSymbol} onChange={event=>{setRunSymbol(event.target.value.trim().toUpperCase());changeDraft()}}/><span className="mt-1 block text-xs text-muted-foreground">This symbol is locked until you stop trading.</span></label>
         <label className="text-sm">Candle timeframe<select className={inputClass} value={runTimeframe} onChange={event=>{setRunTimeframe(event.target.value);changeDraft()}}><option value="">Select timeframe</option><option value="1m">1 minute</option><option value="5m">5 minutes</option><option value="15m">15 minutes</option><option value="1h">1 hour</option></select></label>
         <label className="text-sm">Maximum entry price drift (basis points)<input className={inputClass} type="number" min={1} max={500} step={1} value={Number.isNaN(drift) ? '' : drift} onChange={event => { setDrift(event.target.valueAsNumber); changeDraft() }} /><span className="mt-1 block text-xs text-muted-foreground">100 basis points = 1% from the signal price.</span></label>
         {!running && selected && <label className="flex items-start gap-3 rounded-xl border border-amber-500/30 bg-amber-500/5 p-3 text-sm md:col-span-2"><input className="mt-1" type="checkbox" checked={acknowledged} onChange={event => setAcknowledged(event.target.checked)} /><span>I authorize automatic orders in this {selected.environment === 'live' ? 'LIVE account using real money' : 'TESTNET account using test funds'} for {runSymbol || 'the selected symbol'} on {runTimeframe || 'the selected timeframe'} when strategy and risk checks pass.</span></label>}
