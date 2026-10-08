@@ -4,7 +4,7 @@ import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 import { isPersonalAccount } from '@/lib/supabase/personal-access'
 
-const PUBLIC_PATHS = ['/login', '/register', '/auth/callback', '/api/webhook', '/api/webhook/paper', '/api/jobs/alerts', '/api/jobs/strategy', '/api/jobs/paper', '/api/jobs/execution']
+const PUBLIC_PATHS = ['/', '/login', '/register', '/auth/callback', '/api/webhook', '/api/webhook/paper', '/api/jobs/alerts', '/api/jobs/strategy', '/api/jobs/paper', '/api/jobs/execution']
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl

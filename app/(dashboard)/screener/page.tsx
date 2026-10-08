@@ -162,7 +162,7 @@ export default function ScreenerPage() {
         <label className="text-sm">Chart / scan timeframe<select disabled={loading || busy} className={`${fieldClass} mt-1`} value={timeframe} onChange={e => { setTimeframe(e.target.value); setDirty(true); setScans([]) }}>{['1m', '5m', '15m', '1h'].map(tf => <option key={tf}>{tf}</option>)}</select></label>
         <label className="text-sm">Incoming alert action<select disabled={loading || busy} className={`${fieldClass} mt-1`} value={mode} onChange={e => { setMode(e.target.value as 'signals' | 'paper'); setDirty(true) }}><option value="signals">Broker signals (manual or automatic execution)</option><option value="paper">Paper signals (requires Paper Trading to be ON)</option></select></label>
       </div>
-      <p className="mt-4 text-sm text-muted-foreground">Saving this page does not start trading. Use <Link href="/backtest" className="underline">Paper Trading</Link> for simulated Start/Stop controls and its own Binance watchlist. Use the <Link href="/" className="underline">Live Dashboard</Link> to start or stop broker trading.</p>
+      <p className="mt-4 text-sm text-muted-foreground">Saving this page does not start trading. Use <Link href="/backtest" className="underline">Paper Trading</Link> for simulated Start/Stop controls and its own Binance watchlist. Use the <Link href="/dashboard" className="underline">Live Dashboard</Link> to start or stop broker trading.</p>
     </section>
     <section className="rounded-xl border border-border bg-card p-5">
       <h2 className="font-semibold">Install on TradingView</h2>

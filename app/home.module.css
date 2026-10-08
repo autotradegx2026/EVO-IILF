@@ -1,0 +1,124 @@
+/* Public home page only. Colours are page-scoped so the dashboard theme is unaffected. */
+.page {
+  --ink: #090a09;
+  --ink-2: #101210;
+  --ink-3: #171a17;
+  --line: rgba(236, 230, 216, 0.09);
+  --line-strong: rgba(236, 230, 216, 0.18);
+  --paper: #ece6d8;
+  --muted: #8f8a7e;
+  --long: #7ee38f;
+  --short: #ff6b57;
+  --amber: #f2b544;
+  background: var(--ink);
+  color: var(--paper);
+  position: relative;
+  isolation: isolate;
+  overflow-x: clip;
+}
+
+/* Film grain over everything, beneath interactive content. */
+.page::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.07;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Faint chart-paper grid fading out from the hero. */
+.grid {
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 110vh;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: radial-gradient(ellipse 80% 60% at 70% 30%, #000 20%, transparent 75%);
+}
+
+.glow {
+  position: absolute;
+  z-index: -1;
+  pointer-events: none;
+  width: 52rem;
+  height: 52rem;
+  right: -14rem;
+  top: -18rem;
+  border-radius: 9999px;
+  background: radial-gradient(circle, rgba(126, 227, 143, 0.16), transparent 62%);
+  filter: blur(10px);
+}
+
+.rise {
+  opacity: 0;
+  transform: translateY(18px);
+  animation: rise 0.9s cubic-bezier(0.2, 0.7, 0.1, 1) forwards;
+  animation-delay: calc(var(--d, 0) * 110ms + 80ms);
+}
+
+@keyframes rise {
+  to { opacity: 1; transform: none; }
+}
+
+/* Scroll reveal where supported; content is fully visible elsewhere. */
+@supports (animation-timeline: view()) {
+  .reveal {
+    animation: reveal linear both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 28%;
+  }
+}
+
+@keyframes reveal {
+  from { opacity: 0; transform: translateY(32px); }
+  to { opacity: 1; transform: none; }
+}
+
+.marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 48s linear infinite;
+}
+
+.marqueeWrap:hover .marquee { animation-play-state: paused; }
+
+@keyframes marquee {
+  to { transform: translateX(-50%); }
+}
+
+.pulse {
+  animation: pulse 2.2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(126, 227, 143, 0.55); }
+  50% { box-shadow: 0 0 0 7px rgba(126, 227, 143, 0); }
+}
+
+.sweep {
+  background: linear-gradient(90deg, transparent, rgba(126, 227, 143, 0.12), transparent);
+  background-size: 50% 100%;
+  background-repeat: no-repeat;
+  animation: sweep 3.4s ease-in-out infinite;
+}
+
+@keyframes sweep {
+  from { background-position: -60% 0; }
+  to { background-position: 160% 0; }
+}
+
+.italic { font-style: italic; }
+
+@media (prefers-reduced-motion: reduce) {
+  .rise, .reveal, .marquee, .pulse, .sweep {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

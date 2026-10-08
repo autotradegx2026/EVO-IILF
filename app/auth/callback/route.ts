@@ -9,8 +9,8 @@ import type { NextRequest } from 'next/server'
 export async function GET(request: NextRequest) {
   const { searchParams, origin } = new URL(request.url)
   const code = searchParams.get('code')
-  const requestedNext = searchParams.get('next') ?? '/'
-  const next = requestedNext.startsWith('/') && !requestedNext.startsWith('//') && !requestedNext.includes('\\') ? requestedNext : '/'
+  const requestedNext = searchParams.get('next') ?? '/dashboard'
+  const next = requestedNext.startsWith('/') && !requestedNext.startsWith('//') && !requestedNext.includes('\\') ? requestedNext : '/dashboard'
 
   if (code) {
     const cookieStore = await cookies()

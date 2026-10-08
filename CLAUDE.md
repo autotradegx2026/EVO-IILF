@@ -1,3 +1,5 @@
+> Hosting (8 October 2026): production runs on a dedicated Hostinger VPS with self-hosted Supabase at https://autotradex.io / https://api.autotradex.io. See VPS_DEPLOYMENT.md; it supersedes the Vercel/Netlify/Supabase-cloud hosting notes below. The public home page is `/` and the dashboard is `/dashboard`.
+
 > Current scope: user authorized automatic execution and selected Binance Spot testnet first alongside Angel One. See BROKER_AUTOMATION.md for the durable engine, dashboard credentials, migration 011 and remaining host/acceptance requirements. This supersedes the older manual-confirmation-only scope below.
 
 # EVO-IILF Algo Automation Platform

@@ -7,7 +7,7 @@ import { Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupConte
 
 export const NAV_GROUPS = [
   { label: 'Workspace', items: [
-    { href: '/', label: 'Dashboard', icon: LayoutDashboard },
+    { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
     { href: '/screener', label: 'Strategy & Screener', icon: ScanLine },
     { href: '/charts', label: 'Charts', icon: ChartCandlestick },
     { href: '/backtest', label: 'Paper Trade', icon: FlaskConical },
@@ -30,7 +30,7 @@ export function SidebarNav({ userEmail }: { userEmail: string }) {
   const navigate = () => setOpenMobile(false)
   return <Sidebar variant="floating" collapsible="icon" aria-label="Main navigation">
     <SidebarHeader className="p-3 group-data-[collapsible=icon]:p-2">
-      <Link href="/" onClick={navigate} aria-label="AutotradeX home" className="flex h-12 items-center gap-3 rounded-xl outline-none focus-visible:ring-2 focus-visible:ring-ring">
+      <Link href="/dashboard" onClick={navigate} aria-label="AutotradeX dashboard" className="flex h-12 items-center gap-3 rounded-xl outline-none focus-visible:ring-2 focus-visible:ring-ring">
         <span className="flex size-9 group-data-[collapsible=icon]:size-8 shrink-0 items-center justify-center rounded-xl bg-primary text-primary-foreground shadow-sm"><Activity className="size-5" /></span>
         <span className="flex min-w-0 flex-col group-data-[collapsible=icon]:hidden"><span className="text-base font-bold tracking-tight text-foreground">AutotradeX</span><span className="truncate text-[10px] font-medium uppercase tracking-widest text-muted-foreground">Personal workspace</span></span>
       </Link>
