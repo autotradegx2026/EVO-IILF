@@ -3,6 +3,10 @@ import { z } from 'zod'
 import { readWebhookBody } from '@/lib/webhook/body'
 import { executionDB } from '@/lib/execution/service'
 import { mt5Request } from '@/lib/execution/mt5'
+import { MT5_TIMEFRAMES } from '@/lib/execution/mt5-market'
+import { configFromSettings } from '@/lib/strategy/config'
+import { analysisHistorySize } from '@/lib/strategy/analysis'
+import { timeframeMilliseconds } from '@/lib/trading/session'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
@@ -13,6 +17,7 @@ export const dynamic = 'force-dynamic'
  *   TRACK|position             report this position's deals
  *   CMD|id|kind|client|symbol|side|volume|sl|tp|position
  *   RESOLVE|id|kind|client|position|sl|tp   delivered but unreported; find the outcome in MT5 history
+ *   BARS|EURUSD|15m|500|refresh   send closed bars (UTC) when a new bar closes, or now if refresh=1
  */
 const n = z.number().finite()
 const text = (max: number) => z.string().max(max)
@@ -26,6 +31,7 @@ const Body = z.object({
     volume_min: n, volume_max: n, volume_step: n, bid: n, ask: n, margin_per_lot: n, trade_mode: n, quote_time: n })).max(40),
   results: z.array(z.object({ id: n, status: z.enum(['DONE', 'FAILED']), retcode: n, message: text(120), order: n, deal: n, position: n, price: n, volume: n })).max(40),
   positions: z.array(z.object({ id: n, symbol: text(40), open: z.boolean(), magic: z.boolean(), sl: n, tp: n, deals: z.array(Deal).max(50) })).max(100),
+  candles: z.array(z.object({ request: text(40), timeframe: z.enum(Object.keys(MT5_TIMEFRAMES) as [string, ...string[]]), bars: z.array(z.array(n).length(6)).max(2000) })).max(6).default([]),
 }).strict()
 
 const iso = (seconds: number) => seconds > 0 ? new Date(seconds * 1000).toISOString() : null
@@ -44,7 +50,7 @@ export async function POST(request: Request) {
     const account = await db.from('execution_accounts').select('id,user_id,broker').eq('id', accountId).single()
     if (account.error || account.data.broker !== 'mt5') return new Response('ERR|UNAUTHORIZED\n', { status: 401 })
 
-    const parsed = Body.safeParse(JSON.parse(await readWebhookBody(request, 262_144)))
+    const parsed = Body.safeParse(JSON.parse(await readWebhookBody(request, 1_048_576)))
     if (!parsed.success) return new Response('ERR|INVALID_BODY\n', { status: 400 })
     const body = parsed.data, now = new Date().toISOString(), lines: string[] = []
 
@@ -67,6 +73,11 @@ export async function POST(request: Request) {
         bid: s.bid, ask: s.ask, margin_per_lot: s.margin_per_lot, trade_mode: s.trade_mode, quote_time: iso(s.quote_time), updated_at: now })))
       if (upserted.error) throw new Error('SYMBOL_SAVE_FAILED')
     }
+    // 3b. Closed candles (UTC open time, OHLC, tick volume) for native strategy scanning.
+    if (body.candles.length) {
+      const upserted = await db.from('mt5_candles').upsert(body.candles.map(c => ({ account_id: accountId, request: c.request, timeframe: c.timeframe, bars: c.bars, updated_at: now })))
+      if (upserted.error) throw new Error('CANDLE_SAVE_FAILED')
+    }
     // 4. Positions this platform opened, for deal tracking and to detect unexplained magic positions.
     const entries = await db.from('mt5_commands').select('position_id').eq('account_id', accountId).eq('kind', 'ENTRY').eq('status', 'DONE').not('position_id', 'is', null)
       .gte('created_at', new Date(Date.now() - 7 * 86400000).toISOString()).order('id', { ascending: false }).limit(50)
@@ -83,7 +94,7 @@ export async function POST(request: Request) {
     // 5. Symbols to keep fresh: the owner's run symbols and any symbol with live executions here.
     // Plus symbols the platform asked about in the last day (registered by the adapter).
     const [settings, active, registered] = await Promise.all([
-      db.from('settings').select('screener_symbols').eq('user_id', account.data.user_id).single(),
+      db.from('settings').select('*').eq('user_id', account.data.user_id).single(),
       db.from('broker_executions').select('symbol').eq('broker_account_id', accountId).not('state', 'in', '(CLOSED,REJECTED)'),
       db.from('mt5_symbols').select('request').eq('account_id', accountId).gte('updated_at', new Date(Date.now() - 86400000).toISOString()).limit(20),
     ])
@@ -91,6 +102,21 @@ export async function POST(request: Request) {
     const requests = new Set([...[...(settings.data.screener_symbols ?? []), ...active.data.map(e => e.symbol)]
       .filter(s => /^[A-Z0-9_]+:[A-Z0-9._]+$/.test(s) && !/^(NSE|BSE|BINANCE):/.test(s)).map(mt5Request), ...registered.data.map(r => r.request)])
     for (const s of [...requests].slice(0, 20)) lines.push(`SYM|${field(s)}`)
+    // Bars for the run's symbols at the strategy timeframe and its higher timeframe (what the scanner reads).
+    const runSymbols = (settings.data.screener_symbols ?? []).filter(s => /^[A-Z0-9_]+:[A-Z0-9._]+$/.test(s) && !/^(NSE|BSE|BINANCE):/.test(s)).map(mt5Request).slice(0, 3)
+    if (runSymbols.length && settings.data.screener_timeframe) {
+      const config = configFromSettings(settings.data), tf = settings.data.screener_timeframe, htf = config.htfTimeframe.toLowerCase()
+      const base = analysisHistorySize(config, tf)
+      const needs = [[tf, base], ...(htf === tf ? [] : [[htf, Math.ceil(base * timeframeMilliseconds(tf) / timeframeMilliseconds(htf)) + config.htfEmaLength + 100]])] as [string, number][]
+      const stored = await db.from('mt5_candles').select('request,timeframe,updated_at').eq('account_id', accountId)
+      if (stored.error) throw new Error('CANDLE_READ_FAILED')
+      for (const symbol of runSymbols) for (const [timeframe, count] of needs) {
+        if (!MT5_TIMEFRAMES[timeframe]) continue
+        const row = stored.data.find(r => r.request === symbol && r.timeframe === timeframe)
+        const refresh = !row || Date.now() - Date.parse(row.updated_at) > 45000
+        lines.push(`BARS|${field(symbol)}|${timeframe}|${Math.min(count, 2000)}|${refresh ? 1 : 0}`)
+      }
+    }
 
     // 6. Work. Follow-up commands need the entry's position; fail them if it never opened.
     const claimed = await db.rpc('mt5_claim_commands', { p_account: accountId })

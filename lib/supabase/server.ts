@@ -25,11 +25,14 @@ export async function createClient() {
   )
 }
 
-// Service role — bypasses RLS, use only in webhook + execution routes
+// Service role — bypasses RLS, use only in webhook + execution routes.
+// Stateless, so one client per process: a client per request leaks memory under frequent polling.
+let serviceClient: ReturnType<typeof createSupabaseClient<Database>> | null = null
 export function createServiceClient() {
-  return createSupabaseClient<Database>(
+  serviceClient ??= createSupabaseClient<Database>(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.SUPABASE_SERVICE_ROLE_KEY!,
-    { auth: { persistSession: false } }
+    { auth: { persistSession: false, autoRefreshToken: false, detectSessionInUrl: false } }
   )
+  return serviceClient
 }

@@ -299,6 +299,12 @@ export type Database = {
         Update: R<Partial<{token_hash:string;login:number|null;server:string|null;company:string|null;trade_mode:'DEMO'|'CONTEST'|'REAL'|null;margin_mode:string|null;currency:string|null;balance:number|null;equity:number|null;margin_free:number|null;leverage:number|null;trade_allowed:boolean;connected:boolean;build:number|null;untracked_positions:number;heartbeat_at:string|null;last_error:string|null}>>
         Relationships: []
       }
+      mt5_candles: {
+        Row: R<{account_id:string;request:string;timeframe:string;bars:unknown;updated_at:string}>
+        Insert: R<{account_id:string;request:string;timeframe:string;bars:unknown;updated_at?:string}>
+        Update: R<Partial<{bars:unknown;updated_at:string}>>
+        Relationships: []
+      }
       mt5_symbols: {
         Row: R<{account_id:string;request:string;resolved:string|null;base:string|null;quote:string|null;digits:number|null;tick_size:number|null;tick_value:number|null;contract_size:number|null;volume_min:number|null;volume_max:number|null;volume_step:number|null;bid:number|null;ask:number|null;margin_per_lot:number|null;trade_mode:number|null;quote_time:string|null;updated_at:string}>
         Insert: R<{account_id:string;request:string;resolved?:string|null;base?:string|null;quote?:string|null;digits?:number|null;tick_size?:number|null;tick_value?:number|null;contract_size?:number|null;volume_min?:number|null;volume_max?:number|null;volume_step?:number|null;bid?:number|null;ask?:number|null;margin_per_lot?:number|null;trade_mode?:number|null;quote_time?:string|null;updated_at?:string}>

@@ -10,6 +10,7 @@ const Input=z.discriminatedUnion('action',[
   z.object({action:z.literal('connect'),account_id:id.optional(),broker:z.enum(['angelone','binance','mt5']),environment:z.enum(['testnet','live']),label:z.string().trim().min(1).max(80),credentials:z.unknown()}).strict(),
   z.object({action:z.literal('verify'),account_id:id}).strict(),
   z.object({action:z.literal('bridge_token'),account_id:id}).strict(),
+  z.object({action:z.literal('remove'),account_id:id}).strict(),
   z.object({action:z.literal('configure'),account_id:id,auto_enabled:z.boolean(),max_price_drift_bps:z.number().int().min(1).max(500),symbol:z.string().trim().toUpperCase().regex(/^[A-Z0-9_&.:-]{2,50}$/).optional(),timeframe:z.enum(['1m','5m','15m','1h']).optional(),acknowledgement:z.literal('ENABLE_BROKER_AUTOMATION').optional()}).strict(),
   z.object({action:z.literal('stop')}).strict(),
   z.object({action:z.literal('close'),execution_id:id}).strict(),
@@ -129,6 +130,19 @@ export async function POST(request:Request){
     }
     const account=await db.from('execution_accounts').select('*').eq('id',body.account_id).eq('user_id',user.id).single()
     if(account.error)return Response.json({error:'BROKER_NOT_FOUND',code:'BROKER_NOT_FOUND'},{status:404})
+    if(body.action==='remove'){
+      // Only accounts without execution history and outside a running automation can be removed.
+      const history=await db.from('broker_executions').select('id',{count:'exact',head:true}).eq('broker_account_id',body.account_id)
+      if(history.error)throw new Error('EXECUTION_STATUS_UNAVAILABLE')
+      if((history.count??0)>0)throw new Error('ACCOUNT_HAS_EXECUTION_HISTORY')
+      const run=await db.from('execution_settings').select('account_id,auto_enabled').eq('user_id',user.id).maybeSingle()
+      if(run.error)throw new Error('AUTOMATION_SETTINGS_UNAVAILABLE')
+      if(run.data?.account_id===body.account_id&&run.data.auto_enabled)throw new Error('STOP_TRADING_BEFORE_REMOVING')
+      if(run.data?.account_id===body.account_id){const cleared=await db.from('execution_settings').update({account_id:null,updated_at:new Date().toISOString()}).eq('user_id',user.id);if(cleared.error)throw new Error('AUTOMATION_SETTINGS_SAVE_FAILED')}
+      const removed=await db.from('execution_accounts').delete().eq('id',body.account_id).eq('user_id',user.id)
+      if(removed.error)throw new Error('BROKER_REMOVE_FAILED')
+      return Response.json({data:{account_id:body.account_id},message:'Broker account removed.'})
+    }
     if(body.action==='bridge_token'){
       if(account.data.broker!=='mt5')throw new Error('NOT_AN_MT5_ACCOUNT')
       const active=await db.from('broker_executions').select('id',{count:'exact',head:true}).eq('broker_account_id',body.account_id).not('state','in','(CLOSED,REJECTED)')

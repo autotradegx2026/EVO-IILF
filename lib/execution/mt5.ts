@@ -36,6 +36,7 @@ const related = (clientId: string, purpose: 'E' | 'L' | 'U') => `${clientId.slic
 
 export class Mt5ExecutionBroker implements ExecutionBroker {
   readonly venue = 'mt5' as const
+  readonly positionProtection = true
   readonly nativeOco = true
   readonly longOnly = false
   constructor(private readonly store: Mt5Store, readonly environment: Environment, private readonly waitMs = 10000, private readonly pollMs = 250) {}
@@ -100,8 +101,9 @@ export class Mt5ExecutionBroker implements ExecutionBroker {
   }
   async submit(symbol: string, intent: Intent): Promise<Submission> {
     if (intent.type !== 'MARKET' || !['ENTRY', 'CLOSE'].includes(intent.purpose)) throw new Error('MT5_UNSUPPORTED_ORDER')
+    if (intent.purpose === 'ENTRY' && (!(intent.stopLoss! > 0) || !(intent.takeProfit! > 0))) throw new Error('MT5_ENTRY_PROTECTION_REQUIRED')
     const entry = intent.purpose === 'ENTRY' ? intent.clientId : related(intent.clientId, 'E')
-    await this.store.enqueue({ client_id: intent.clientId, kind: intent.purpose as 'ENTRY' | 'CLOSE', entry_client_id: entry, request: mt5Request(symbol), side: intent.side, volume: await this.lots(symbol, intent.quantity) })
+    await this.store.enqueue({ client_id: intent.clientId, kind: intent.purpose as 'ENTRY' | 'CLOSE', entry_client_id: entry, request: mt5Request(symbol), side: intent.side, volume: await this.lots(symbol, intent.quantity), ...(intent.purpose === 'ENTRY' ? { sl: intent.stopLoss, tp: intent.takeProfit } : {}) })
     return this.result(entry, intent.clientId)
   }
   async protect(symbol: string, stop: Intent, target: Intent, listClientId: string): Promise<Submission> {
@@ -110,11 +112,8 @@ export class Mt5ExecutionBroker implements ExecutionBroker {
     return this.result(entry, listClientId)
   }
   async cancel(symbol: string, intent: Intent) {
-    // Market entries and closes fill or fail immediately; only position protection can be withdrawn.
-    if (intent.purpose !== 'STOP' && intent.purpose !== 'TARGET') return
-    const entry = related(intent.clientId, 'E'), clientId = related(intent.clientId, 'U')
-    await this.store.enqueue({ client_id: clientId, kind: 'UNPROTECT', entry_client_id: entry, request: mt5Request(symbol) })
-    await this.result(entry, clientId)
+    // MT5 protection belongs to the position. Never strip it before closing.
+    if (intent.purpose === 'STOP' || intent.purpose === 'TARGET') throw new Error('MT5_PROTECTION_CANNOT_BE_REMOVED')
   }
 
   async lookup(symbol: string, intent: Intent): Promise<OrderSnapshot | null> {

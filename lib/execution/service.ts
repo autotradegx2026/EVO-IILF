@@ -17,8 +17,12 @@ export const BinanceCredentials=z.object({apiKey:secret,apiSecret:secret}).stric
 // MT5 logins stay inside the broker terminal; the account record only names the platform.
 export const Mt5Credentials=z.object({platform:z.enum(['XM','Vantage','Other'])}).strict()
 export const AngelCredentials=z.object({apiKey:secret,password:secret,totpSecret:secret,clientCode:secret,localIp:z.string().ip(),publicIp:z.string().ip()}).strict()
+// One stateless service client per process. Creating a client per request leaked memory under the
+// MT5 bridge's sub-second polling until the server ran out of heap.
+let serviceClient: ExecutionDB | null = null
 export function executionDB(): ExecutionDB {
-  return createClient<Database>(process.env.NEXT_PUBLIC_SUPABASE_URL!,process.env.SUPABASE_SERVICE_ROLE_KEY!,{auth:{persistSession:false}})
+  serviceClient ??= createClient<Database>(process.env.NEXT_PUBLIC_SUPABASE_URL!,process.env.SUPABASE_SERVICE_ROLE_KEY!,{auth:{persistSession:false,autoRefreshToken:false,detectSessionInUrl:false}})
+  return serviceClient
 }
 export const executionGates=()=>({testnet:process.env.BROKER_TESTNET_ENABLED==='true',live:process.env.LIVE_TRADING_ENABLED==='true'})
 const brokers=new Map<string,{encrypted:string;environment:string;broker:ExecutionBroker}>()

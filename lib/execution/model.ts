@@ -3,7 +3,7 @@ export type OrderState = 'NEW' | 'PARTIAL' | 'FILLED' | 'CANCELED' | 'REJECTED' 
 export type Purpose = 'ENTRY' | 'STOP' | 'TARGET' | 'CLOSE'
 export type Intent = {
   clientId: string; purpose: Purpose; side: 'BUY' | 'SELL'; type: 'MARKET' | 'STOP' | 'LIMIT'
-  quantity: number; price?: number; trigger?: number
+  quantity: number; price?: number; trigger?: number; stopLoss?: number; takeProfit?: number
   state: 'PREPARED' | 'SUBMITTING' | 'ACKNOWLEDGED' | 'REJECTED'
   orderId?: string; submittedAt?: string; snapshot?: OrderSnapshot
 }
@@ -22,6 +22,8 @@ export interface ExecutionBroker {
   readonly environment: Environment
   readonly nativeOco: boolean
   readonly longOnly: boolean
+  /** Position attributes stay active while a position-specific market close is pending. */
+  readonly positionProtection?: boolean
   connect(): Promise<void>
   instrument(symbol: string): Promise<Instrument>
   availableQuote(symbol: string): Promise<number>

@@ -5,7 +5,7 @@
 //| Requires: Algo Trading on, and WebRequest allowed for the URL.   |
 //+------------------------------------------------------------------+
 #property copyright "GrindX Technologies Pvt Ltd"
-#property version   "1.00"
+#property version   "1.20"
 #property strict
 
 input string BridgeUrl = "https://autotradex.io/api/mt5/bridge";
@@ -15,6 +15,8 @@ input int    PollMs    = 700;
 #define TOKEN_FILE   "autotradex_token.txt"
 
 struct PendingResult { long id; string json; };
+struct BarsRequest { string request; string timeframe; int count; bool refresh; };
+struct BarsSent { string key; long last; };
 
 string        g_token = "";
 string        g_requests[];   // symbol names requested by the platform
@@ -22,6 +24,9 @@ string        g_resolved[];   // matching broker symbol names ("" = not found)
 long          g_track[];      // position ids to report
 PendingResult g_results[];    // command results kept until the server ACKs them
 string        g_error = "";
+BarsRequest   g_bars[];       // closed-bar series the platform scans
+BarsSent      g_barsSent[];   // last closed bar delivered per series
+BarsSent      g_barsPending[];
 
 //--- small helpers --------------------------------------------------
 string Esc(string s) { StringReplace(s, "\\", "\\\\"); StringReplace(s, "\"", "\\\""); return s; }
@@ -147,9 +152,17 @@ string ReasonName(long r)
    }
 }
 
+// Identifiers survive broker ticket changes (for example a swap rebooking).
+bool SelectPositionId(long id)
+{
+   for(int i = PositionsTotal() - 1; i >= 0; i--)
+      if(PositionGetTicket(i) && PositionGetInteger(POSITION_IDENTIFIER) == id) return true;
+   return false;
+}
+
 string PositionJson(long id)
 {
-   bool open = PositionSelectByTicket((ulong)id);
+   bool open = SelectPositionId(id);
    string symbol = open ? PositionGetString(POSITION_SYMBOL) : "";
    double sl = open ? PositionGetDouble(POSITION_SL) : 0, tp = open ? PositionGetDouble(POSITION_TP) : 0;
    bool magic = open && PositionGetInteger(POSITION_MAGIC) == BRIDGE_MAGIC;
@@ -193,6 +206,65 @@ string PositionsJson()
    }
    string out = "";
    for(int i = 0; i < n && i < 100; i++) { if(out != "") out += ","; out += PositionJson(ids[i]); }
+   return out;
+}
+
+//--- closed bars for native scanning, UTC open times ---------------------------
+ENUM_TIMEFRAMES PeriodOf(string tf)
+{
+   if(tf == "1m") return PERIOD_M1;  if(tf == "5m") return PERIOD_M5;  if(tf == "15m") return PERIOD_M15;
+   if(tf == "30m") return PERIOD_M30; if(tf == "1h") return PERIOD_H1; if(tf == "2h") return PERIOD_H2;
+   if(tf == "4h") return PERIOD_H4;  if(tf == "1d") return PERIOD_D1;  if(tf == "1w") return PERIOD_W1;
+   return PERIOD_CURRENT;
+}
+
+// Bar times are broker server time; subtract the server's UTC offset (brokers use whole quarter hours).
+long ServerOffset()
+{
+   long offset = (long)TimeTradeServer() - (long)TimeGMT();
+   return (long)MathRound(offset / 900.0) * 900;
+}
+
+long SentFor(string key)
+{
+   for(int i = 0; i < ArraySize(g_barsSent); i++) if(g_barsSent[i].key == key) return g_barsSent[i].last;
+   return 0;
+}
+
+void MarkSent(BarsSent &list[], string key, long last)
+{
+   for(int i = 0; i < ArraySize(list); i++) if(list[i].key == key) { list[i].last = last; return; }
+   int n = ArraySize(list); ArrayResize(list, n + 1); list[n].key = key; list[n].last = last;
+}
+
+string CandlesJson()
+{
+   string out = "";
+   ArrayResize(g_barsPending, 0);
+   long offset = ServerOffset();
+   for(int i = 0; i < ArraySize(g_bars); i++)
+   {
+      string symbol = ResolvedFor(g_bars[i].request);
+      ENUM_TIMEFRAMES period = PeriodOf(g_bars[i].timeframe);
+      if(symbol == "" || period == PERIOD_CURRENT) continue;
+      MqlRates rates[];
+      int got = CopyRates(symbol, period, 1, g_bars[i].count, rates);   // start at 1: closed bars only
+      if(got <= 0) continue;
+      string key = g_bars[i].request + "|" + g_bars[i].timeframe;
+      long last = (long)rates[got - 1].time;
+      if(!g_bars[i].refresh && SentFor(key) == last) continue;
+      int digits = (int)SymbolInfoInteger(symbol, SYMBOL_DIGITS);
+      string bars = "";
+      for(int k = 0; k < got; k++)
+      {
+         if(k > 0) bars += ",";
+         bars += "[" + L((long)rates[k].time - offset) + "," + DoubleToString(rates[k].open, digits) + "," + DoubleToString(rates[k].high, digits)
+               + "," + DoubleToString(rates[k].low, digits) + "," + DoubleToString(rates[k].close, digits) + "," + L(rates[k].tick_volume) + "]";
+      }
+      if(out != "") out += ",";
+      out += "{\"request\":" + Q(g_bars[i].request) + ",\"timeframe\":" + Q(g_bars[i].timeframe) + ",\"bars\":[" + bars + "]}";
+      MarkSent(g_barsPending, key, last);
+   }
    return out;
 }
 
@@ -257,12 +329,27 @@ void Execute(long id, string kind, string client, string request, string side, d
       req.price = side == "BUY" ? SymbolInfoDouble(symbol, SYMBOL_ASK) : SymbolInfoDouble(symbol, SYMBOL_BID);
       req.type_filling = Filling(symbol);
       req.comment = client;
+      // Submit protection atomically with the entry. Never retry with naked orders.
+      int digits = (int)SymbolInfoInteger(symbol, SYMBOL_DIGITS);
+      req.sl = NormalizeDouble(sl, digits);
+      req.tp = NormalizeDouble(tp, digits);
+      if(sl <= 0 || tp <= 0 || (side == "BUY" ? sl >= req.price || tp <= req.price : sl <= req.price || tp >= req.price))
+      { AddResult(id, false, 0, "INVALID_ENTRY_PROTECTION", 0, 0, 0, 0, 0); return; }
+      // Netting accounts hold one position per symbol: never merge a strategy entry into an existing one.
+      if(AccountInfoInteger(ACCOUNT_MARGIN_MODE) != ACCOUNT_MARGIN_MODE_RETAIL_HEDGING && PositionSelect(symbol)) { AddResult(id, false, 0, "SYMBOL_POSITION_EXISTS", 0, 0, 0, 0, 0); return; }
+      MqlTradeCheckResult check;
+      ZeroMemory(check);
+      if(!OrderCheck(req, check)) { AddResult(id, false, check.retcode, check.comment, 0, 0, 0, 0, 0); return; }
       bool sent = OrderSend(req, res);
       if(!sent || !Done(res.retcode)) { AddResult(id, false, res.retcode, res.comment, res.order, res.deal, 0, 0, 0); return; }
       AddResult(id, true, res.retcode, res.comment, res.order, res.deal, PositionOfDeal(res.deal), res.price, res.volume);
       return;
    }
-   bool open = PositionSelectByTicket((ulong)position);
+   bool open = SelectPositionId(position);
+   if(open && PositionGetInteger(POSITION_MAGIC) != BRIDGE_MAGIC)
+   { AddResult(id, false, 0, "POSITION_OWNERSHIP_MISMATCH", 0, 0, position, 0, 0); return; }
+   if(kind == "UNPROTECT")
+   { AddResult(id, !open, 0, open ? "PROTECTION_REMOVAL_FORBIDDEN" : "POSITION_CLOSED", 0, 0, position, 0, 0); return; }
    if(kind == "PROTECT" || kind == "UNPROTECT")
    {
       if(!open)
@@ -272,7 +359,7 @@ void Execute(long id, string kind, string client, string request, string side, d
          return;
       }
       req.action = TRADE_ACTION_SLTP;
-      req.position = (ulong)position;
+      req.position = (ulong)PositionGetInteger(POSITION_TICKET);
       req.symbol = PositionGetString(POSITION_SYMBOL);
       int digits = (int)SymbolInfoInteger(req.symbol, SYMBOL_DIGITS);
       req.sl = kind == "PROTECT" ? NormalizeDouble(sl, digits) : 0;
@@ -286,7 +373,7 @@ void Execute(long id, string kind, string client, string request, string side, d
    {
       if(!open) { AddResult(id, true, 0, "ALREADY_CLOSED", 0, 0, position, 0, 0); return; }
       req.action = TRADE_ACTION_DEAL;
-      req.position = (ulong)position;
+      req.position = (ulong)PositionGetInteger(POSITION_TICKET);
       req.symbol = PositionGetString(POSITION_SYMBOL);
       long type = PositionGetInteger(POSITION_TYPE);
       req.type = type == POSITION_TYPE_BUY ? ORDER_TYPE_SELL : ORDER_TYPE_BUY;
@@ -319,12 +406,12 @@ void ResolveStale(long id, string kind, string client, long position, double sl,
          else AddResult(id, false, 0, "RESOLVED_NOT_FILLED", t, 0, 0, 0, 0);
          return;
       }
-      if(kind == "CLOSE" && !PositionSelectByTicket((ulong)position)) { AddResult(id, true, 0, "ALREADY_CLOSED", 0, 0, position, 0, 0); return; }
+      if(kind == "CLOSE" && !SelectPositionId(position)) { AddResult(id, true, 0, "ALREADY_CLOSED", 0, 0, position, 0, 0); return; }
       AddResult(id, false, 0, "RESOLVED_NOT_FOUND", 0, 0, 0, 0, 0);
       return;
    }
    // PROTECT / UNPROTECT: the position's current stops show whether the change took effect.
-   if(!PositionSelectByTicket((ulong)position)) { AddResult(id, kind == "UNPROTECT", 0, "POSITION_CLOSED", 0, 0, position, 0, 0); return; }
+   if(!SelectPositionId(position)) { AddResult(id, kind == "UNPROTECT", 0, "POSITION_CLOSED", 0, 0, position, 0, 0); return; }
    double psl = PositionGetDouble(POSITION_SL), ptp = PositionGetDouble(POSITION_TP);
    double point = SymbolInfoDouble(PositionGetString(POSITION_SYMBOL), SYMBOL_POINT);
    bool applied = kind == "PROTECT" ? MathAbs(psl - sl) < point / 2 && MathAbs(ptp - tp) < point / 2 : psl == 0 && ptp == 0;
@@ -339,6 +426,7 @@ void HandleResponse(string text)
    if(count < 1 || StringFind(lines[0], "OK|") != 0) { g_error = "BAD_RESPONSE"; return; }
    string requests[];
    long track[];
+   ArrayResize(g_bars, 0);
    for(int i = 1; i < count; i++)
    {
       string f[];
@@ -347,6 +435,12 @@ void HandleResponse(string text)
       if(f[0] == "ACK") Ack(StringToInteger(f[1]));
       else if(f[0] == "SYM") { int n = ArraySize(requests); ArrayResize(requests, n + 1); requests[n] = f[1]; }
       else if(f[0] == "TRACK") { int n = ArraySize(track); ArrayResize(track, n + 1); track[n] = StringToInteger(f[1]); }
+      else if(f[0] == "BARS" && k >= 5 && ArraySize(g_bars) < 6)
+      {
+         int n = ArraySize(g_bars); ArrayResize(g_bars, n + 1);
+         g_bars[n].request = f[1]; g_bars[n].timeframe = f[2];
+         g_bars[n].count = (int)MathMin(StringToInteger(f[3]), 2000); g_bars[n].refresh = f[4] == "1";
+      }
    }
    // Keep resolutions for symbols still requested; new requests resolve on first use.
    string keepR[], keepS[];
@@ -378,7 +472,8 @@ void HandleResponse(string text)
 void Poll()
 {
    string body = "{\"v\":1" + (g_error != "" ? ",\"error\":" + Q(g_error) : "") + ",\"account\":" + AccountJson()
-               + ",\"symbols\":[" + SymbolsJson() + "],\"results\":[" + ResultsJson() + "],\"positions\":[" + PositionsJson() + "]}";
+               + ",\"symbols\":[" + SymbolsJson() + "],\"results\":[" + ResultsJson() + "],\"positions\":[" + PositionsJson() + "]"
+               + ",\"candles\":[" + CandlesJson() + "]}";
    char data[], reply[];
    string headers = "Content-Type: application/json\r\nAuthorization: Bearer " + g_token + "\r\n", replyHeaders;
    int size = StringToCharArray(body, data, 0, WHOLE_ARRAY, CP_UTF8);
@@ -394,6 +489,7 @@ void Poll()
    }
    if(status != 200) { g_error = "HTTP_" + IntegerToString(status); return; }
    g_error = "";
+   for(int i = 0; i < ArraySize(g_barsPending); i++) MarkSent(g_barsSent, g_barsPending[i].key, g_barsPending[i].last);
    Comment("AutotradeX Bridge connected · ", TimeToString(TimeLocal(), TIME_SECONDS));
    HandleResponse(CharArrayToString(reply, 0, WHOLE_ARRAY, CP_UTF8));
 }

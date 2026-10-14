@@ -89,7 +89,7 @@ export async function advanceExecution(initial: Execution, broker: ExecutionBrok
       assertQuantity(e.requested_quantity,rules.price,rules)
       if (e.requested_quantity*rules.price>await broker.availableQuote(e.symbol)) { e.state='REJECTED';e.error='INSUFFICIENT_AVAILABLE_BALANCE';return save() }
       e.state='ENTERING';e.error=null
-      await send([{clientId:clientId(e.id,'E'),purpose:'ENTRY',side:e.direction==='LONG'?'BUY':'SELL',type:'MARKET',quantity:e.requested_quantity,state:'PREPARED'}])
+      await send([{clientId:clientId(e.id,'E'),purpose:'ENTRY',side:e.direction==='LONG'?'BUY':'SELL',type:'MARKET',quantity:e.requested_quantity,stopLoss:e.stop_loss,takeProfit:e.take_profit,state:'PREPARED'}])
       if((e as Execution).state==='REJECTED')return e
       await sync();entry=e.intents.find(i=>i.purpose==='ENTRY')!
     }
@@ -140,11 +140,12 @@ export async function advanceExecution(initial: Execution, broker: ExecutionBrok
     // All protective/previous close orders must be terminal before another market exit.
     for (const intent of e.intents.filter(i=>i.purpose!=='ENTRY')) {
       if (intent.state==='REJECTED') continue
+      if (broker.positionProtection && ['STOP','TARGET'].includes(intent.purpose)) continue
       if (!intent.snapshot) return fail('EXIT_OUTCOME_UNKNOWN')
       if (!terminal(intent.snapshot.state)) await cancel(intent)
     }
     await sync()
-    if (e.intents.some(i=>i.purpose!=='ENTRY' && i.state!=='REJECTED' && (!i.snapshot||!terminal(i.snapshot.state)))) { e.error='EXIT_CANCELLATION_PENDING';return save() }
+    if (e.intents.some(i=>i.purpose!=='ENTRY' && !(broker.positionProtection && ['STOP','TARGET'].includes(i.purpose)) && i.state!=='REJECTED' && (!i.snapshot||!terminal(i.snapshot.state)))) { e.error='EXIT_CANCELLATION_PENDING';return save() }
     if (e.residual_quantity<=epsilon) { e.state='CLOSED';e.residual_quantity=0;e.error=null;return save() }
     const quantity=roundStep(e.residual_quantity,rules.step)
     if (quantity<rules.minQuantity || quantity*rules.price<rules.minNotional) {

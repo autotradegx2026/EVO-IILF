@@ -56,3 +56,12 @@ Restore a backup: `docker exec -i supabase-db pg_restore -U supabase_admin -d po
 Schema, data, auth users (with existing password hashes), the `auth.users` triggers, the storage policy, the realtime publication, Vault secrets and cron jobs were copied from Supabase cloud project `itvcmfvvfemzykwtzvqd`. Every application table count matched before cutover. A local copy of the cloud dumps is in `~/evo-iilf-backups/2026-10-08-cloud/` on the owner's Mac. The cloud project's three cron jobs were paused (`cron.alter_job(..., active := false)`), not deleted; re-enable them only to roll back. Self-hosted Supabase uses a new JWT secret, so existing sessions ended and users sign in again with unchanged passwords. Public sign-up is disabled.
 
 The public home page is `/`; the dashboard moved from `/` to `/dashboard`.
+
+## MetaTrader 5 (XM, Vantage)
+
+Each MT5 broker account runs in its own headless terminal (`/opt/mt5/docker-compose.yml`: `mt5-xm`, `mt5-vantage`; Wine 10.0, which avoids MetaTrader's false debugger detection in Wine 10.3+). The AutotradeX Bridge EA (`mt5/AutotradeXBridge.mq5`, mounted from `/opt/mt5/bridge`, recompiled on start when changed) is attached on every start by `Config/autotradex-startup.ini`, polls `https://autotradex.io/api/mt5/bridge` with the account token in `MQL5/Files/autotradex_token.txt`, places entries with broker-held SL/TP, and reports account state, symbol specifications, closed UTC bars (for native scanning) and position deals. Accounts must be **MT5** accounts; a demo terminal maps to `testnet`, a real one to `live`.
+
+- One-time broker login (owner): `ssh -N -L 5901:127.0.0.1:5901 -L 5902:127.0.0.1:5902 root@91.108.104.102`, then VNC to `localhost:5901` (XM) / `localhost:5902` (Vantage) with the password in `/opt/mt5/vnc_password.txt`. Use the master password and exact server name; tick Save password.
+- New terminal: add a service to the compose file, `docker compose up -d`, `configure-terminal.sh <container>`, install the token file, then `allow-webrequest.sh <container>` (MT5 stores the WebRequest allow-list encrypted, so it is set through Options once).
+- Diagnose: `docker exec mt5-xm sh -c 'cd "$WINEPREFIX/drive_c/Program Files/MetaTrader 5"; iconv -f UTF-16LE -t UTF-8 $(ls -t logs/*.log | head -1) | tail'` shows logins (`authorization ... failed (Invalid account)` means wrong login/password/server or an MT4 account).
+- `scripts/verify-mt5-bridge.ts` places minimum-volume LONG and SHORT round trips on a DEMO account through the production engine (passed on MetaQuotes-Demo, 9 October 2026).

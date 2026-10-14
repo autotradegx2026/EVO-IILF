@@ -3,6 +3,7 @@ import assert from 'node:assert/strict'
 import { advanceExecution, type ExecutionControls, type ExecutionStore } from '../lib/execution/engine'
 import { Mt5ExecutionBroker, mt5Request, type Mt5Bridge, type Mt5Command, type Mt5Deal, type Mt5NewCommand, type Mt5Position, type Mt5Store, type Mt5Symbol } from '../lib/execution/mt5'
 import type { Execution } from '../lib/execution/model'
+import { decodeMt5Candles } from '../lib/execution/mt5-market'
 
 const controls: ExecutionControls = { entriesAllowed: true, maxPriceDriftBps: 100 }
 
@@ -43,7 +44,7 @@ class FakeMt5 implements Mt5Store {
     if (c.kind === 'ENTRY') {
       if (this.rejectEntry) return Object.assign(c, { status: 'FAILED', ...this.rejectEntry })
       const order = ++this.ticket, id = order
-      this.positions.set(id, { position_id: id, open: true, side: c.side!, volume: c.volume!, sl: 0, tp: 0,
+      this.positions.set(id, { position_id: id, open: true, side: c.side!, volume: c.volume!, sl: c.sl ?? 0, tp: c.tp ?? 0,
         deals: [this.deal('IN', 'EXPERT', c.volume!, c.side === 'BUY' ? this.ask : this.bid, order)] })
       return done({ order_ticket: order, position_id: id })
     }
@@ -95,6 +96,7 @@ test('long entry converts units to lots, attaches broker SL/TP and closes on sto
   const mt5 = new FakeMt5(), store = new MemoryStore(execution())
   await run(mt5, store)          // entry
   assert.equal(mt5.queued[0].kind, 'ENTRY'); assert.equal(mt5.queued[0].volume, 0.5); assert.equal(mt5.queued[0].side, 'BUY')
+  assert.equal(mt5.queued[0].sl, 1.0981, 'stop loss travels with the entry order'); assert.ok(mt5.queued[0].tp! > 1.1)
   await run(mt5, store)          // protection
   assert.equal(mt5.queued[1].kind, 'PROTECT'); assert.equal(mt5.queued[1].sl, 1.0981)
   await run(mt5, store)
@@ -118,12 +120,12 @@ test('short entry is allowed and take profit is attributed to the target', async
   near(store.value.gross_pnl, (1.1000 - 1.0941) * 50000)
 })
 
-test('manual close withdraws protection, then closes with a market order', async () => {
+test('manual close keeps broker protection on the position and closes with a market order', async () => {
   const mt5 = new FakeMt5(), store = new MemoryStore(execution())
   await run(mt5, store); await run(mt5, store); await run(mt5, store)
   store.value.closing_requested = true
   await run(mt5, store); await run(mt5, store)
-  assert.deepEqual(mt5.queued.map(c => c.kind), ['ENTRY', 'PROTECT', 'UNPROTECT', 'CLOSE'])
+  assert.deepEqual(mt5.queued.map(c => c.kind), ['ENTRY', 'PROTECT', 'CLOSE'])
   assert.equal(store.value.state, 'CLOSED'); assert.equal(store.value.close_reason, 'MANUAL')
   near(store.value.exit_quantity, 50000)
 })
@@ -180,4 +182,12 @@ test('margin capacity and equity risk capital are reported in quote currency', a
   near(await broker.availableQuote('OANDA:EURUSD'), 9000 * 0.9 / 1100 * 100000 * 1.1001)
   const rules = await broker.instrument('OANDA:EURUSD')
   assert.equal(rules.step, 1000); assert.equal(rules.minQuantity, 1000); assert.equal(rules.quote, 'USD')
+})
+
+test('MT5 candles decode as closed UTC bars and reject a still-open bar', () => {
+  const now = Date.parse('2026-10-14T10:00:30Z'), t = Date.parse('2026-10-14T09:45:00Z') / 1000
+  const bars = decodeMt5Candles([[t - 900, 1.1, 1.2, 1.0, 1.15, 10], [t, 1.15, 1.16, 1.14, 1.155, 12]], '15m', now)
+  assert.equal(bars.length, 2); assert.equal(bars[1].closeTime, Date.parse('2026-10-14T10:00:00Z') - 1)
+  assert.throws(() => decodeMt5Candles([[t + 900, 1.1, 1.2, 1.0, 1.15, 10]], '15m', now), /MT5_OPEN_CANDLE_REJECTED/)
+  assert.throws(() => decodeMt5Candles([[t, 1.1, 1.0, 1.2, 1.15, 10]], '15m', now))
 })
